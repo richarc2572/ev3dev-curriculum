@@ -41,7 +41,7 @@ Authors: David Fisher and Clayton Richards.
 #     900 degrees / second  -->  traveled  40 inches  -->  8.0 inches / second
 #  (probably no faster than 800)
 #
-# TODO: 3. Make an equation
+# Done: 3. Make an equation
 #   Derive from that information a way to convert a given degrees per second speed into an inches / second speed.
 #     If you plotted the data with degrees / second on the x axis and inches per second on the y axis you would find the
 #       data is fairly linear, so you could use a    y = m * x + b   line approximation formula.  Excel could even help
