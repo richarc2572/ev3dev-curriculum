@@ -35,8 +35,8 @@ Authors: David Fisher and Jonathan Kinnard.
 #     400 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
 #   Tests @ 5 seconds:
 #     500 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
-#     600 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
-#     700 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
+#     600 degrees / second  -->   traveled XXX inches  -->  YYY inches / second
+#     700 degrees / second  -->  t   raveled XXX inches  -->  YYY inches / second
 #     800 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
 #     900 degrees / second  -->  traveled XXX inches  -->  YYY inches / second (probably no faster than 800)
 #
