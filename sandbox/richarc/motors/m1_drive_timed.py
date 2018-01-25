@@ -73,9 +73,9 @@ import time
 
 def main():
     print("--------------------------------------------")
-    print("  Drive using input Kinnarjd Done3")
+    print("  Timed Driving")
     print("--------------------------------------------")
-    ev3.Sound.speak("Drive using input Kinnard Done 3").wait()
+    ev3.Sound.speak("Timed Driving").wait()
 
     # Connect two large motors on output ports B and C
     left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
