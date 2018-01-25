@@ -8,8 +8,8 @@ to collect data, then make an equation to figure out the time needed given the d
 
 Note: If future modules you will learn different (BETTER) ways to drive a given distance.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Clayton Richards.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 # TODO: 2. Get a yardstick or tape measure to do some testing with /examples/motors/drive_input_speed.py
 #   Have your whole team work this activity together.
@@ -29,16 +29,17 @@ Authors: David Fisher and PUT_YOUR_NAME_HERE.
 #
 #  Record your calculated speed conversions here:
 #   Tests @ 10 seconds:
-#     100 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
-#     200 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
-#     300 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
-#     400 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
+#     100 degrees / second  -->  traveled  13 inches  -->  1.3 inches / second
+#     200 degrees / second  -->  traveled  25 inches  -->  2.5 inches / second
+#     300 degrees / second  -->  traveled  35 inches  -->  3.5 inches / second
+#     400 degrees / second  -->  traveled  45 inches  -->  4.5 inches / second
 #   Tests @ 5 seconds:
-#     500 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
-#     600 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
-#     700 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
-#     800 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
-#     900 degrees / second  -->  traveled XXX inches  -->  YYY inches / second (probably no faster than 800)
+#     500 degrees / second  -->  traveled  28 inches  -->  5.6 inches / second
+#     600 degrees / second  -->  traveled  34 inches  -->  6.8 inches / second
+#     700 degrees / second  -->  traveled  39 inches  -->  7.8 inches / second
+#     800 degrees / second  -->  traveled  40 inches  -->  8.0 inches / second
+#     900 degrees / second  -->  traveled  40 inches  -->  8.0 inches / second
+#  (probably no faster than 800)
 #
 # TODO: 3. Make an equation
 #   Derive from that information a way to convert a given degrees per second speed into an inches / second speed.
