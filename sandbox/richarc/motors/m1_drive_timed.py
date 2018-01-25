@@ -113,16 +113,20 @@ def main():
     assert left_motor.connected
     assert right_motor.connected
 
-    speed = int(input("Enter a speed (0 to 900 dps): "))
-    distance = int(input("Distance to travel (inches): "))
-    speed_inches = 0.11 * speed + 0.257
-
-    while speed or distance != 0:
+    while True:
+        speed = int(input("Enter a speed (0 to 900 dps): "))
+        distance = int(input("Distance to travel (inches): "))
+        if speed or distance == 0:
+            break
+        speed_inches = 0.11 * speed + 0.257
         left_motor.run_forever(speed_sp=speed)
         right_motor.run_forever(speed_sp=speed)
-        time.sleep(distance / speed_inches)
+        time.sleep(3)
         left_motor.stop(stop_action="brake")
         right_motor.stop(stop_action="brake")
 
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()
+
+
+main()
