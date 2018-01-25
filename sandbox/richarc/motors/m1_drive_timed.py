@@ -11,7 +11,8 @@ Note: If future modules you will learn different (BETTER) ways to drive a given 
 Authors: David Fisher and Clayton Richards.
 """  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
-# TODO: 2. Get a yardstick or tape measure to do some testing with /examples/motors/drive_input_speed.py
+# DONE: 2. Get a yardstick or tape measure to do some testing with
+# /examples/motors/drive_input_speed.py
 #   Have your whole team work this activity together.
 #   For your first test run drive_input_speed (via python drive_input_speed from that folder using SSH).
 #   Enter these values for your first test and record the distance below as XXX for 100.
@@ -41,14 +42,14 @@ Authors: David Fisher and Clayton Richards.
 #     900 degrees / second  -->  traveled  40 inches  -->  8.0 inches / second
 #  (probably no faster than 800)
 #
-# TODO: 3. Make an equation
+# DONE: 3. Make an equation
 #   Derive from that information a way to convert a given degrees per second speed into an inches / second speed.
 #     If you plotted the data with degrees / second on the x axis and inches per second on the y axis you would find the
 #       data is fairly linear, so you could use a    y = m * x + b   line approximation formula.  Excel could even help
 #       make the value for m and b perfect, but that is overkill.  You have permission to set b = 0 and just pick an m
 #       that would roughly fit most of your data.  Put your value for m below and think about if it most fits:
 #
-#       speed_in_inches_per_second = m * speed_in_degrees_per_second + 0
+#     speed_in_inches_per_second = 0.011 * speed_in_degrees_per_second + 0.257
 #
 #     Eventually your goal is to make an equation that will allow users to input any distance in inches and any speed in
 #     degrees per second, then output the time needed to drive the correct distance at that speed.  So eventually you
