@@ -38,7 +38,7 @@ Authors: David Fisher and Clayton Richards.
 #     600 degrees / second  -->  traveled  34 inches  -->  6.8 inches / second
 #     700 degrees / second  -->  traveled  39 inches  -->  7.8 inches / second
 #     800 degrees / second  -->  traveled  40 inches  -->  8.0 inches / second
-#     900 degrees / second  -->  traveled  40 inches  -->  8.2 inches / second
+#     900 degrees / second  -->  traveled  40 inches  -->  8.0 inches / second
 #  (probably no faster than 800)
 #
 # TODO: 3. Make an equation
@@ -47,7 +47,7 @@ Authors: David Fisher and Clayton Richards.
 #       data is fairly linear, so you could use a    y = m * x + b   line approximation formula.  Excel could even help
 #       make the value for m and b perfect, but that is overkill.  You have permission to set b = 0 and just pick an m
 #       that would roughly fit most of your data.  Put your value for m below and think about if it most fits:
-# 
+#
 #       speed_in_inches_per_second = m * speed_in_degrees_per_second + 0
 #
 #     Eventually your goal is to make an equation that will allow users to input any distance in inches and any speed in
