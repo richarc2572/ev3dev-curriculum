@@ -73,13 +73,15 @@ Authors: David Fisher and Clayton Richards.
 # to:
 #   Enter a speed (0 to 900 dps):
 #   Distance to travel (inches):
-# TODO: 5. Write the code necessary to make the robot drive at that speed going roughly that distance.
+# DONE: 5. Write the code necessary to make the robot drive at that speed going
+#  roughly that distance.
 #   Note, in this module, you are REQUIRED to use the pattern...
 #      run_forever()
 #      time.sleep(some_amount)
 #      stop()
 #   You may NOT use the advanced motor commands at this time like: run_to_abs_pos, run_to_rel_pos, or run_timed.
-# TODO: 6. Modify the program so that it will exit immediately if the answer to   any   question is 0.
+# DONE: 6. Modify the program so that it will exit immediately if the answer to
+#    any   question is 0.
 # TODO: 7. Formally test your work. When you think you have the problem complete run these tests to be sure:
 #   200 dps 24 inches (make sure it drives within 6 inches of the target distance)
 #   400 dps 24 inches (make sure it drives within 6 inches of the target distance)
@@ -111,15 +113,15 @@ def main():
     assert left_motor.connected
     assert right_motor.connected
 
-    time_s = 1  # Any value other than 0.
-    while time_s != 0:
-        speed = int(input("Enter a speed (0 to 900 dps): "))
-        distance = int(input("Distance to travel (inches): "))
-        distance_inches = 
+    speed = int(input("Enter a speed (0 to 900 dps): "))
+    distance = int(input("Distance to travel (inches): "))
+    speed_inches = 0.11 * speed + 0.257
+
+    while speed or distance != 0:
         left_motor.run_forever(speed_sp=speed)
         right_motor.run_forever(speed_sp=speed)
-        time.sleep()
-        left_motor.stop()
+        time.sleep(distance / speed_inches)
+        left_motor.stop(stop_action="brake")
         right_motor.stop(stop_action="brake")
 
     print("Goodbye!")
