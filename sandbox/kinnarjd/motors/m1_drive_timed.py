@@ -8,10 +8,10 @@ to collect data, then make an equation to figure out the time needed given the d
 
 Note: If future modules you will learn different (BETTER) ways to drive a given distance.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Jonathan Kinnard.
+"""  # Done: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
-# TODO: 2. Get a yardstick or tape measure to do some testing with /examples/motors/drive_input_speed.py
+# Done: 2. Get a yardstick or tape measure to do some testing with /examples/motors/drive_input_speed.py
 #   Have your whole team work this activity together.
 #   For your first test run drive_input_speed (via python drive_input_speed from that folder using SSH).
 #   Enter these values for your first test and record the distance below as XXX for 100.
