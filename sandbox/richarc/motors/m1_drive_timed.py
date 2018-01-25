@@ -38,7 +38,7 @@ Authors: David Fisher and Clayton Richards.
 #     600 degrees / second  -->  traveled  34 inches  -->  6.8 inches / second
 #     700 degrees / second  -->  traveled  39 inches  -->  7.8 inches / second
 #     800 degrees / second  -->  traveled  40 inches  -->  8.0 inches / second
-#     900 degrees / second  -->  traveled  40 inches  -->  8.0 inches / second
+#     900 degrees / second  -->  traveled  40 inches  -->  8.2 inches / second
 #  (probably no faster than 800)
 #
 # TODO: 3. Make an equation
