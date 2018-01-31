@@ -3,10 +3,10 @@ This module lets you extend what you have learned about driving and extend it to
 
 Much like you have a drive_inches command in your library, you will now make a turn_degrees method.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Jonathan Kinnard.
+"""  # Done: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
-# TODO: 2. Copy the contents of m3_drive_inches_via_library.py and paste that text into this file below these comments.
+# Done: 2. Copy the contents of m3_drive_inches_via_library.py and paste that text into this file below these comments.
 #   Change the initial print and speak commands to reflect this module, like this...
 #     print("--------------------------------------------")
 #     print(" Turn degrees")
@@ -48,3 +48,9 @@ Authors: David Fisher and PUT_YOUR_NAME_HERE.
 # TODO: 6. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.
 #
 # Observations you should make, using run_to_rel_pos is useful for accurate turns, but testing takes time.
+
+def turn_degrees(self, degrees_to_turn, turn_speed_sp):
+    print("--------------------------------------------")
+    print(" Turn degrees")
+    print("--------------------------------------------")
+    ev3.Sound.speak("Turn degrees").wait()

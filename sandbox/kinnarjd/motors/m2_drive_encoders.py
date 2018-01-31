@@ -86,7 +86,7 @@ def main():
                                stop_action=ev3.Motor.STOP_ACTION_BRAKE)
     ev3.Sound.beep().wait()
     ev3.Sound.beep().wait()
-    left_motor.wait_while(
+    left_motor.wait_while()
         ev3.Motor.STATE_RUNNING)  # run_to_rel_pos just schedules a stop, code runs on
     ev3.Sound.beep().wait()
     print("Goodbye!")
