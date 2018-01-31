@@ -27,7 +27,7 @@ Authors: David Fisher and Jonathan Kinnard.
 #   Your arguments to the run_to_rel_pos method should include the named arguments (notice time is not needed):
 #        -- position_sp
 #        -- speed_sp
-#        -- stop_action
+#        -- stop_action again
 """
 degrees_per_inch = 90
 inches_target = 4
