@@ -121,7 +121,7 @@ def main():
         speed_inches = 0.11 * speed + 0.257
         left_motor.run_forever(speed_sp=speed)
         right_motor.run_forever(speed_sp=speed)
-        time.sleep(3)
+        time.sleep(distance / speed_inches)
         left_motor.stop(stop_action="brake")
         right_motor.stop(stop_action="brake")
 
