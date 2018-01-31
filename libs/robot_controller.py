@@ -16,19 +16,35 @@ import math
 import time
 
 
-
 class Snatch3r(object):
     """Commands for the Snatch3r robot that might be useful in many different programs."""
 
     def __init__(self):
-        self.left_motor = ev3.LargeMotor(ev3.OUTPUT_B)  # you put real code here later
+        self.left_motor = ev3.LargeMotor(
+            ev3.OUTPUT_B)  # you put real code here later
         self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
         assert self.left_motor.connected
         assert self.right_motor.connected
+
     # TODO: Implement the Snatch3r class as needed when working the sandox
     # exercises
     # (and delete these comments)
     def drive_inches(self, inches_target, speed_deg_per_second):
         assert self.left_motor.connected
         assert self.right_motor.connected
-        
+        degrees_per_inch = 90
+        motor_turns_needed_in_degrees = inches_target * degrees_per_inch
+        position_sp = motor_turns_needed_in_degrees
+        self.left_motor.run_to_rel_pos(position_sp=position_sp,
+                                       speed_sp=speed_deg_per_second,
+                                       stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        self.right_motor.run_to_rel_pos(position_sp=position_sp,
+                                        speed_sp=speed_deg_per_second,
+                                        stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        ev3.Sound.beep().wait()
+        ev3.Sound.beep().wait()
+        self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)  # run_to_rel_pos
+        # just schedules a stop, code runs on
+        ev3.Sound.beep().wait()
+        print("Goodbye!")
+        ev3.Sound.speak("Goodbye").wait()
