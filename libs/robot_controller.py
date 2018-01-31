@@ -21,7 +21,14 @@ class Snatch3r(object):
     """Commands for the Snatch3r robot that might be useful in many different programs."""
 
     def __init__(self):
-        self.left_motor = None  # you put real code here later
-        assert self.left_motor
-    # Done: Implement the Snatch3r class as needed when working the sandox exercises
+        self.left_motor = ev3.LargeMotor(ev3.OUTPUT_B)  # you put real code here later
+        self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        assert self.left_motor.connected
+        assert self.right_motor.connected
+    # TODO: Implement the Snatch3r class as needed when working the sandox
+    # exercises
     # (and delete these comments)
+    def drive_inches(self, inches_target, speed_deg_per_second):
+        assert self.left_motor.connected
+        assert self.right_motor.connected
+        
