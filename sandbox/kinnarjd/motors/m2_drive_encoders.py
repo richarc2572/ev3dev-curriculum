@@ -61,7 +61,6 @@ m.run_to_rel_pos(position_sp, speed_sp)
 
 
 import ev3dev.ev3 as ev3
-import time
 
 
 def main():
@@ -78,21 +77,17 @@ def main():
     assert left_motor.connected
     assert right_motor.connected
 
-    while True:
-        speed = int(input("Enter a speed (0 to 900 dps): "))
-        distance = int(input("Distance to travel (inches): "))
-        if speed == 0:
-            break
-        elif distance == 0:
-            break
-        speed_inches = 0.011 * speed + 0.257
-        left_motor.run_forever(speed_sp=speed)
-        right_motor.run_forever(speed_sp=speed)
-        time.sleep(distance / speed_inches)
-        left_motor.stop(stop_action="brake")
-        right_motor.stop(stop_action="brake")
+        degrees_per_inch = 90
+        speed_sp = int(input("Enter a speed (0 to 900 dps): "))
+        inches_target = int(input("Distance to travel (inches): "))
+        motor_turns_needed_in_degrees = inches_target * degrees_per_inch
+        position_sp = motor_turns_needed_in_degrees
+        left_motor.run_to_rel_pos(position_sp = position_sp, speed_sp = speed_sp, stop_action = ev3.Motor.STOP_ACTION_BRAKE)
+        right_motor.run_to_rel_pos(position_sp = position_sp, speed_sp = speed_sp, stop_action = ev3.Motor.STOP_ACTION_BRAKE)
         ev3.Sound.beep().wait()
-
+        ev3.Sound.beep().wait()
+        left_motor.wait_while(ev3.Motor.STATE_RUNNING)  # run_to_rel_pos just schedules a stop, code runs on
+        ev3.Sound.beep().wait()
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()
 
