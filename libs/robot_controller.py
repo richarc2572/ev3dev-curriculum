@@ -26,7 +26,7 @@ class Snatch3r(object):
         assert self.left_motor.connected
         assert self.right_motor.connected
 
-    # TODO: Implement the Snatch3r class as needed when working the sandox
+    # DONE: Implement the Snatch3r class as needed when working the sandox
     # exercises
     # (and delete these comments)
     def drive_inches(self, inches_target, speed_deg_per_second):
