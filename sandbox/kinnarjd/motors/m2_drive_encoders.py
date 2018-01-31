@@ -28,8 +28,22 @@ Authors: David Fisher and Jonathan Kinnard.
 #        -- position_sp
 #        -- speed_sp
 #        -- stop_action
+"""
+degrees_per_inch = 90
+inches_target = 4
+motor_turns_needed_in_degrees = inches_target * degrees_per_inch
+position_sp = motor_turns_needed_in_degrees
+speed_sp = 400
+# left_motor.run_to_rel_pos(speed_sp=500, time_sp=3000, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+m.run_to_rel_pos(position_sp, speed_sp)
+  m.run_to_rel_pos(position_sp=360)
+  ev3.Sound.beep().wait()
+  ev3.Sound.beep().wait()
+  left_motor.wait_while(ev3.Motor.STATE_RUNNING) # run_to_rel_pos just schedules a stop, code runs on
+  ev3.Sound.beep().wait()
+"""
 
-# TODO: 5. Make sure the beep happens AFTER the motors stop.  Use the wait_while command to block code execution.
+# Done: 5. Make sure the beep happens AFTER the motors stop.  Use the wait_while command to block code execution.
 
 # TODO: 6. Formally test your work. When you think you have the problem complete run these tests:
 #   200 dps 24 inches (make sure it drives within 2 inches of the target distance)
