@@ -16,8 +16,12 @@ import math
 import time
 
 
+
 class Snatch3r(object):
     """Commands for the Snatch3r robot that might be useful in many different programs."""
-    
-    # TODO: Implement the Snatch3r class as needed when working the sandox exercises
+
+    def __init__(self):
+        self.left_motor = None  # you put real code here later
+        assert self.left_motor
+    # Done: Implement the Snatch3r class as needed when working the sandox exercises
     # (and delete these comments)
