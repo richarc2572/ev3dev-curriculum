@@ -116,9 +116,11 @@ def main():
     while True:
         speed = int(input("Enter a speed (0 to 900 dps): "))
         distance = int(input("Distance to travel (inches): "))
-        if speed or distance == 0:
+        if speed == 0:
             break
-        speed_inches = 0.11 * speed + 0.257
+        elif distance == 0:
+            break
+        speed_inches = 0.011 * speed + 0.257
         left_motor.run_forever(speed_sp=speed)
         right_motor.run_forever(speed_sp=speed)
         time.sleep(distance / speed_inches)
