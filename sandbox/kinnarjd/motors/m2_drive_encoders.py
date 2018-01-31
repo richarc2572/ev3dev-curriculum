@@ -66,9 +66,9 @@ import time
 
 def main():
     print("--------------------------------------------")
-    print("  Timed Driving")
+    print("  Drive using encoders")
     print("--------------------------------------------")
-    ev3.Sound.speak("Timed Driving").wait()
+    ev3.Sound.speak("Drive using encoders").wait()
 
     # Connect two large motors on output ports B and C
     left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
