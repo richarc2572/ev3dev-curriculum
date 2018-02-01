@@ -24,7 +24,7 @@ def main():
 
     # Opening LED dance (to show the LED syntax)
     # Red LEDs
-    ev3.Sound.speak("Red")
+    '''ev3.Sound.speak("Red")
     ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
     ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
     time.sleep(3)
@@ -40,18 +40,19 @@ def main():
     ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
     ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
     # ev3.Leds.all_off()  # Could also use this single command if turning both LEDs off.
-    print('Press the Back button on the EV3 to exit this program.')
+    print('Press the Back button on the EV3 to exit this program.')'''
 
     # Buttons on EV3 (the real focus of this module)
     btn = ev3.Button()  # Construct the one and only EV3 Button object
-    led_colors = [ev3.Leds.BLACK,  # This list is useful for the down button in TO DO 4.
+    led_colors = [ev3.Leds.BLACK,
+                  # This list is useful for the down button in TO DO 4.
                   ev3.Leds.GREEN,
                   ev3.Leds.RED,
                   # ev3.Leds.ORANGE,  # Too close to another color in my opinion
                   # ev3.Leds.YELLOW,  # Too close to another color in my opinion
                   ev3.Leds.AMBER]
 
-    current_color_index = 0
+    k = 1
     while True:
         # Done: 3. Implement the left, right, and up buttons as follows:
         #    When the up button is being pressed:
@@ -81,7 +82,6 @@ def main():
             print("right")
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
-        time.sleep(1.0)
 
         # Done: 4. Implement the down button to change the color of both LEDs.
         #   The first press to down should make both LEDs GREEN, the next press makes them RED, then AMBER, then off.
@@ -90,21 +90,20 @@ def main():
         #   Since you are only allowed to use states, not event callbacks, this last request is a pain, but it's doable
         #     with a while loop that blocks code execution until the down instance variable is False.
         #     Use a time.sleep(0.01) inside the while loop to do nothing but wait for the button to be released.
-        k = 1
         if btn.down:
+            while btn.down:
+                time.sleep(0.01)
             color = led_colors[k]
             ev3.Leds.set_color(ev3.Leds.RIGHT, color)
             ev3.Leds.set_color(ev3.Leds.LEFT, color)
-            if k >= len(led_colors):
+            if k + 1 >= len(led_colors):
                 k = 0
             else:
                 k = k + 1
             time.sleep(0.01)
-        while btn.down is False:
-            time.sleep(0.01)
 
-
-        # TODO: 5. Formally test your work. When you think you have the problem complete run these tests:
+        # DONE: 5. Formally test your work. When you think you have the problem
+        #  complete run these tests:
         #   Press Left - Green left LED is on (try holding the button down for a few seconds when you to the press)
         #   Press Right - Right right LED is on
         #   Press Up - Both LEDs are off
@@ -116,7 +115,8 @@ def main():
         #   Press Down - Both LEDs are Red (the cycle repeats)
         #   Press Back - Both LEDs turn Green, the robot says Goodbye and the program exits
 
-        # TODO: 6. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.
+        # DONE: 6. Call over a TA or instructor to sign your team's checkoff
+        # sheet and do a code review.
         #
         # Observation you should make, working with buttons as 'states' is functional but usually 'events' work better.
         # Also observe that we don't use the Enter button.  Enter can cause issues since your program is running at the
@@ -125,7 +125,8 @@ def main():
 
         if btn.backspace:
             break
-        time.sleep(0.01)  # Best practice to have a short delay to avoid working too hard between loop iterations.
+        time.sleep(
+            0.01)  # Best practice to have a short delay to avoid working too hard between loop iterations.
 
     # Best practice to leave the LEDs on after you finish a program so you don't put away the robot while still on.
     ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)

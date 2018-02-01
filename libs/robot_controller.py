@@ -46,7 +46,7 @@ class Snatch3r(object):
     def turn_degrees(self, degrees_to_turn, turn_speed_sp):
         assert self.left_motor.connected
         assert self.right_motor.connected
-        motor_turn = degrees_to_turn * 4.5
+        motor_turn = degrees_to_turn * 4.45
         self.left_motor.run_to_rel_pos(position_sp=-motor_turn,
                                        speed_sp=turn_speed_sp,
                                        stop_action=ev3.Motor.STOP_ACTION_BRAKE)
