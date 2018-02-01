@@ -41,18 +41,12 @@ class Snatch3r(object):
         self.right_motor.run_to_rel_pos(position_sp=position_sp,
                                         speed_sp=speed_deg_per_second,
                                         stop_action=ev3.Motor.STOP_ACTION_BRAKE)
-        ev3.Sound.beep().wait()
-        ev3.Sound.beep().wait()
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)  # run_to_rel_pos
-        # just schedules a stop, code runs on
-        ev3.Sound.beep().wait()
-        print("Goodbye!")
-        ev3.Sound.speak("Goodbye").wait()
 
     def turn_degrees(self, degrees_to_turn, turn_speed_sp):
         assert self.left_motor.connected
         assert self.right_motor.connected
-        motor_turn = degrees_to_turn * 4.55
+        motor_turn = degrees_to_turn * 4.5
         self.left_motor.run_to_rel_pos(position_sp=-motor_turn,
                                        speed_sp=turn_speed_sp,
                                        stop_action=ev3.Motor.STOP_ACTION_BRAKE)
@@ -60,4 +54,3 @@ class Snatch3r(object):
                                         speed_sp=turn_speed_sp,
                                         stop_action=ev3.Motor.STOP_ACTION_BRAKE)
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
-        print("Goodbye!")
