@@ -15,16 +15,17 @@ In addition to the MQTT goals, this example will show some tkinter tricks:
   -- How to capture mouse clicks and process the X Y locations
   -- How to draw circles onto a Tkinter Canvas.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Clayton Richards.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
-
-# TODO: 2. Select one team member to open libs/mqtt_remote_method_calls.py and complete the TO DO that is in that file.
+# DONE: 2. Select one team member to open libs/mqtt_remote_method_calls.py and
+# complete the TO DO that is in that file.
 # After making that change, they should commit their work and all other team members should do a VCS -> Update
 # After all team members see that file changed you can move on to the next TO DO
 # Also someone should update the libs/mqtt_remote_method_calls.py file on the robot too (at some point before m3).
 
-# TODO: 3. Run this program as is on your computer and watch the logs as you click in the window.
+# DONE: 3. Run this program as is on your computer and watch the logs as you
+# click in the window.
 # Next see if you can review the code to see how it works.  You can do this individually or as a team.
 
 
@@ -32,19 +33,19 @@ import tkinter
 from tkinter import ttk
 
 
-# TODO: 4. Uncomment the code below.  It imports a library and creates a relatively simple class.
+# DONE: 4. Uncomment the code below.  It imports a library and creates a
+# relatively simple class.
 # The constructor receives a Tkinter Canvas and the one and only method draws a circle on that canvas at a given XY.
 
-# import mqtt_remote_method_calls as com
-#
-#
-# class MyDelegate(object):
-#
-#     def __init__(self, canvas):
-#         self.canvas = canvas
-#
-#     def on_circle_draw(self, color, x, y):
-#         self.canvas.create_oval(x - 10, y - 10, x + 10, y + 10, fill=color, width=3)
+import mqtt_remote_method_calls as com
+
+
+class mydelegate(object):
+    def __init__(self, canvas):
+        self.canvas = canvas
+
+    def on_circle_draw(self, color, x, y):
+        self.canvas.create_oval(x - 10, y - 10, x + 10, y + 10, fill=color, width=3)
 
 
 def main():
@@ -59,11 +60,13 @@ def main():
     label.grid(columnspan=2)
 
     # Make a tkinter.Canvas on a Frame.
-    canvas = tkinter.Canvas(main_frame, background="lightgray", width=800, height=500)
+    canvas = tkinter.Canvas(main_frame, background="lightgray", width=800,
+                            height=500)
     canvas.grid(columnspan=2)
 
     # Make callbacks for mouse click events.
-    canvas.bind("<Button-1>", lambda event: left_mouse_click(event, mqtt_client))
+    canvas.bind("<Button-1>",
+                lambda event: left_mouse_click(event, mqtt_client))
 
     # Make callbacks for the two buttons.
     clear_button = ttk.Button(main_frame, text="Clear")
@@ -75,11 +78,11 @@ def main():
     quit_button["command"] = lambda: quit_program(mqtt_client)
 
     # Create an MQTT connection
-    # TODO: 5. Delete the line below (mqtt_client = None) then uncomment the code below.  It creates a real mqtt client.
-    mqtt_client = None
-    # my_delegate = MyDelegate(canvas)
-    # mqtt_client = com.MqttClient(my_delegate)
-    # mqtt_client.connect("draw", "draw")
+    # DONE: 5. Delete the line below (mqtt_client = None) then uncomment the
+    # code below.  It creates a real mqtt client.
+    my_delegate = MyDelegate(canvas)
+    mqtt_client = com.MqttClient(my_delegate)
+    mqtt_client.connect("draw", "draw")
 
     root.mainloop()
 
@@ -92,9 +95,9 @@ def left_mouse_click(event, mqtt_client):
     """ Draws a circle onto the canvas (one way or another). """
     print("You clicked location ({},{})".format(event.x, event.y))
 
-    # TODO: 6. Talk to your team members and have everyone pick a unique color.
+    # DONE: 6. Talk to your team members and have everyone pick a unique color.
     # Examples... "red", "green", "blue", "yellow", "aquamarine", "magenta", "navy", "orange"
-    my_color = "magenta"  # Make your color unique
+    my_color = "blue"  # Make your color unique
 
     # Optional test: If you just want to see circles purely local to your computer the four lines below would work.
     # You could uncomment it to see it temporarily, but make sure to comment it back out before todo7 below.

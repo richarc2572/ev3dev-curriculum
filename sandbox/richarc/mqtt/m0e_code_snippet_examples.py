@@ -3,7 +3,7 @@
 Contains example code snippets used in the drive motor lecture.  Don't try to actually run this file!
 These are just snippets used in the lecture, not actual code to run!
 
-TODO: 1. PASSIVELY LISTEN TO THE LECTURE ABOUT MQTT
+DONE: 1. PASSIVELY LISTEN TO THE LECTURE ABOUT MQTT
 https://docs.google.com/presentation/d/1gQt1K4X2xzcspKMn2S0X98vhzVNmLA-xoQe5rp58CVE/edit?usp=sharing
 
 Author: David Fisher
@@ -103,7 +103,8 @@ def the_computer_can_receive_messages_too():
             self.canvas = canvas
 
         def on_circle_draw(self, color, x, y):
-            self.canvas.create_oval(x - 10, y - 10, x + 10, y + 10, fill=color, width=3)
+            self.canvas.create_oval(x - 10, y - 10, x + 10, y + 10, fill=color,
+                                    width=3)
 
     canvas = "A Tkinter object"  # Something specific to the m1_pc_shared_circles example.
     my_delegate = MyDelegate(canvas)
