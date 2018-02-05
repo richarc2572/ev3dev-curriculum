@@ -54,3 +54,5 @@ class Snatch3r(object):
                                         speed_sp=turn_speed_sp,
                                         stop_action=ev3.Motor.STOP_ACTION_BRAKE)
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+
+    def arm_calibration(self):
