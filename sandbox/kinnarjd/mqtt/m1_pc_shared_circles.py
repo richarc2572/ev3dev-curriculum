@@ -18,7 +18,6 @@ In addition to the MQTT goals, this example will show some tkinter tricks:
 Authors: David Fisher and PUT_YOUR_NAME_HERE.
 """  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
-
 # TODO: 2. Select one team member to open libs/mqtt_remote_method_calls.py and complete the TO DO that is in that file.
 # After making that change, they should commit their work and all other team members should do a VCS -> Update
 # After all team members see that file changed you can move on to the next TO DO
@@ -32,19 +31,18 @@ import tkinter
 from tkinter import ttk
 
 
-# TODO: 4. Uncomment the code below.  It imports a library and creates a relatively simple class.
+# Done: 4. Uncomment the code below.  It imports a library and creates a relatively simple class.
 # The constructor receives a Tkinter Canvas and the one and only method draws a circle on that canvas at a given XY.
 
 # import mqtt_remote_method_calls as com
-#
-#
-# class MyDelegate(object):
-#
-#     def __init__(self, canvas):
-#         self.canvas = canvas
-#
-#     def on_circle_draw(self, color, x, y):
-#         self.canvas.create_oval(x - 10, y - 10, x + 10, y + 10, fill=color, width=3)
+
+
+class MyDelegate(object):
+    def __init__(self, canvas):
+        self.canvas = canvas
+
+    def on_circle_draw(self, color, x, y):
+        self.canvas.create_oval(x - 10, y - 10, x + 10, y + 10, fill=color, width=3)
 
 
 def main():
@@ -75,16 +73,13 @@ def main():
     quit_button["command"] = lambda: quit_program(mqtt_client)
 
     # Create an MQTT connection
-    # TODO: 5. Delete the line below (mqtt_client = None) then uncomment the code below.  It creates a real mqtt client.
-    mqtt_client = None
-    # my_delegate = MyDelegate(canvas)
-    # mqtt_client = com.MqttClient(my_delegate)
-    # mqtt_client.connect("draw", "draw")
-
-    root.mainloop()
+    # Done: 5. Delete the line below (mqtt_client = None) then uncomment the code below.  It creates a real mqtt client.
+    my_delegate = MyDelegate(canvas)
+    mqtt_client = com.MqttClient(my_delegate)
+    mqtt_client.connect("draw", "draw")
 
 
-# ----------------------------------------------------------------------
+root.mainloop()  # ----------------------------------------------------------------------
 # Tkinter event handlers
 # Left mouse click
 # ----------------------------------------------------------------------
@@ -105,13 +100,14 @@ def left_mouse_click(event, mqtt_client):
     # Repeated: If you uncommented the code above to test it, make sure to comment it back out before todo7 below.
 
     # MQTT draw
-    # TODO: 7. Send a message using MQTT that will:
+    # Done: 7. Send a message using MQTT that will:
     #   - Call the method called "on_circle_draw" on the delegate at the other end of the pipe.
     #   - Pass the parameters [my_color, event.x, event.y] as a list.
     # This is the only TO DO you have to think about.  It is meant to help you learn the mqtt_client.send_message syntax
     # Review the lecture notes about the two parameters passed into the mqtt_client.send_message method if needed
     # All of your teammates should receive the message and create a circle of your color at your click location.
     # Additionally you will receive your own message and draw a circle in your color too.
+    mqtt_client.send_message("on_circle_draw", [my_color, event.x, event.y])
 
     # TODO: 8. Help get everyone on your team running this program at the same time.
     # You should be able to see circles on your computer from everyone else on your team.
