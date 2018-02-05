@@ -92,3 +92,15 @@ class Snatch3r(object):
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
         print('Goodbye!')
         ev3.Sound.speak("Goodbye").wait()
+
+    def left_motor_run_forever(self, speed):
+        self.left_motor.run_forever(speed_sp=speed)
+
+    def right_motor_run_forever(self, speed):
+        self.right_motor.run_forever(speed_sp=speed)
+
+    def left_motor_stop(self):
+        self.left_motor.stop()
+
+    def right_motor_stop(self):
+        self.right_motor.stop()
