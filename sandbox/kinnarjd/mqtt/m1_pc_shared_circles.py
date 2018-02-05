@@ -94,7 +94,7 @@ def left_mouse_click(event, mqtt_client):
 
     # TODO: 6. Talk to your team members and have everyone pick a unique color.
     # Examples... "red", "green", "blue", "yellow", "aquamarine", "magenta", "navy", "orange"
-    my_color = "magenta"  # Make your color unique
+    my_color = "aquamarine"  # Make your color unique
 
     # Optional test: If you just want to see circles purely local to your computer the four lines below would work.
     # You could uncomment it to see it temporarily, but make sure to comment it back out before todo7 below.
