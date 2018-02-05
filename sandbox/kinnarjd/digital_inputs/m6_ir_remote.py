@@ -104,7 +104,8 @@ def main():
 # ----------------------------------------------------------------------
 # DONE: 6. Implement the IR handler callbacks handlers.
 
-# TODO: 7. When your program is complete, call over a TA or instructor to sign your checkoff sheet and do a code review.
+# DONE: 7. When your program is complete, call over a TA or instructor to sign
+# your checkoff sheet and do a code review.
 #
 # Observations you should make, IR buttons are a fun way to control the robot.
 
@@ -189,7 +190,7 @@ def handle_right_motor_backward(button_state, robot):
         robot.right_motor_run_forever(-600)
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
     else:
-        robot.left_motor_stop()
+        robot.right_motor_stop()
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
 
 

@@ -13,7 +13,8 @@ Authors: David Fisher and Clayton Richards.
 # to work, then have that person commit their work.  All other team members need to do a VCS --> Update project...
 # Once the library is implemented each team member should be able to run their version of this code on the robot.
 
-# TODO: 3. Call over a TA or instructor to sign your team's checkoff sheet and do a code review of your library.
+# DONE: 3. Call over a TA or instructor to sign your team's checkoff sheet and
+# do a code review of your library.
 #
 # Observations you should make, you are a TEAM and making great library methods will make life easier for everyone.
 
