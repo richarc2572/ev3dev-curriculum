@@ -20,15 +20,17 @@ class Snatch3r(object):
     """Commands for the Snatch3r robot that might be useful in many different programs."""
 
     def __init__(self):
-        self.left_motor = ev3.LargeMotor(
-            ev3.OUTPUT_B)  # you put real code here later
+        self.arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
+        self.left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
         self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        self.touch_sensor = ev3.TouchSensor()
+        assert self.arm_motor.connected
         assert self.left_motor.connected
         assert self.right_motor.connected
+        assert self.touch_sensor
 
-    # DONE: Implement the Snatch3r class as needed when working the sandox
-    # exercises
-    # (and delete these comments)
+        self.MAX_SPEED = 900
+
     def drive_inches(self, inches_target, speed_deg_per_second):
         assert self.left_motor.connected
         assert self.right_motor.connected
@@ -41,7 +43,7 @@ class Snatch3r(object):
         self.right_motor.run_to_rel_pos(position_sp=position_sp,
                                         speed_sp=speed_deg_per_second,
                                         stop_action=ev3.Motor.STOP_ACTION_BRAKE)
-        self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)  # run_to_rel_pos
+        self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
 
     def turn_degrees(self, degrees_to_turn, turn_speed_sp):
         assert self.left_motor.connected
@@ -56,3 +58,28 @@ class Snatch3r(object):
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
 
     def arm_calibration(self):
+        self.arm_motor.run_forever(speed_sp=self.MAX_SPEED)
+        while not self.touch_sensor.is_pressed:
+            time.sleep(0.01)
+        self.arm_motor.stop_action = ev3.Motor.STOP_ACTION_BRAKE
+        self.arm_motor.stop()
+        ev3.Sound.beep().wait()
+        arm_revolutions_for_full_range = 14.2 * 360
+        self.arm_motor.run_to_rel_pos(
+            position_sp=-arm_revolutions_for_full_range)
+        self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        ev3.Sound.beep().wait()
+        self.arm_motor.position = 0
+
+    def arm_up(self):
+        self.arm_motor.run_forever(speed_sp=self.MAX_SPEED)
+        while not self.touch_sensor.is_pressed:
+            time.sleep(0.01)
+        self.arm_motor.stop_action = ev3.Motor.STOP_ACTION_BRAKE
+        self.arm_motor.stop()
+        ev3.Sound.beep().wait()
+
+    def arm_down(self):
+        self.arm_motor.run_to_abs_pos(position_sp=0, speed_sp=self.MAX_SPEED)
+        self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        ev3.Sound.beep().wait()

@@ -7,7 +7,8 @@ This module will work exactly the same as the prior module but will do that work
 Authors: David Fisher and Clayton Richards.
 """  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
-# TODO: 2. Have everyone talk about this problem together then pick one team member to modify libs/robot_controller.py
+# DONE: 2. Have everyone talk about this problem together then pick one team
+# member to modify libs/robot_controller.py
 # as necessary to make the code below perform the same task as the prior module. Once the code has been tested and shown
 # to work, then have that person commit their work.  All other team members need to do a VCS --> Update project...
 # Once the library is implemented each team member should be able to run their version of this code on the robot.
@@ -33,7 +34,8 @@ def main():
     robot = robo.Snatch3r()
 
     while True:
-        command_to_run = input("Enter c (for calibrate), u (for up), d (for down), or q (for quit): ")
+        command_to_run = input(
+            "Enter c (for calibrate), u (for up), d (for down), or q (for quit): ")
         if command_to_run == 'c':
             print("Calibrate the arm")
             robot.arm_calibration()
@@ -46,7 +48,8 @@ def main():
         elif command_to_run == 'q':
             break
         else:
-            print(command_to_run, "is not a known command. Please enter a valid choice.")
+            print(command_to_run,
+                  "is not a known command. Please enter a valid choice.")
 
     ev3.Sound.speak("Goodbye").wait()
 
