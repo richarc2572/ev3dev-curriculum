@@ -90,7 +90,9 @@ class MyDelegate(object):
             led_color = ev3.Leds.BLACK
 
         if led_side is None or led_color is None:
-            print("Invalid parameters sent to set_led. led_side_string = {} led_color_string = {}".format(led_side_string, led_color_string))
+            print(
+                "Invalid parameters sent to set_led. led_side_string = {} led_color_string = {}".format(
+                    led_side_string, led_color_string))
         else:
             ev3.Leds.set_color(led_side, led_color)
 
@@ -109,6 +111,7 @@ def main():
     # Note: on EV3 you call connect_to_pc, but in the PC code it will call connect_to_ev3
     my_delegate = MyDelegate()
     mqtt_client = com.MqttClient(my_delegate)
+    mqtt_client.connect_to_pc()
 
     # Buttons on EV3 (these obviously assume TO DO: 3. is done)
     btn = ev3.Button()
@@ -144,7 +147,8 @@ def handle_button_press(button_state, mqtt_client, button_name):
         mqtt_client.send_message("button_pressed", [button_name])
 
 
-# TODO: 5. Run this program on your EV3 and run m3_pc_led_button_communication.py on your PC at the same time.
+# DONE: 5. Run this program on your EV3 and run
+# m3_pc_led_button_communication.py on your PC at the same time.
 # This will be the first time you've run a program on the robot today, but you'll remember how to do it (right?).
 # Hint: To be less confusing use two different computers for this task.  One to run the EV3 program (you) and one to run
 #   the PC program (a different person on your team).  It can be done from one computer but that gets confusing.
@@ -152,7 +156,8 @@ def handle_button_press(button_state, mqtt_client, button_name):
 # Press the buttons on the EV3 (up, down, left, right) and watch the Tkinter GUI on your PC.
 # When done, press the Back button on EV3 to end that program and click Quit on the Tkinter GUI.
 
-# TODO: 6. Call over a TA or instructor to sign your team's checkoff sheet (demo both LEDs and buttons).
+# DONE: 6. Call over a TA or instructor to sign your team's checkoff sheet (
+# demo both LEDs and buttons).
 #
 # Observations you should make, when communicating using MQTT there is always a program running on EV3 and on your PC
 #   at the same time.  To make your life easier, you only write one of those programs this time (the on on the EV3).
