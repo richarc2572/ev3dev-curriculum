@@ -35,7 +35,7 @@ COLOR_NAMES = ["None", "Black", "Blue", "Green", "Yellow", "Red", "White", "Brow
 
 # This list is just a helper list if you ever want the string (for printing or speaking) from a color value.
 
- 
+
 class DataContainer(object):
     """ Helper class that might be useful to communicate between different callbacks."""
 
