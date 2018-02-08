@@ -44,7 +44,7 @@ def main():
 
 
 def command(mqtt_client, command_entry):
-    mqtt_client.send_message("command", [command_entry.get()])
+    mqtt_client.send_message("command", [command_entry.get().split()])
     command_entry.delete(0, 'end')
 
 

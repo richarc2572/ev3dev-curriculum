@@ -17,6 +17,9 @@ class GameMaster(object):
         self.running = False
 
     def command(self, command_entry):
+        verb_word = command_entry[0]
+        if verb_word == 'move':
+            kjh
 
 
 ''' 
