@@ -13,7 +13,6 @@ import mqtt_remote_method_calls as com
 
 
 class MyDelegate(object):
-
     def __init__(self, label):
         self.label = label
 
@@ -47,7 +46,8 @@ def main():
     main_frame = ttk.Frame(root, padding=20, relief='raised')
     main_frame.grid()
 
-    label = ttk.Label(main_frame, justify=tkinter.LEFT, text="Send a message to " + team_member_name)
+    label = ttk.Label(main_frame, justify=tkinter.LEFT,
+                      text="Send a message to " + team_member_name)
     label.grid(columnspan=2)
 
     msg_entry = ttk.Entry(main_frame, width=60)
@@ -55,10 +55,14 @@ def main():
 
     msg_button = ttk.Button(main_frame, text="Send")
     msg_button.grid(row=2, column=1)
-    msg_button['command'] = lambda: send_message(mqtt_client, my_name, chat_window, msg_entry)
-    root.bind('<Return>', lambda event: send_message(mqtt_client, my_name, chat_window, msg_entry))
+    msg_button['command'] = lambda: send_message(mqtt_client, my_name,
+                                                 chat_window, msg_entry)
+    root.bind('<Return>',
+              lambda event: send_message(mqtt_client, my_name, chat_window,
+                                         msg_entry))
 
-    chat_window = ttk.Label(main_frame, justify=tkinter.LEFT, text="", width=60, wraplength="500p")
+    chat_window = ttk.Label(main_frame, justify=tkinter.LEFT, text="",
+                            width=60, wraplength="500p")
     # chat_window.pack(fill="x")
     chat_window.grid(columnspan=2)
 
