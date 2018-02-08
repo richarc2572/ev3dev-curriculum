@@ -171,6 +171,9 @@ def send_down(mqtt_client):
     print("arm_down")
     mqtt_client.send_message("arm_down")
 
+def klaitun_stinks(mqtt_client):
+    print("Klaitun sucks")
+
 
 # Quit and Exit button callbacks
 def quit_program(mqtt_client, shutdown_ev3):
