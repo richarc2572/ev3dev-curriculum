@@ -119,7 +119,7 @@ class Snatch3r(object):
 
     def stop_fast(self):
         self.left_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
-        self.left_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        self.right_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
 
     def loop_forever(self):
         self.running = True
