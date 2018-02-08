@@ -24,6 +24,7 @@ class Snatch3r(object):
         self.left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
         self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
         self.touch_sensor = ev3.TouchSensor()
+        self.running = True
         assert self.arm_motor.connected
         assert self.left_motor.connected
         assert self.right_motor.connected
@@ -88,19 +89,33 @@ class Snatch3r(object):
         self.arm_motor.stop()
         self.left_motor.stop()
         self.right_motor.stop()
+        self.running = False
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
         print('Goodbye!')
         ev3.Sound.speak("Goodbye").wait()
 
-    def left_motor_run_forever(self, speed):
-        self.left_motor.run_forever(speed_sp=speed)
+    def forward(self, left_speed_entry, right_speed_entry):
+        self.left_motor.run_forever(speed_sp=left_speed_entry)
+        self.right_motor.run_forever(speed_sp=right_speed_entry)
 
-    def right_motor_run_forever(self, speed):
-        self.right_motor.run_forever(speed_sp=speed)
+    def backward(self, left_speed_entry, right_speed_entry):
+        self.left_motor.run_forever(speed_sp=-left_speed_entry)
+        self.right_motor.run_forever(speed_sp=-right_speed_entry)
 
-    def left_motor_stop(self):
+    def turn_left(self, left_speed_entry, right_speed_entry):
+        self.left_motor.run_forever(speed_sp=-left_speed_entry)
+        self.right_motor.run_forever(speed_sp=right_speed_entry)
+
+    def turn_right(self, left_speed_entry, right_speed_entry):
+        self.left_motor.run_forever(speed_sp=left_speed_entry)
+        self.right_motor.run_forever(speed_sp=-right_speed_entry)
+
+    def stop(self):
         self.left_motor.stop()
-
-    def right_motor_stop(self):
         self.right_motor.stop()
+
+    def loop_forever(self):
+        self.running = True
+        while self.running:
+            time.sleep(0.1)
