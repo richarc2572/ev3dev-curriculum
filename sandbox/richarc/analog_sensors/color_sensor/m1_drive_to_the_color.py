@@ -35,7 +35,7 @@ COLOR_NAMES = ["None", "Black", "Blue", "Green", "Yellow", "Red", "White", "Brow
 
 # This list is just a helper list if you ever want the string (for printing or speaking) from a color value.
 
- 
+
 class DataContainer(object):
     """ Helper class that might be useful to communicate between different callbacks."""
 
@@ -105,7 +105,7 @@ def drive_to_color(button_state, robot, color_to_seek):
         robot.forward(600, 600)
         while robot.color_sensor.color != color_to_seek:
             time.sleep(0.01)
-        robot.stop()
+        robot.stop_fast()
 
         ev3.Sound.speak("Found " + COLOR_NAMES[color_to_seek]).wait()
 
