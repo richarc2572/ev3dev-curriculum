@@ -1,9 +1,9 @@
-mport
-ev3dev.ev3 as ev3
+import ev3dev.ev3 as ev3
 import time
 import random
 from PIL import Image
 import mqtt_remote_method_calls as com
+import robot_controller as robo
 
 
 class GameMaster(object):
@@ -12,6 +12,7 @@ class GameMaster(object):
     def __init__(self):
         self.mqtt_client = None
         self.running = False
+        self.current_direction = 0
 
     def exit(self):
         self.running = False
@@ -19,7 +20,7 @@ class GameMaster(object):
     def command(self, command_entry):
         verb_word = command_entry[0]
         if verb_word == 'move':
-            kjh
+            move()
 
 
 ''' 
@@ -113,15 +114,22 @@ class GameMaster(object):
         self.randomly_display_new_dice()'''
 
 
+def move(direction):
+    if direction == 'forward':
+        print('forward')
+
+
 def main():
     print("Ready")
+    robot = robo.Snatch3r()
     my_delegate = GameMaster()
-    mqtt_client = com.MqttClient(my_delegate)
+    mqtt_client = com.MqttClient(GameMaster)
     my_delegate.mqtt_client = mqtt_client
     mqtt_client.connect_to_pc()
     # mqtt_client.connect_to_pc("35.194.247.175")  # Off campus use EV3 as broker.
     my_delegate.loop_forever()
     print("Welcome to the dungeon")
+    robot.loop_forever()
 
 
 # ----------------------------------------------------------------------

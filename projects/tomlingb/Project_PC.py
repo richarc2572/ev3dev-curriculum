@@ -21,7 +21,7 @@ def main():
     main_frame.grid()
 
     label = ttk.Label(main_frame,
-                      text='Run your champion from here')
+                      text='Command your champion from here')
     label.grid(columnspan=2)
 
     command_entry = ttk.Entry(main_frame, width=15)
