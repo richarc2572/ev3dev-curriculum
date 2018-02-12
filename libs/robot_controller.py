@@ -140,7 +140,7 @@ class Snatch3r(object):
                 self.forward(-100, 100)
                 time.sleep(1)
             else:
-                if math.fabs(current_heading) < 1.25:
+                if math.fabs(current_heading) < 1.5:
                     print("On the right heading. Distance: ", current_distance)
                     if current_distance <= 1:
                         self.drive_inches(2, 200)
