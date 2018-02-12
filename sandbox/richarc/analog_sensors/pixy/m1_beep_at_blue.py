@@ -31,7 +31,7 @@ def main():
 
     while not robot.touch_sensor.is_pressed:
         # TODO: 2. Implement the module as described in the opening comment block.
-        width = robot.pixy.value(2)
+        width = robot.pixy.value(2) 
 
 
 
