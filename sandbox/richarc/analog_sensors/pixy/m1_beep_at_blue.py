@@ -27,7 +27,7 @@ def main():
     print("Press the touch sensor to exit this program.")
 
     robot = robo.Snatch3r()
-    robot.pixy.mode = "SIG1"
+    robot.pixy.mode = "SIG2"
 
     while not robot.touch_sensor.is_pressed:
         # Done: 2. Implement the module as described in the opening comment block.
@@ -42,7 +42,8 @@ def main():
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()
 
-# TODO: 3. Call over a TA or instructor to sign your team's checkoff sheet.
+
+# DONE: 3. Call over a TA or instructor to sign your team's checkoff sheet.
 #
 # Observations you should make, the Pixy cam can detect colors.  That's just neat. ;)
 
