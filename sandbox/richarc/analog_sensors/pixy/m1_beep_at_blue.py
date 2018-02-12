@@ -27,7 +27,7 @@ def main():
     print("Press the touch sensor to exit this program.")
 
     robot = robo.Snatch3r()
-    robot.pixy.mode = "SIG1"
+    robot.pixy.mode = "SIG2"
 
     while not robot.touch_sensor.is_pressed:
         # Done: 2. Implement the module as described in the opening comment block.
@@ -36,11 +36,12 @@ def main():
             robot.pixy.value(1), robot.pixy.value(2), robot.pixy.value(3),
             robot.pixy.value(4)))
         if width > 50:
-            ev3.Sound.speak("clayton sucks").wait()
+            ev3.Sound.beep().wait()
         time.sleep(0.1)
 
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()
+
 
 # TODO: 3. Call over a TA or instructor to sign your team's checkoff sheet.
 #
