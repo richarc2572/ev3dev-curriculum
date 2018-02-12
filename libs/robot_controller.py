@@ -26,6 +26,7 @@ class Snatch3r(object):
         self.touch_sensor = ev3.TouchSensor()
         self.color_sensor = ev3.ColorSensor()
         self.ir_sensor = ev3.InfraredSensor()
+        self.beacon_seeker = ev3.BeaconSeeker()
         self.running = None
         assert self.arm_motor.connected
         assert self.left_motor.connected
@@ -127,3 +128,5 @@ class Snatch3r(object):
         self.running = True
         while self.running:
             time.sleep(0.1)
+
+    def seek_beacon(self):

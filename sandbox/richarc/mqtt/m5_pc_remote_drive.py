@@ -68,8 +68,8 @@ def main():
     forward_button.grid(row=2, column=1)
     # forward_button and '<Up>' key is done for your here...
     forward_button['command'] = lambda: send_forward(mqtt_client,
-                                                     left_speed,
-                                                     right_speed)
+                                                     int(left_speed_entry.get()),
+                                                     int(right_speed_entry.get()))
     root.bind('<Up>', lambda event: send_forward(mqtt_client,
                                                  left_speed,
                                                  right_speed))
