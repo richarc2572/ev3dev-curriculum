@@ -31,11 +31,11 @@ def main():
 
     while not robot.touch_sensor.is_pressed:
         # Done: 2. Implement the module as described in the opening comment block.
-        width = robot.pixy.value(2)
+        width = robot.pixy.value(3)
         print("(X, Y)=({}, {}) Width={} Height={}".format(
             robot.pixy.value(1), robot.pixy.value(2), robot.pixy.value(3),
             robot.pixy.value(4)))
-        if width > 0:
+        if width > 50:
             ev3.Sound.speak("clayton sucks").wait()
         time.sleep(0.1)
 
