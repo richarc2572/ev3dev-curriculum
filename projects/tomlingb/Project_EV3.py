@@ -20,7 +20,12 @@ class GameMaster(object):
     def command(self, command_entry):
         verb_word = command_entry[0]
         if verb_word == 'move':
-            move()
+            direction = command_entry[1]
+            if direction in direction_dict:
+                move(direction)
+                print('moving')
+            else:
+                print('that direction is invalid')
 
 
 ''' 
@@ -117,6 +122,8 @@ class GameMaster(object):
 def move(direction):
     if direction == 'forward':
         print('forward')
+    if direction == 'backward':
+        print('backward')
 
 
 def main():
@@ -131,6 +138,8 @@ def main():
     print("Welcome to the dungeon")
     robot.loop_forever()
 
+
+direction_dict = ['forward', 'backward', 'left', 'right']
 
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
