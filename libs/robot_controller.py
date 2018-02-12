@@ -130,3 +130,32 @@ class Snatch3r(object):
             time.sleep(0.1)
 
     def seek_beacon(self):
+        while not self.touch_sensor.is_pressed:
+            current_heading = self.beacon_seeker.heading
+            current_distance = self.beacon_seeker.distance
+            if current_distance == -128:
+                print("IR Remote not found. Distance is -128")
+                self.forward(-100, 100)
+                time.sleep(1)
+            else:
+                if math.fabs(current_heading) < 1.25:
+                    print("On the right heading. Distance: ", current_distance)
+                    if current_distance <= 1:
+                        self.drive_inches(2, 200)
+                        self.stop()
+                        return True
+                    else:
+                        self.forward(300, 300)
+                elif math.fabs(current_heading) < 10:
+                    if current_heading < 0:
+                        self.forward(-100, 100)
+                    else:
+                        self.forward(100, -100)
+                else:
+                    print("Heading to far off")
+                    self.forward(-100, 100)
+                    time.sleep(1)
+            time.sleep(0.2)
+        print("Abandon ship!")
+        self.stop()
+        return False
