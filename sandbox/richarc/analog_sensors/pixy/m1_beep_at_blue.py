@@ -10,8 +10,8 @@ If the width reading is greater than 0 then you should make your robot beep.  If
 robot beeps thinking blue is present, but no blue is present) try setting the threshold higher than 0 (see what works
 for your environment). After a beep wait for at least 1 second to avoid lots of annoying beeps.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Jonathan Kinnard.
+"""  # Done: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time
@@ -30,11 +30,10 @@ def main():
     robot.pixy.mode = "SIG1"
 
     while not robot.touch_sensor.is_pressed:
-        # TODO: 2. Implement the module as described in the opening comment block.
-        width = robot.pixy.value(2) 
-
-
-
+        # Done: 2. Implement the module as described in the opening comment block.
+        width = robot.pixy.value(2)
+        if width > 0:
+            ev3.Sound.speak("clayton sucks").wait()
         time.sleep(0.1)
 
     print("Goodbye!")
@@ -43,6 +42,7 @@ def main():
 # TODO: 3. Call over a TA or instructor to sign your team's checkoff sheet.
 #
 # Observations you should make, the Pixy cam can detect colors.  That's just neat. ;)
+
 
 color_sensor = ev3.ColorSensor()
 
