@@ -44,6 +44,7 @@ def main():
         time.sleep(0.25)
 
     print("Goodbye!")
+    robot.stop()
     ev3.Sound.speak("Goodbye").wait()
 
 
