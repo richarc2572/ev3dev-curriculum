@@ -28,7 +28,7 @@ def main():
 
     robot = robo.Snatch3r()
     robot.pixy.mode = "SIG2"
-
+  
     while not robot.touch_sensor.is_pressed:
         # DONE: 3. Read the Pixy values for x, y, width, and height
         # Print the values (much like the print_pixy_readings example)
