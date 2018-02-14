@@ -1,7 +1,6 @@
 
 import tkinter
 from tkinter import ttk
-import ev3dev.ev3 as ev3
 
 import mqtt_remote_method_calls as com
 
@@ -113,7 +112,6 @@ def main():
 # DONE: 4. Implement the functions for the drive button callbacks.
 def send_forward(mqtt_client, left_speed_entry, right_speed_entry):
     print("drive forward")
-    ev3.Sound.speak("Jonathan is Amazing").wait()
     mqtt_client.send_message("forward", [left_speed_entry, right_speed_entry])
 
 
