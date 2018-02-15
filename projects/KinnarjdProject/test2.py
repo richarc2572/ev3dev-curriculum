@@ -87,6 +87,7 @@ def main():
 def send_choice(mqtt_client, answer, delegate):
     print("Sending either move up or move back depending on the answer: ".format(answer))
     questionanswers = ["Yes", "No", "No", "Yes"]
+    delegate.tester("Dr. Mutchler is great")
     if delegate.index < len(questionanswers):
         if answer == questionanswers[delegate.index]:
             mqtt_client.send_message("qright", [delegate.index])
@@ -96,7 +97,7 @@ def send_choice(mqtt_client, answer, delegate):
             delegate.index = delegate.index + 1
         else:
             print("It is not working")
-        delegate.tester("Dr. Mutchler is great")
+        # delegate.tester("Dr. Mutchler is great")
     else:
         print("Too big of a question number index")
         mqtt_client.send_message("indexout")
