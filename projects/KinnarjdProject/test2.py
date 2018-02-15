@@ -27,7 +27,7 @@ class MyDelegateOnThePc(object):
         self.display_label.configure(text=message_to_show)
 
     def cracked_the_code(self):
-        self.display_label.configure(text="You may now answer the first question")
+        self.display_label.configure(text="answer the first question")
 
 
 index = 0
@@ -44,7 +44,7 @@ def main():
     mqtt_client.connect_to_ev3()
     main_frame = ttk.Frame(root, padding=20, relief='raised')
     main_frame.grid()
-    pc_delegate.display_label.configure(text="let's do it")
+    # pc_delegate.display_label.configure(text="let's do it")
     """if pc_delegate.index == 0:
         pc_delegate.display_label.configure(text=questions[0])
     elif pc_delegate.index == 1:
@@ -84,7 +84,7 @@ def main():
 
     # mqtt_client.connect_to_ev3("35.194.247.175")  # Off campus IP address of a GCP broker
 
-    # root.mainloop()
+    root.mainloop()
 
 # ----------------------------------------------------------------------
 # Tkinter callbacks
@@ -94,12 +94,13 @@ def main():
 def send_choice(mqtt_client, answer, delegate):
     print("Sending either move up or move back depending on the answer: ".format(answer))
     questionanswers = ["Yes", "No", "Yes", "No"]
-    print(answer, delegate.index, questionanswers[delegate.index], answer == questionanswers[delegate.index])
     if delegate.index <= len(questionanswers):
         if answer == questionanswers[delegate.index]:
             mqtt_client.send_message("qright", [delegate.index])
+            delegate.index = delegate.index + 1
         elif answer != questionanswers[delegate.index]:
             mqtt_client.send_message("qwrong", [delegate.index])
+            delegate.index = delegate.index + 1
         else:
             print("It is not working")
     else:
