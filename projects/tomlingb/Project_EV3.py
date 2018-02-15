@@ -14,18 +14,21 @@ class GameMaster(object):
         self.running = False
         self.current_direction = 0
 
+    def loop_forever(self):
+        btn = ev3.Button()
+        self.running = True
+        while not btn.backspace and self.running:
+            # Do nothing while waiting for commands
+            time.sleep(0.01)
+        self.mqtt_client.close()
+        # Copied from robot.shutdown
+        print("Goodbye")
+        ev3.Sound.speak("Goodbye").wait()
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+
     def exit(self):
         self.running = False
-
-    def command(self, command_entry):
-        verb_word = command_entry[0]
-        if verb_word == 'move':
-            direction = command_entry[1]
-            if direction in direction_dict:
-                move(direction)
-                print('moving')
-            else:
-                print('that direction is invalid')
 
 
 ''' 
@@ -119,18 +122,11 @@ class GameMaster(object):
         self.randomly_display_new_dice()'''
 
 
-def move(direction):
-    if direction == 'forward':
-        print('forward')
-    if direction == 'backward':
-        print('backward')
-
-
 def main():
     print("Ready")
     robot = robo.Snatch3r()
     my_delegate = GameMaster()
-    mqtt_client = com.MqttClient(GameMaster)
+    mqtt_client = com.MqttClient(my_delegate)
     my_delegate.mqtt_client = mqtt_client
     mqtt_client.connect_to_pc()
     # mqtt_client.connect_to_pc("35.194.247.175")  # Off campus use EV3 as broker.

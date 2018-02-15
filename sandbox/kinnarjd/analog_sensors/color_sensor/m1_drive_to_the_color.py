@@ -21,7 +21,6 @@ import time
 
 import robot_controller as robo
 
-
 # Potential values of the color_sensor.color property
 #   ev3.ColorSensor.COLOR_NOCOLOR is the value 0
 #   ev3.ColorSensor.COLOR_BLACK   is the value 1
@@ -32,6 +31,8 @@ import robot_controller as robo
 #   ev3.ColorSensor.COLOR_WHITE   is the value 6
 #   ev3.ColorSensor.COLOR_BROWN   is the value 7
 COLOR_NAMES = ["None", "Black", "Blue", "Green", "Yellow", "Red", "White", "Brown"]
+
+
 # This list is just a helper list if you ever want the string (for printing or speaking) from a color value.
 
 
