@@ -39,6 +39,7 @@ class MyDelegateOnThePc(object):
 
 
 def main():
+    questions = ["Que 1", "Que 2", "Que 3", "Oue 4"]
     root = tkinter.Tk()
     root.title("Crack the Code to Rob the Bank")
     main_frame = ttk.Frame(root, padding=20, relief='raised')
@@ -47,7 +48,6 @@ def main():
     pc_delegate = MyDelegateOnThePc(button_message)
     mqtt_client = com.MqttClient(pc_delegate)
     mqtt_client.connect_to_ev3()
-    questionnum = pc_delegate.questionNum
     main_frame = ttk.Frame(root, padding=20, relief='raised')
     main_frame.grid()
 
@@ -56,9 +56,10 @@ def main():
 
     left_green_button = ttk.Button(main_frame, text="Yes")
     left_green_button.grid(row=1, column=0)
-    left_green_button['command'] = lambda: send_choice(mqtt_client, "Yes", questionnum)
+    questionnumer = pc_delegate.questionNum
+    left_green_button['command'] = lambda: send_choice(mqtt_client, "Yes", questionnumer)
 
-    button_label = ttk.Label(main_frame, text="  Buttom messages from EV3  ")
+    button_label = ttk.Label(main_frame, text="{}".format(questions[questionnumer]))
     button_label.grid(row=1, column=1)
 
     button_message.grid(row=2, column=1)
@@ -68,7 +69,7 @@ def main():
 
     right_green_button = ttk.Button(main_frame, text="No")
     right_green_button.grid(row=1, column=2)
-    right_green_button['command'] = lambda: send_choice(mqtt_client, "No", questionnum)
+    right_green_button['command'] = lambda: send_choice(mqtt_client, "No", questionnumer)
 
     spacer = ttk.Label(main_frame, text="")
     spacer.grid(row=4, column=2)

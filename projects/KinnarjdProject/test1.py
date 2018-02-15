@@ -13,13 +13,13 @@ class MyDelegate(object):
 
     def qright(self, num):
         ev3.Sound.speak("question {} correct".format(num)).wait()
-        time.sleep(0.2)
+        time.sleep(0.5)
         """Move the robot forward"""
         handle_questions()
 
     def qwrong(self, num):
         ev3.Sound.speak("question {} incorrect".format(num)).wait()
-        time.sleep(0.2)
+        time.sleep(0.5)
         """Move the robot backwards"""
         handle_questions()
 
@@ -81,7 +81,7 @@ def handle_shutdown(button_state, my_delegate):
 
 def handle_questions():
     ev3.Sound.speak("Next").wait()
-    time.sleep(0.2)
+    time.sleep(0.5)
     new_delegate = MyDelegate()
     mqtt_client = com.MqttClient(new_delegate)
     mqtt_client.connect_to_pc()
