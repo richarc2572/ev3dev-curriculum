@@ -29,33 +29,36 @@ class MyDelegateOnThePc(object):
     def cracked_the_code(self):
         self.display_label.configure(text="answer the first question")
 
+    def tester(self, string):
+        # change the delegate's label to have the given text
+        # self.display_label.configure(text=string)
+        self.display_label["text"] = string
+        print("try it out")
+
 
 index = 0
 
 
 def main():
     root = tkinter.Tk()
-    root.title("Crack the Code to Rob the Bank")
-    main_frame = ttk.Frame(root, padding=20, relief='raised')
-    button_message = ttk.Label(main_frame, text="Yo")
     questions = ["Did you choose Dr. Mutchler as your getaway driver?", "Did you copy the heist from Ocean's 11?",
                  "Does your mom know you are robbing a bank?", "Are you wearing a black leather jacket?"]
-    pc_delegate = MyDelegateOnThePc(button_message)
-    mqtt_client = com.MqttClient(pc_delegate)
-    mqtt_client.connect_to_ev3()
+    root.title("Crack the Code to Rob the Bank")
     main_frame = ttk.Frame(root, padding=20, relief='raised')
     main_frame.grid()
+    button_label = ttk.Label(main_frame, text=questions[0])
+    pc_delegate = MyDelegateOnThePc(button_label)
+    mqtt_client = com.MqttClient(pc_delegate)
+    mqtt_client.connect_to_ev3()
     left_side_label = ttk.Label(main_frame, text="Choice Option 1")
     left_side_label.grid(row=0, column=0)
 
     left_green_button = ttk.Button(main_frame, text="Yes")
     left_green_button.grid(row=1, column=0)
     left_green_button['command'] = lambda: send_choice(mqtt_client, "Yes", pc_delegate)
-    button_label = labeler(pc_delegate, main_frame)
-    # button_label = ttk.Label(main_frame, text=questions[pc_delegate.index])
+    # button_label = labeler(pc_delegate, main_frame)
+    button_label = ttk.Label(main_frame, text=questions[pc_delegate.index])
     button_label.grid(row=1, column=1)
-
-    button_message.grid(row=2, column=1)
 
     right_side_label = ttk.Label(main_frame, text="Choice Option 2")
     right_side_label.grid(row=0, column=2)
@@ -93,6 +96,7 @@ def send_choice(mqtt_client, answer, delegate):
             delegate.index = delegate.index + 1
         else:
             print("It is not working")
+        delegate.tester("Dr. Mutchler is great")
     else:
         print("Too big of a question number index")
         mqtt_client.send_message("indexout")
