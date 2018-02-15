@@ -102,7 +102,7 @@ def main():
     print(" LED Button communication")
     print(" Press Back to exit when done.")
     print("--------------------------------------------")
-    ev3.Sound.speak("LED Button").wait()
+    ev3.Sound.speak("Lego").wait()
 
     # DONE: 3. Create an instance of your delegate class and an MQTT client,
     # passing in the delegate object.
@@ -144,7 +144,7 @@ def handle_button_press(button_state, mqtt_client, button_name):
         #   -- Pass the parameters [button_name] as a list.
         # This is meant to help you learn the mqtt_client.send_message syntax.
         # You can review the code above to understand how button_name is passed into this function.
-        mqtt_client.send_message("button_pressed", [button_name])
+        mqtt_client.send_message("incorrect_button_pressed", [button_name])
 
 
 def handle_button_press2(button_state, mqtt_client, button_name):
@@ -157,7 +157,7 @@ def handle_button_press2(button_state, mqtt_client, button_name):
         #   -- Pass the parameters [button_name] as a list.
         # This is meant to help you learn the mqtt_client.send_message syntax.
         # You can review the code above to understand how button_name is passed into this function.
-        mqtt_client.send_message("stop_pressing_my_buttons", [button_name])
+        mqtt_client.send_message("correct_button_pressed", [button_name])
 
 
 def handle_shutdown(button_state, my_delegate):

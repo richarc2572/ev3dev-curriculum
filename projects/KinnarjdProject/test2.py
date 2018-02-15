@@ -20,14 +20,14 @@ class MyDelegateOnThePc(object):
     def __init__(self, label_to_display_messages_in):
         self.display_label = label_to_display_messages_in
 
-    def button_pressed(self, button_name):
-        print("Received: " + button_name)
-        message_to_display = "{} was pressed.".format(button_name)
+    def incorrect_button_pressed(self, button_name):
+        print("Incorrect Button: " + button_name)
+        message_to_display = "{} was incorrect button try again".format(button_name)
         self.display_label.configure(text=message_to_display)
 
-    def stop_pressing_my_buttons(self, button_name):
-        print("Yo we Got: " + button_name)
-        message_to_display = "{} Got Hit.".format(button_name)
+    def correct_button_pressed(self, button_name):
+        print("Correct Button: " + button_name)
+        message_to_display = "{} Correct! Keep Going!".format(button_name)
         self.display_label.configure(text=message_to_display)
 
 
