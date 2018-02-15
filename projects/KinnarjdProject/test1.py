@@ -11,14 +11,6 @@ class MyDelegate(object):
     def __init__(self):
         self.running = True
 
-    def qright(self, num):
-        ev3.Sound.speak("question {} correct".format(num)).wait()
-        time.sleep(0.5)
-
-    def qwrong(self, num):
-        ev3.Sound.speak("question {} incorrect".format(num)).wait()
-        time.sleep(0.5)
-
     def indexout(self):
         ev3.Sound.speak("No more questions left, you got caught by the police by making too many poor decisions").wait()
         time.sleep(0.5)
