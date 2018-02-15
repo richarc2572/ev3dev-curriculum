@@ -80,6 +80,7 @@ class Snatch3r(object):
         self.arm_motor.position = 0
 
     def arm_up(self):
+        ev3.Sound.speak("Arm Up").wait()
         self.arm_motor.run_forever(speed_sp=self.MAX_SPEED)
         while not self.touch_sensor.is_pressed:
             time.sleep(0.01)
