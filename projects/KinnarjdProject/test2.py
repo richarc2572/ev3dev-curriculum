@@ -89,10 +89,10 @@ def main():
 def send_choice(mqtt_client, answer, delegate, root, main_frame):
     print("Sending either move up or move back depending on the answer: ".format(answer))
     questions = ["Did you choose Dr. Mutchler as your getaway driver?",
-                 "Did you copy the awesome bankheist from Ocean's 11?",
-                 "They do have a copper in the sky, do you keep going",
-                 "Does your mom know you're right now robbing a bank?",
-                 "Are you wearing an awesome real black leather coat?",
+                 "Did you copy the awesome heist from the Ocean's 11",
+                 "They do have a chopper in the sky, do you keep goin",
+                 "Does your mom know you're right now robbin a bank?",
+                 "Do you wear an awesome real black leather coat too?",
                  "You remember to use the bathroom before this heist?",
                  "The cops are on your tail, do you wanna give up now",
                  "Your tire just popped, do you go to the mechanic???",
