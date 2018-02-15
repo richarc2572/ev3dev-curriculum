@@ -106,24 +106,24 @@ def send_led_command(mqtt_client, led_side, led_color):
     mqtt_client.send_message("led_command", [led_side, led_color])
 
 
-def send_choice(mqtt_client, answer, questionNum):
+def send_choice(mqtt_client, answer, questionnum):
     print("Sending either move up or move back depending on the answer: ".format(answer))
-    if answer == "Yes" and questionNum == 1:
-        mqtt_client.send_message("qright")
-    elif answer == "No" and questionNum == 1:
-        mqtt_client.send_message("qwrong")
-    elif answer == "Yes" and questionNum == 2:
-        mqtt_client.send_message("qright")
-    elif answer == "No" and questionNum == 2:
-        mqtt_client.send_message("qwrong")
-    elif answer == "Yes" and questionNum == 3:
-        mqtt_client.send_message("qright")
-    elif answer == "No" and questionNum == 3:
-        mqtt_client.send_message("qwrong")
-    elif answer == "Yes" and questionNum == 2:
-        mqtt_client.send_message("qright")
-    elif answer == "No" and questionNum == 2:
-        mqtt_client.send_message("qwrong")
+    if answer == "Yes" and questionnum == 1:
+        mqtt_client.send_message("qright", [questionnum])
+    elif answer == "No" and questionnum == 1:
+        mqtt_client.send_message("qwrong", [questionnum])
+    elif answer == "No" and questionnum == 2:
+        mqtt_client.send_message("qright", [questionnum])
+    elif answer == "Yes" and questionnum == 2:
+        mqtt_client.send_message("qwrong", [questionnum])
+    elif answer == "Yes" and questionnum == 3:
+        mqtt_client.send_message("qright", [questionnum])
+    elif answer == "No" and questionnum == 3:
+        mqtt_client.send_message("qwrong", [questionnum])
+    elif answer == "No" and questionnum == 2:
+        mqtt_client.send_message("qright", [questionnum])
+    elif answer == "Yes" and questionnum == 2:
+        mqtt_client.send_message("qwrong", [questionnum])
 
 
 def quit_program(mqtt_client):

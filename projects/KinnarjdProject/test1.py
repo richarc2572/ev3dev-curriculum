@@ -10,7 +10,6 @@ class MyDelegate(object):
 
     def __init__(self):
         self.running = True
-        self.questionNum = 1
 
     def led_command(self, led_side_string, led_color_string):
         print("Received: {} {}".format(led_side_string, led_color_string))
@@ -36,15 +35,13 @@ class MyDelegate(object):
         else:
             ev3.Leds.set_color(led_side, led_color)
 
-    def qright(self):
-        ev3.Sound.speak("question {} correct".format(self.questionNum)).wait()
-        self.questionNum = self.questionNum + 1
+    def qright(self, num):
+        ev3.Sound.speak("question {} correct".format(num)).wait()
         """Move the robot forward"""
         handle_questions()
 
-    def qwrong(self):
-        ev3.Sound.speak("question {} incorrect".format(self.questionNum)).wait()
-        self.questionNum = self.questionNum + 1
+    def qwrong(self, num):
+        ev3.Sound.speak("question {} incorrect".format(num)).wait()
         """Move the robot backwards"""
         handle_questions()
 
