@@ -104,9 +104,10 @@ class Snatch3r(object):
         print('Goodbye!')
         ev3.Sound.speak("Goodbye").wait()
 
-    def drive_unless_line(self, mqtt):
+    def drive_unless_line(self, num):
         """Created by Jonathan Kinnard"""
         """This drives forward for two seconds unless it hits a black line"""
+        ev3.Sound.speak("question {} correct".format(num)).wait()
         for k in range(200):
             if ev3.ColorSensor != 1:
                 self.forward(600, 600)
@@ -115,8 +116,20 @@ class Snatch3r(object):
                 mqtt_client = com.MqttClient()
                 mqtt_client.connect_to_pc()
                 mqtt_client.send_message("they_won")
+                ev3.Sound.speak("You won the game well done").wait()
                 break
             time.sleep(0.01)
+        self.stop()
+        ev3.Sound.beep().wait()
+
+    def driveback_unless_line(self, num):
+        """Created by Jonathan Kinnard"""
+        """This drives forward for two seconds unless it hits a black line"""
+        ev3.Sound.speak("question {} incorrect".format(num)).wait()
+        for k in range(200):
+            self.backward(600, 600)
+            time.sleep(0.01)
+        self.stop()
         ev3.Sound.beep().wait()
 
     def forward(self, left_speed_entry, right_speed_entry):

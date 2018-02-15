@@ -94,12 +94,10 @@ def send_choice(mqtt_client, answer, delegate):
     delegate.tester("Dr. Mutchler is great")
     if delegate.index < len(questionanswers):
         if answer == questionanswers[delegate.index]:
-            mqtt_client.send_message("qright", [delegate.index])
-            mqtt_client.send_message("drive_unless_line", [600, 600])
+            mqtt_client.send_message("drive_unless_line", [delegate.index])
             delegate.index = delegate.index + 1
         elif answer != questionanswers[delegate.index]:
-            mqtt_client.send_message("qwrong", [delegate.index])
-            mqtt_client.send_message("driveback_unless_line", [600, 600])
+            mqtt_client.send_message("driveback_unless_line", [delegate.index])
             delegate.index = delegate.index + 1
         else:
             print("It is not working")
