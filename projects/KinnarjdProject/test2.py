@@ -42,12 +42,11 @@ class MyDelegateOnThePc(object):
 
 
 def main():
-    questions = ["Que 1", "Que 2", "Que 3", "Oue 4"]
     root = tkinter.Tk()
     root.title("Crack the Code to Rob the Bank")
     main_frame = ttk.Frame(root, padding=20, relief='raised')
     button_message = ttk.Label(main_frame, text="--")
-
+    questions = ["Que 1", "Que 2", "Que 3", "Oue 4"]
     pc_delegate = MyDelegateOnThePc(button_message)
     mqtt_client = com.MqttClient(pc_delegate)
     mqtt_client.connect_to_ev3()
@@ -83,7 +82,7 @@ def main():
 
     # mqtt_client.connect_to_ev3("35.194.247.175")  # Off campus IP address of a GCP broker
 
-    root.mainloop()
+    # root.mainloop()
 
 # ----------------------------------------------------------------------
 # Tkinter callbacks
