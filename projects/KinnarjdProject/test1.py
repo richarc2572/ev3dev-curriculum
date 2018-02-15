@@ -11,37 +11,15 @@ class MyDelegate(object):
     def __init__(self):
         self.running = True
 
-    def led_command(self, led_side_string, led_color_string):
-        print("Received: {} {}".format(led_side_string, led_color_string))
-
-        led_side = None
-        if led_side_string == "left":
-            led_side = ev3.Leds.LEFT
-        elif led_side_string == "right":
-            led_side = ev3.Leds.RIGHT
-
-        led_color = None
-        if led_color_string == "green":
-            led_color = ev3.Leds.GREEN
-        elif led_color_string == "red":
-            led_color = ev3.Leds.RED
-        elif led_color_string == "black":
-            led_color = ev3.Leds.BLACK
-
-        if led_side is None or led_color is None:
-            print(
-                "Invalid parameters sent to set_led. led_side_string = {} led_color_string = {}".format(
-                    led_side_string, led_color_string))
-        else:
-            ev3.Leds.set_color(led_side, led_color)
-
     def qright(self, num):
         ev3.Sound.speak("question {} correct".format(num)).wait()
+        time.sleep(2)
         """Move the robot forward"""
         handle_questions()
 
     def qwrong(self, num):
         ev3.Sound.speak("question {} incorrect".format(num)).wait()
+        time.sleep(2)
         """Move the robot backwards"""
         handle_questions()
 
@@ -103,8 +81,8 @@ def handle_shutdown(button_state, my_delegate):
 
 def handle_questions():
     ev3.Sound.speak("Next Question").wait()
-    my_delegate = MyDelegate()
-    mqtt_client = com.MqttClient(my_delegate)
+    new_delegate = MyDelegate()
+    mqtt_client = com.MqttClient(new_delegate)
     mqtt_client.connect_to_pc()
     mqtt_client.send_message("cracked_the_code")
 

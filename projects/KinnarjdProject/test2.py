@@ -28,16 +28,23 @@ class MyDelegateOnThePc(object):
 
     def cracked_the_code(self):
         questions = ["Que 1", "Que 2", "Que 3", "Oue 4"]
+        print("Yep1")
         if self.questionNum < len(questions):
+            print("Yep2")
             message_to_display = "question: {}".format(questions[self.questionNum])
+            print("Yep3")
             self.display_label.configure(text=message_to_display)
+            print("Yep4")
             self.questionNum = self.questionNum + 1
+            print("Yep5")
         else:
             self.display_label.configure(text="We are all out of questions")
+            print("Yep6")
             self.questionNum = self.questionNum + 1
 
 
 def main():
+    print("Main")
     root = tkinter.Tk()
     root.title("Bank Robber Game")
     main_frame = ttk.Frame(root, padding=20, relief='raised')
@@ -101,18 +108,17 @@ def main():
 # ----------------------------------------------------------------------
 # Tkinter callbacks
 # ----------------------------------------------------------------------
-def send_led_command(mqtt_client, led_side, led_color):
-    print("Sending LED side = {}  LED color = {}".format(led_side, led_color))
-    mqtt_client.send_message("led_command", [led_side, led_color])
 
 
 def send_choice(mqtt_client, answer, questionnum):
     print("Sending either move up or move back depending on the answer: ".format(answer))
     if answer == "Yes" and questionnum == 1:
+        print("Yep7")
         mqtt_client.send_message("qright", [questionnum])
     elif answer == "No" and questionnum == 1:
         mqtt_client.send_message("qwrong", [questionnum])
     elif answer == "No" and questionnum == 2:
+        print("Yep8")
         mqtt_client.send_message("qright", [questionnum])
     elif answer == "Yes" and questionnum == 2:
         mqtt_client.send_message("qwrong", [questionnum])
