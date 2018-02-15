@@ -88,9 +88,16 @@ def main():
 
 def send_choice(mqtt_client, answer, delegate, root, main_frame):
     print("Sending either move up or move back depending on the answer: ".format(answer))
-    questions = ["Did you choose Dr. Mutchler as your getaway driver?", "Did you copy the heist from Ocean's 11?",
-                 "Does your mom know you are robbing a bank?", "Are you wearing a black leather jacket?"]
-    questionanswers = ["Yes", "No", "No", "Yes"]
+    questions = ["Did you choose Dr. Mutchler as your getaway driver?",
+                 "Did you copy the awesome bankheist from Ocean's 11?",
+                 " They have a copper in the sky, do you keep going? ",
+                 "Does your mom know you're right now robbing a bank?",
+                 "Are you wearing an awesome real black leather coat?",
+                 "You remember to use the bathroom before the heist? ",
+                 "The cops are on your tail, do you want to give up? ", 
+                 " Your tire just popped, do you stop by a mechanic? ",
+                 "  You forgot to have breakfast, stop at Mcdonalds? "]
+    questionanswers = ["Yes", "No", "Yes", "No", "Yes", "Yes", "No", "No", "No"]
     root.title("Crack the Code to Rob")
     button_label = ttk.Label(main_frame, text=questions[delegate.index])
     button_label.grid(row=1, column=1)
