@@ -29,10 +29,11 @@ class MyDelegateOnThePc(object):
     def cracked_the_code(self):
         self.display_label.configure(text="answer the first question")
 
-    def tester(self, string):
+    def tester(self, labelwithstring):
         # change the delegate's label to have the given text
+        self.display_label = labelwithstring
         # self.display_label.configure(text=string)
-        self.display_label["text"] = string
+        # self.display_label["text"] = string
         print("try it out")
 
     def they_won(self):
@@ -50,7 +51,8 @@ def main():
     root.title("Crack the Code to Rob the Bank")
     main_frame = ttk.Frame(root, padding=20, relief='raised')
     main_frame.grid()
-    button_label = ttk.Label(main_frame, text=questions[0])
+    button_label = ttk.Label(main_frame, text="First String")
+    button_label.grid(row=1, column=1)
     pc_delegate = MyDelegateOnThePc(button_label)
     mqtt_client = com.MqttClient(pc_delegate)
     mqtt_client.connect_to_ev3()
@@ -59,17 +61,15 @@ def main():
 
     left_green_button = ttk.Button(main_frame, text="Yes")
     left_green_button.grid(row=1, column=0)
-    left_green_button['command'] = lambda: send_choice(mqtt_client, "Yes", pc_delegate)
+    left_green_button['command'] = lambda: send_choice(mqtt_client, "Yes", pc_delegate, root)
     # button_label = labeler(pc_delegate, main_frame)
-    button_label = ttk.Label(main_frame, text=questions[pc_delegate.index])
-    button_label.grid(row=1, column=1)
 
     right_side_label = ttk.Label(main_frame, text="Choice Option 2")
     right_side_label.grid(row=0, column=2)
 
     right_green_button = ttk.Button(main_frame, text="No")
     right_green_button.grid(row=1, column=2)
-    right_green_button['command'] = lambda: send_choice(mqtt_client, "No", pc_delegate)
+    right_green_button['command'] = lambda: send_choice(mqtt_client, "No", pc_delegate, root)
 
     spacer = ttk.Label(main_frame, text="")
     spacer.grid(row=4, column=2)
@@ -88,10 +88,15 @@ def main():
 # ----------------------------------------------------------------------
 
 
-def send_choice(mqtt_client, answer, delegate):
+def send_choice(mqtt_client, answer, delegate, root):
     print("Sending either move up or move back depending on the answer: ".format(answer))
     questionanswers = ["Yes", "No", "No", "Yes"]
-    delegate.tester("Dr. Mutchler is great")
+    root.title("Crack the Code to Rob")
+    main_frame = ttk.Frame(root, padding=20, relief='raised')
+    main_frame.grid()
+    button_label = ttk.Label(main_frame, text="Dr. Mutchler is great")
+    button_label.grid(row=1, column=1)
+    delegate.tester(button_label)
     if delegate.index < len(questionanswers):
         if answer == questionanswers[delegate.index]:
             mqtt_client.send_message("drive_unless_line", [delegate.index])
@@ -100,10 +105,9 @@ def send_choice(mqtt_client, answer, delegate):
             mqtt_client.send_message("driveback_unless_line", [delegate.index])
             delegate.index = delegate.index + 1
         else:
-            print("It is not working")
-        # delegate.tester("Dr. Mutchler is great")
+            print("Something went wrong")
     else:
-        print("Too big of a question number index")
+        print("Out of Questions, You loose if you have not gotten to the line by now")
         mqtt_client.send_message("indexout")
 
 
