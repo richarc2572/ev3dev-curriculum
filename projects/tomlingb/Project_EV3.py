@@ -13,6 +13,7 @@ class GameMaster(object):
         self.mqtt_client = None
         self.running = False
         self.current_direction = 0
+        self.robot = robo.Snatch3r
 
     def loop_forever(self):
         btn = ev3.Button()
@@ -29,6 +30,21 @@ class GameMaster(object):
 
     def exit(self):
         self.running = False
+
+    def forwar(self, left_speed, right_speed):
+        self.robot.forward(self, left_speed, right_speed)
+
+    def backward(self, left_speed_entry, right_speed_entry):
+        self.left_motor.run_forever(speed_sp=-left_speed_entry)
+        self.right_motor.run_forever(speed_sp=-right_speed_entry)
+
+    def turn_left(self, left_speed_entry, right_speed_entry):
+        self.left_motor.run_forever(speed_sp=-left_speed_entry)
+        self.right_motor.run_forever(speed_sp=right_speed_entry)
+
+    def turn_right(self, left_speed_entry, right_speed_entry):
+        self.left_motor.run_forever(speed_sp=left_speed_entry)
+        self.right_motor.run_forever(speed_sp=-right_speed_entry)
 
 
 ''' 
@@ -123,16 +139,14 @@ class GameMaster(object):
 
 
 def main():
-    print("Ready")
-    robot = robo.Snatch3r()
+    print('ready')
     my_delegate = GameMaster()
     mqtt_client = com.MqttClient(my_delegate)
     my_delegate.mqtt_client = mqtt_client
     mqtt_client.connect_to_pc()
+    print("Welcome to the dungeon")
     # mqtt_client.connect_to_pc("35.194.247.175")  # Off campus use EV3 as broker.
     my_delegate.loop_forever()
-    print("Welcome to the dungeon")
-    robot.loop_forever()
 
 
 direction_dict = ['forward', 'backward', 'left', 'right']
