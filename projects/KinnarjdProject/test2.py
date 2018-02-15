@@ -22,12 +22,7 @@ class MyDelegateOnThePc(object):
 
     def incorrect_button_pressed(self, button_name):
         print("Incorrect Button: " + button_name)
-        message_to_display = "{} was incorrect button try again".format(button_name)
-        self.display_label.configure(text=message_to_display)
-
-    def correct_button_pressed(self, button_name):
-        print("Correct Button: " + button_name)
-        message_to_display = "{} Correct! Keep Going!".format(button_name)
+        message_to_display = "{} press more than one at a time".format(button_name)
         self.display_label.configure(text=message_to_display)
 
 
