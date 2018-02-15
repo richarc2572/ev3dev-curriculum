@@ -103,6 +103,14 @@ class Snatch3r(object):
         print('Goodbye!')
         ev3.Sound.speak("Goodbye").wait()
 
+    def drive_unless_line(self):
+        """Created by Jonathan Kinnard"""
+        for k in range(200):
+            if ev3.ColorSensor != 1:
+                self.forward(600, 600)
+            time.sleep(0.01)
+        ev3.Sound.beep().wait()
+
     def forward(self, left_speed_entry, right_speed_entry):
         self.left_motor.run_forever(speed_sp=left_speed_entry)
         self.right_motor.run_forever(speed_sp=right_speed_entry)
