@@ -40,7 +40,7 @@ def main():
     print(" LED Button communication")
     print(" Press Back to exit when done.")
     print("--------------------------------------------")
-    ev3.Sound.speak("Lego2").wait()
+    ev3.Sound.speak("Bank Robber").wait()
     # DONE: 3. Create an instance of your delegate class and an MQTT client,
     # passing in the delegate object.
     # Note: you can determine the variable names that you should use by looking at the errors underlined in later code.
@@ -56,11 +56,17 @@ def main():
     btn.on_left = lambda state: handle_button_press3(state, mqtt_client, "Left")
     btn.on_right = lambda state: handle_button_press4(state, mqtt_client, "Right")
     btn.on_backspace = lambda state: handle_shutdown(state, my_delegate)
-
+    combo = 0
     while my_delegate.running:
         btn.process()
-        if btn.check_buttons(buttons=['up', 'left']):
-            ev3.Sound.speak("Correct Combo").wait()
+        if combo == 2 and btn.check_buttons(buttons=['up', 'right']):
+            ev3.Sound.speak("You cracked the code").wait()
+        elif btn.check_buttons(buttons=['up', 'left']):
+            ev3.Sound.speak("Correct Combo for the first part").wait()
+            combo = combo + 1
+        elif btn.check_buttons(buttons=['down', 'right']):
+            ev3.Sound.speak("Correct Combo for the second part, one left").wait()
+            combo = combo + 1
         time.sleep(0.01)
 
     ev3.Sound.speak("Goodbye").wait()
