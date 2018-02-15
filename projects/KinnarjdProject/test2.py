@@ -19,34 +19,44 @@ class MyDelegateOnThePc(object):
 
     def __init__(self, label_to_display_messages_in):
         self.display_label = label_to_display_messages_in
+        self.questionNum = 1
 
     def incorrect_button_pressed(self, button_name):
         print("Incorrect Button: " + button_name)
-        message_to_display = "{} press more than one at a time".format(button_name)
+        message_to_display = "{} was pressed, try more than one at a time".format(button_name)
         self.display_label.configure(text=message_to_display)
+
+    def cracked_the_code(self):
+        questions = ["Que 1", "Que 2", "Que 3", "Oue 4"]
+        if self.questionNum < len(questions):
+            message_to_display = "question: {}".format(questions[self.questionNum])
+            self.display_label.configure(text=message_to_display)
+            self.questionNum = self.questionNum + 1
+        else:
+            self.display_label.configure(text="We are all out of questions")
+            self.questionNum = self.questionNum + 1
 
 
 def main():
     root = tkinter.Tk()
-    root.title("LED Button communication")
-
+    root.title("Bank Robber Game")
     main_frame = ttk.Frame(root, padding=20, relief='raised')
     main_frame.grid()
 
-    left_side_label = ttk.Label(main_frame, text="Left LED")
+    left_side_label = ttk.Label(main_frame, text="Choice Option 1")
     left_side_label.grid(row=0, column=0)
 
-    left_green_button = ttk.Button(main_frame, text="Green")
+    left_green_button = ttk.Button(main_frame, text="Yes")
     left_green_button.grid(row=1, column=0)
-    left_green_button['command'] = lambda: send_led_command(mqtt_client, "left", "green")
+    left_green_button['command'] = lambda: send_choice(mqtt_client, "Yes")
 
-    left_red_button = ttk.Button(main_frame, text="Red")
+    """left_red_button = ttk.Button(main_frame, text="Red")
     left_red_button.grid(row=2, column=0)
-    left_red_button['command'] = lambda: send_led_command(mqtt_client, "left", "red")
+    left_red_button['command'] = lambda: send_led_command(mqtt_client, "left", "red")"""
 
-    left_black_button = ttk.Button(main_frame, text="Black")
+    """left_black_button = ttk.Button(main_frame, text="Black")
     left_black_button.grid(row=3, column=0)
-    left_black_button['command'] = lambda: send_led_command(mqtt_client, "left", "black")
+    left_black_button['command'] = lambda: send_led_command(mqtt_client, "left", "black")"""
 
     button_label = ttk.Label(main_frame, text="  Buttom messages from EV3  ")
     button_label.grid(row=1, column=1)
@@ -54,20 +64,20 @@ def main():
     button_message = ttk.Label(main_frame, text="--")
     button_message.grid(row=2, column=1)
 
-    right_side_label = ttk.Label(main_frame, text="Right LED")
+    right_side_label = ttk.Label(main_frame, text="Choice Option 2")
     right_side_label.grid(row=0, column=2)
 
-    right_green_button = ttk.Button(main_frame, text="Green")
+    right_green_button = ttk.Button(main_frame, text="No")
     right_green_button.grid(row=1, column=2)
-    right_green_button['command'] = lambda: send_led_command(mqtt_client, "right", "green")
+    right_green_button['command'] = lambda: send_choice(mqtt_client, "No")
 
-    right_red_button = ttk.Button(main_frame, text="Red")
+    """right_red_button = ttk.Button(main_frame, text="Red")
     right_red_button.grid(row=2, column=2)
-    right_red_button['command'] = lambda: send_led_command(mqtt_client, "right", "red")
+    right_red_button['command'] = lambda: send_led_command(mqtt_client, "right", "red")"""
 
-    right_black_button = ttk.Button(main_frame, text="Black")
+    """right_black_button = ttk.Button(main_frame, text="Black")
     right_black_button.grid(row=3, column=2)
-    right_black_button['command'] = lambda: send_led_command(mqtt_client, "right", "black")
+    right_black_button['command'] = lambda: send_led_command(mqtt_client, "right", "black")"""
 
     spacer = ttk.Label(main_frame, text="")
     spacer.grid(row=4, column=2)
@@ -90,7 +100,15 @@ def main():
 # ----------------------------------------------------------------------
 def send_led_command(mqtt_client, led_side, led_color):
     print("Sending LED side = {}  LED color = {}".format(led_side, led_color))
-    mqtt_client.send_message("set_led", [led_side, led_color])
+    mqtt_client.send_message("led_command", [led_side, led_color])
+
+
+def send_choice(mqtt_client, answer):
+    print("Sending either move up or move back depending on the answer: ".format(answer))
+    if answer == "Yes":
+        mqtt_client.send_message("q1right")
+    else:
+        mqtt_client.send_message("q1wrong")
 
 
 def quit_program(mqtt_client):
