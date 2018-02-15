@@ -60,7 +60,7 @@ def main():
     while my_delegate.running:
         btn.process()
         if combo == 2 and btn.check_buttons(buttons=['up', 'right']):
-            ev3.Sound.speak("You cracked the code").wait()
+            ev3.Sound.speak("You cracked the code, now answer the questions on the computer").wait()
         elif combo == 0 and btn.check_buttons(buttons=['up', 'left']):
             ev3.Sound.speak("Correct Combo for the first part").wait()
             combo = combo + 1
