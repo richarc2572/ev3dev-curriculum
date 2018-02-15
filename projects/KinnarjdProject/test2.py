@@ -19,26 +19,18 @@ class MyDelegateOnThePc(object):
 
     def __init__(self, label_to_display_messages_in):
         self.display_label = label_to_display_messages_in
-        self.questionNum = -1
+        self.index = 0
 
     def incorrect_button_pressed(self, button_name):
         print("Incorrect Button: " + button_name)
-        message_to_display = "{} was pressed, try more than one at a time".format(button_name)
-        self.display_label.configure(text=message_to_display)
+        message_to_show = "{} was pressed, try more than one at a time".format(button_name)
+        self.display_label.configure(text=message_to_show)
 
     def cracked_the_code(self):
-        questions = ["Que 1", "Que 2", "Que 3", "Oue 4"]
-        if self.questionNum < len(questions):
-            # message_to_display = "question: {}".format(questions[self.questionNum])
-            message_to_display = "Balls"
-            print("dicks")
-            self.questionNum = self.questionNum + 1
-            print("balls")
-            self.display_label.configure(text=message_to_display)
-        else:
-            self.questionNum = self.questionNum + 1
-            print("ballers")
-            self.display_label.configure(text="We are all out of questions")
+        self.display_label.configure(text="You may now answer the first question")
+
+
+index = 0
 
 
 def main():
@@ -52,15 +44,25 @@ def main():
     mqtt_client.connect_to_ev3()
     main_frame = ttk.Frame(root, padding=20, relief='raised')
     main_frame.grid()
-
+    pc_delegate.display_label.configure(text="let's do it")
+    """if pc_delegate.index == 0:
+        pc_delegate.display_label.configure(text=questions[0])
+    elif pc_delegate.index == 1:
+        pc_delegate.display_label.configure(text=questions[1])
+    elif pc_delegate.index == 2:
+        pc_delegate.display_label.configure(text=questions[2])
+    elif pc_delegate.index == 3:
+        pc_delegate.display_label.configure(text=questions[3])
+    elif pc_delegate.index >= 4:
+        pc_delegate.display_label.configure(text="all out of questions")"""
     left_side_label = ttk.Label(main_frame, text="Choice Option 1")
     left_side_label.grid(row=0, column=0)
 
     left_green_button = ttk.Button(main_frame, text="Yes")
     left_green_button.grid(row=1, column=0)
-    left_green_button['command'] = lambda: send_choice(mqtt_client, "Yes", pc_delegate.questionNum)
+    left_green_button['command'] = lambda: send_choice(mqtt_client, "Yes", pc_delegate)
 
-    button_label = ttk.Label(main_frame, text="{}".format(questions[pc_delegate.questionNum]))
+    button_label = ttk.Label(main_frame, text="{}".format(questions[pc_delegate.index]))
     button_label.grid(row=1, column=1)
 
     button_message.grid(row=2, column=1)
@@ -70,7 +72,7 @@ def main():
 
     right_green_button = ttk.Button(main_frame, text="No")
     right_green_button.grid(row=1, column=2)
-    right_green_button['command'] = lambda: send_choice(mqtt_client, "No", pc_delegate.questionNum)
+    right_green_button['command'] = lambda: send_choice(mqtt_client, "No", pc_delegate)
 
     spacer = ttk.Label(main_frame, text="")
     spacer.grid(row=4, column=2)
@@ -89,15 +91,15 @@ def main():
 # ----------------------------------------------------------------------
 
 
-def send_choice(mqtt_client, answer, questionnum):
+def send_choice(mqtt_client, answer, delegate):
     print("Sending either move up or move back depending on the answer: ".format(answer))
     questionanswers = ["Yes", "No", "Yes", "No"]
-    print(answer, questionnum, questionanswers[questionnum], answer == questionanswers[questionnum])
-    if questionnum <= len(questionanswers):
-        if answer == questionanswers[questionnum]:
-            mqtt_client.send_message("qright", [questionnum])
-        elif answer != questionanswers[questionnum]:
-            mqtt_client.send_message("qwrong", [questionnum])
+    print(answer, delegate.index, questionanswers[delegate.index], answer == questionanswers[delegate.index])
+    if delegate.index <= len(questionanswers):
+        if answer == questionanswers[delegate.index]:
+            mqtt_client.send_message("qright", [delegate.index])
+        elif answer != questionanswers[delegate.index]:
+            mqtt_client.send_message("qwrong", [delegate.index])
         else:
             print("It is not working")
     else:

@@ -10,22 +10,16 @@ class MyDelegate(object):
 
     def __init__(self):
         self.running = True
-        self.num = 0
-        self.oldnum = 0
 
     def qright(self, num):
         ev3.Sound.speak("question {} correct".format(num)).wait()
         time.sleep(0.5)
         """Move the robot forward"""
-        self.oldnum = self.num
-        self.num = num + 1
 
     def qwrong(self, num):
         ev3.Sound.speak("question {} incorrect".format(num)).wait()
         time.sleep(0.5)
         """Move the robot backwards"""
-        self.oldnum = self.num
-        self.num = num + 1
 
 
 def main():
@@ -46,7 +40,6 @@ def main():
     btn.on_right = lambda state: handle_button_press(state, mqtt_client, "Right")
     btn.on_backspace = lambda state: handle_shutdown(state, my_delegate)
     combo = 0
-    oldnum = 0
     while my_delegate.running:
         btn.process()
         if combo == 2 and btn.check_buttons(buttons=['up', 'right']):
@@ -63,10 +56,6 @@ def main():
             ev3.Sound.speak("Correct Combo for the second part, one left").wait()
             robot.arm_down()
             combo = combo + 1
-        elif combo > 2 and my_delegate.num > oldnum:
-            ev3.Sound.speak("Next").wait()
-            mqtt_client.send_message("cracked_the_code")
-            oldnum = my_delegate.num
         time.sleep(0.01)
     ev3.Sound.speak("Goodbye").wait()
     ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
