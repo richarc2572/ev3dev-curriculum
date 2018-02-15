@@ -36,13 +36,13 @@ class MyDelegate(object):
         else:
             ev3.Leds.set_color(led_side, led_color)
 
-    def q1right(self):
+    def qright(self):
         ev3.Sound.speak("question {} correct".format(self.questionNum)).wait()
         self.questionNum = self.questionNum + 1
         """Move the robot forward"""
         handle_questions()
 
-    def q1wrong(self):
+    def qwrong(self):
         ev3.Sound.speak("question {} incorrect".format(self.questionNum)).wait()
         self.questionNum = self.questionNum + 1
         """Move the robot backwards"""

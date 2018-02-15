@@ -19,7 +19,7 @@ class MyDelegateOnThePc(object):
 
     def __init__(self, label_to_display_messages_in):
         self.display_label = label_to_display_messages_in
-        self.questionNum = 1
+        self.questionNum = 0
 
     def incorrect_button_pressed(self, button_name):
         print("Incorrect Button: " + button_name)
@@ -41,6 +41,13 @@ def main():
     root = tkinter.Tk()
     root.title("Bank Robber Game")
     main_frame = ttk.Frame(root, padding=20, relief='raised')
+    button_message = ttk.Label(main_frame, text="--")
+
+    pc_delegate = MyDelegateOnThePc(button_message)
+    mqtt_client = com.MqttClient(pc_delegate)
+    mqtt_client.connect_to_ev3()
+
+    main_frame = ttk.Frame(root, padding=20, relief='raised')
     main_frame.grid()
 
     left_side_label = ttk.Label(main_frame, text="Choice Option 1")
@@ -48,7 +55,7 @@ def main():
 
     left_green_button = ttk.Button(main_frame, text="Yes")
     left_green_button.grid(row=1, column=0)
-    left_green_button['command'] = lambda: send_choice(mqtt_client, "Yes")
+    left_green_button['command'] = lambda: send_choice(mqtt_client, "Yes", pc_delegate.questionNum)
 
     """left_red_button = ttk.Button(main_frame, text="Red")
     left_red_button.grid(row=2, column=0)
@@ -61,7 +68,6 @@ def main():
     button_label = ttk.Label(main_frame, text="  Buttom messages from EV3  ")
     button_label.grid(row=1, column=1)
 
-    button_message = ttk.Label(main_frame, text="--")
     button_message.grid(row=2, column=1)
 
     right_side_label = ttk.Label(main_frame, text="Choice Option 2")
@@ -69,7 +75,7 @@ def main():
 
     right_green_button = ttk.Button(main_frame, text="No")
     right_green_button.grid(row=1, column=2)
-    right_green_button['command'] = lambda: send_choice(mqtt_client, "No")
+    right_green_button['command'] = lambda: send_choice(mqtt_client, "No", pc_delegate.questionNum)
 
     """right_red_button = ttk.Button(main_frame, text="Red")
     right_red_button.grid(row=2, column=2)
@@ -87,9 +93,6 @@ def main():
     q_button.grid(row=5, column=2)
     q_button['command'] = (lambda: quit_program(mqtt_client))
 
-    pc_delegate = MyDelegateOnThePc(button_message)
-    mqtt_client = com.MqttClient(pc_delegate)
-    mqtt_client.connect_to_ev3()
     # mqtt_client.connect_to_ev3("35.194.247.175")  # Off campus IP address of a GCP broker
 
     root.mainloop()
@@ -103,12 +106,24 @@ def send_led_command(mqtt_client, led_side, led_color):
     mqtt_client.send_message("led_command", [led_side, led_color])
 
 
-def send_choice(mqtt_client, answer):
+def send_choice(mqtt_client, answer, questionNum):
     print("Sending either move up or move back depending on the answer: ".format(answer))
-    if answer == "Yes":
-        mqtt_client.send_message("q1right")
-    else:
-        mqtt_client.send_message("q1wrong")
+    if answer == "Yes" and questionNum == 1:
+        mqtt_client.send_message("qright")
+    elif answer == "No" and questionNum == 1:
+        mqtt_client.send_message("qwrong")
+    elif answer == "Yes" and questionNum == 2:
+        mqtt_client.send_message("qright")
+    elif answer == "No" and questionNum == 2:
+        mqtt_client.send_message("qwrong")
+    elif answer == "Yes" and questionNum == 3:
+        mqtt_client.send_message("qright")
+    elif answer == "No" and questionNum == 3:
+        mqtt_client.send_message("qwrong")
+    elif answer == "Yes" and questionNum == 2:
+        mqtt_client.send_message("qright")
+    elif answer == "No" and questionNum == 2:
+        mqtt_client.send_message("qwrong")
 
 
 def quit_program(mqtt_client):
