@@ -10,7 +10,7 @@ Author: David Fisher.
 
 import tkinter
 from tkinter import ttk
-
+import time
 import mqtt_remote_method_calls as com
 
 
@@ -91,9 +91,15 @@ def send_choice(mqtt_client, answer, delegate):
     if delegate.index < len(questionanswers):
         if answer == questionanswers[delegate.index]:
             mqtt_client.send_message("qright", [delegate.index])
+            mqtt_client.send_message("forward", [600, 600])
+            time.sleep(2)
+            mqtt_client.send_message("stop")
             delegate.index = delegate.index + 1
         elif answer != questionanswers[delegate.index]:
             mqtt_client.send_message("qwrong", [delegate.index])
+            mqtt_client.send_message("backward", [600, 600])
+            time.sleep(2)
+            mqtt_client.send_message("stop")
             delegate.index = delegate.index + 1
         else:
             print("It is not working")
