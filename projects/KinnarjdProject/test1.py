@@ -61,10 +61,10 @@ def main():
         btn.process()
         if combo == 2 and btn.check_buttons(buttons=['up', 'right']):
             ev3.Sound.speak("You cracked the code").wait()
-        elif btn.check_buttons(buttons=['up', 'left']):
+        elif combo == 0 and btn.check_buttons(buttons=['up', 'left']):
             ev3.Sound.speak("Correct Combo for the first part").wait()
             combo = combo + 1
-        elif btn.check_buttons(buttons=['down', 'right']):
+        elif combo == 1 and btn.check_buttons(buttons=['down', 'right']):
             ev3.Sound.speak("Correct Combo for the second part, one left").wait()
             combo = combo + 1
         time.sleep(0.01)
