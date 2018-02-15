@@ -19,7 +19,7 @@ class MyDelegateOnThePc(object):
 
     def __init__(self, label_to_display_messages_in):
         self.display_label = label_to_display_messages_in
-        self.questionNum = 0
+        self.questionNum = -1
 
     def incorrect_button_pressed(self, button_name):
         print("Incorrect Button: " + button_name)
@@ -31,11 +31,14 @@ class MyDelegateOnThePc(object):
         if self.questionNum < len(questions):
             # message_to_display = "question: {}".format(questions[self.questionNum])
             message_to_display = "Balls"
+            print("dicks")
+            self.questionNum = self.questionNum + 1
+            print("balls")
             self.display_label.configure(text=message_to_display)
-            self.questionNum = self.questionNum + 1
         else:
-            self.display_label.configure(text="We are all out of questions")
             self.questionNum = self.questionNum + 1
+            print("ballers")
+            self.display_label.configure(text="We are all out of questions")
 
 
 def main():
@@ -56,10 +59,9 @@ def main():
 
     left_green_button = ttk.Button(main_frame, text="Yes")
     left_green_button.grid(row=1, column=0)
-    questionnumer = pc_delegate.questionNum
-    left_green_button['command'] = lambda: send_choice(mqtt_client, "Yes", questionnumer)
+    left_green_button['command'] = lambda: send_choice(mqtt_client, "Yes", pc_delegate.questionNum)
 
-    button_label = ttk.Label(main_frame, text="{}".format(questions[questionnumer]))
+    button_label = ttk.Label(main_frame, text="{}".format(questions[pc_delegate.questionNum]))
     button_label.grid(row=1, column=1)
 
     button_message.grid(row=2, column=1)
@@ -69,7 +71,7 @@ def main():
 
     right_green_button = ttk.Button(main_frame, text="No")
     right_green_button.grid(row=1, column=2)
-    right_green_button['command'] = lambda: send_choice(mqtt_client, "No", questionnumer)
+    right_green_button['command'] = lambda: send_choice(mqtt_client, "No", pc_delegate.questionNum)
 
     spacer = ttk.Label(main_frame, text="")
     spacer.grid(row=4, column=2)
