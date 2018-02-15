@@ -35,6 +35,10 @@ class MyDelegateOnThePc(object):
         self.display_label["text"] = string
         print("try it out")
 
+    def they_won(self):
+        self.display_label["text"] = "you won the game!"
+        winner_sequence()
+
 
 index = 0
 
@@ -114,6 +118,10 @@ def labeler(delegate, frame):
     questions = ["Did you choose Dr. Mutchler as your getaway driver?", "Did you copy the heist from Ocean's 11?",
                  "Does your mom know you are robbing a bank?", "Are you wearing a black leather jacket?"]
     return ttk.Label(frame, text=questions[delegate.index])
+
+
+def winner_sequence():
+    print("call on the robot to say congrats or something")
 
 
 main()

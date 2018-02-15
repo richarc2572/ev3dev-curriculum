@@ -14,6 +14,7 @@
 import ev3dev.ev3 as ev3
 import math
 import time
+import mqtt_remote_method_calls as com
 
 
 class Snatch3r(object):
@@ -103,11 +104,18 @@ class Snatch3r(object):
         print('Goodbye!')
         ev3.Sound.speak("Goodbye").wait()
 
-    def drive_unless_line(self):
+    def drive_unless_line(self, mqtt):
         """Created by Jonathan Kinnard"""
+        """This drives forward for two seconds unless it hits a black line"""
         for k in range(200):
             if ev3.ColorSensor != 1:
                 self.forward(600, 600)
+            else:
+                self.stop()
+                mqtt_client = com.MqttClient()
+                mqtt_client.connect_to_pc()
+                mqtt_client.send_message("they_won")
+                break
             time.sleep(0.01)
         ev3.Sound.beep().wait()
 

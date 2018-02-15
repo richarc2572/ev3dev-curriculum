@@ -14,12 +14,10 @@ class MyDelegate(object):
     def qright(self, num):
         ev3.Sound.speak("question {} correct".format(num)).wait()
         time.sleep(0.5)
-        """Move the robot forward"""
 
     def qwrong(self, num):
         ev3.Sound.speak("question {} incorrect".format(num)).wait()
         time.sleep(0.5)
-        """Move the robot backwards"""
 
     def indexout(self):
         ev3.Sound.speak("No more questions left, you got caught by the police by making too many poor decisions").wait()
