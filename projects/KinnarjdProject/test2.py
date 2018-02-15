@@ -46,8 +46,6 @@ index = 0
 
 def main():
     root = tkinter.Tk()
-    questions = ["Did you choose Dr. Mutchler as your getaway driver?", "Did you copy the heist from Ocean's 11?",
-                 "Does your mom know you are robbing a bank?", "Are you wearing a black leather jacket?"]
     root.title("Crack the Code to Rob the Bank")
     main_frame = ttk.Frame(root, padding=20, relief='raised')
     main_frame.grid()
@@ -61,7 +59,7 @@ def main():
 
     left_green_button = ttk.Button(main_frame, text="Yes")
     left_green_button.grid(row=1, column=0)
-    left_green_button['command'] = lambda: send_choice(mqtt_client, "Yes", pc_delegate, root)
+    left_green_button['command'] = lambda: send_choice(mqtt_client, "Yes", pc_delegate, root, main_frame)
     # button_label = labeler(pc_delegate, main_frame)
 
     right_side_label = ttk.Label(main_frame, text="Choice Option 2")
@@ -69,7 +67,7 @@ def main():
 
     right_green_button = ttk.Button(main_frame, text="No")
     right_green_button.grid(row=1, column=2)
-    right_green_button['command'] = lambda: send_choice(mqtt_client, "No", pc_delegate, root)
+    right_green_button['command'] = lambda: send_choice(mqtt_client, "No", pc_delegate, root, main_frame)
 
     spacer = ttk.Label(main_frame, text="")
     spacer.grid(row=4, column=2)
@@ -88,13 +86,13 @@ def main():
 # ----------------------------------------------------------------------
 
 
-def send_choice(mqtt_client, answer, delegate, root):
+def send_choice(mqtt_client, answer, delegate, root, main_frame):
     print("Sending either move up or move back depending on the answer: ".format(answer))
+    questions = ["Did you choose Dr. Mutchler as your getaway driver?", "Did you copy the heist from Ocean's 11?",
+                 "Does your mom know you are robbing a bank?", "Are you wearing a black leather jacket?"]
     questionanswers = ["Yes", "No", "No", "Yes"]
     root.title("Crack the Code to Rob")
-    main_frame = ttk.Frame(root, padding=20, relief='raised')
-    main_frame.grid()
-    button_label = ttk.Label(main_frame, text="Dr. Mutchler is great")
+    button_label = ttk.Label(main_frame, text=questions[delegate.index])
     button_label.grid(row=1, column=1)
     delegate.tester(button_label)
     if delegate.index < len(questionanswers):
