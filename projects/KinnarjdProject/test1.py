@@ -21,6 +21,11 @@ class MyDelegate(object):
         time.sleep(0.5)
         """Move the robot backwards"""
 
+    def indexout(self):
+        ev3.Sound.speak("No more questions left, you got caught by the police by making too many poor decisions").wait()
+        time.sleep(0.5)
+        """Have the cops theme song play"""
+
 
 def main():
     print("--------------------------------------------")

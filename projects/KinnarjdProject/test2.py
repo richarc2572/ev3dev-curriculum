@@ -37,32 +37,22 @@ def main():
     root = tkinter.Tk()
     root.title("Crack the Code to Rob the Bank")
     main_frame = ttk.Frame(root, padding=20, relief='raised')
-    button_message = ttk.Label(main_frame, text="--")
-    questions = ["Que 1", "Que 2", "Que 3", "Oue 4"]
+    button_message = ttk.Label(main_frame, text="Yo")
+    questions = ["Did you choose Dr. Mutchler as your getaway driver?", "Did you copy the heist from Ocean's 11?",
+                 "Does your mom know you are robbing a bank?", "Are you wearing a black leather jacket?"]
     pc_delegate = MyDelegateOnThePc(button_message)
     mqtt_client = com.MqttClient(pc_delegate)
     mqtt_client.connect_to_ev3()
     main_frame = ttk.Frame(root, padding=20, relief='raised')
     main_frame.grid()
-    # pc_delegate.display_label.configure(text="let's do it")
-    """if pc_delegate.index == 0:
-        pc_delegate.display_label.configure(text=questions[0])
-    elif pc_delegate.index == 1:
-        pc_delegate.display_label.configure(text=questions[1])
-    elif pc_delegate.index == 2:
-        pc_delegate.display_label.configure(text=questions[2])
-    elif pc_delegate.index == 3:
-        pc_delegate.display_label.configure(text=questions[3])
-    elif pc_delegate.index >= 4:
-        pc_delegate.display_label.configure(text="all out of questions")"""
     left_side_label = ttk.Label(main_frame, text="Choice Option 1")
     left_side_label.grid(row=0, column=0)
 
     left_green_button = ttk.Button(main_frame, text="Yes")
     left_green_button.grid(row=1, column=0)
     left_green_button['command'] = lambda: send_choice(mqtt_client, "Yes", pc_delegate)
-
-    button_label = ttk.Label(main_frame, text="{}".format(questions[pc_delegate.index]))
+    button_label = labeler(pc_delegate, main_frame)
+    # button_label = ttk.Label(main_frame, text=questions[pc_delegate.index])
     button_label.grid(row=1, column=1)
 
     button_message.grid(row=2, column=1)
@@ -93,8 +83,8 @@ def main():
 
 def send_choice(mqtt_client, answer, delegate):
     print("Sending either move up or move back depending on the answer: ".format(answer))
-    questionanswers = ["Yes", "No", "Yes", "No"]
-    if delegate.index <= len(questionanswers):
+    questionanswers = ["Yes", "No", "No", "Yes"]
+    if delegate.index < len(questionanswers):
         if answer == questionanswers[delegate.index]:
             mqtt_client.send_message("qright", [delegate.index])
             delegate.index = delegate.index + 1
@@ -105,11 +95,18 @@ def send_choice(mqtt_client, answer, delegate):
             print("It is not working")
     else:
         print("Too big of a question number index")
+        mqtt_client.send_message("indexout")
 
 
 def quit_program(mqtt_client):
     mqtt_client.close()
     exit()
+
+
+def labeler(delegate, frame):
+    questions = ["Did you choose Dr. Mutchler as your getaway driver?", "Did you copy the heist from Ocean's 11?",
+                 "Does your mom know you are robbing a bank?", "Are you wearing a black leather jacket?"]
+    return ttk.Label(frame, text=questions[delegate.index])
 
 
 main()
