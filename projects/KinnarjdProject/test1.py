@@ -102,7 +102,7 @@ def main():
     print(" LED Button communication")
     print(" Press Back to exit when done.")
     print("--------------------------------------------")
-    ev3.Sound.speak("LED Button communication").wait()
+    ev3.Sound.speak("LED Button").wait()
 
     # DONE: 3. Create an instance of your delegate class and an MQTT client,
     # passing in the delegate object.
@@ -121,6 +121,7 @@ def main():
     btn.on_right = lambda state: handle_button_press(state, mqtt_client,
                                                      "Right")
     btn.on_backspace = lambda state: handle_shutdown(state, my_delegate)
+    btn.
 
     while my_delegate.running:
         btn.process()
@@ -145,24 +146,6 @@ def handle_button_press(button_state, mqtt_client, button_name):
         # This is meant to help you learn the mqtt_client.send_message syntax.
         # You can review the code above to understand how button_name is passed into this function.
         mqtt_client.send_message("button_pressed", [button_name])
-
-
-# DONE: 5. Run this program on your EV3 and run
-# m3_pc_led_button_communication.py on your PC at the same time.
-# This will be the first time you've run a program on the robot today, but you'll remember how to do it (right?).
-# Hint: To be less confusing use two different computers for this task.  One to run the EV3 program (you) and one to run
-#   the PC program (a different person on your team).  It can be done from one computer but that gets confusing.
-# Click the Tkinter buttons on your PC and watch the LEDs on the EV3
-# Press the buttons on the EV3 (up, down, left, right) and watch the Tkinter GUI on your PC.
-# EV3
-# When done, press the Back button on EV3 to end that program and click Quit on the Tkinter GUI.
-
-# DONE: 6. Call over a TA or instructor to sign your team's checkoff sheet (
-# demo both LEDs and buttons).
-#
-# Observations you should make, when communicating using MQTT there is always a program running on EV3 and on your PC
-#   at the same time.  To make your life easier, you only write one of those programs this time (the on on the EV3).
-#   We try to use the naming convention m#_pc and m#_ev3 to show where the program should run since it gets confusing.
 
 
 def handle_shutdown(button_state, my_delegate):
