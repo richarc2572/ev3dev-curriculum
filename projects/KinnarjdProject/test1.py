@@ -157,7 +157,7 @@ def handle_button_press2(button_state, mqtt_client, button_name):
         #   -- Pass the parameters [button_name] as a list.
         # This is meant to help you learn the mqtt_client.send_message syntax.
         # You can review the code above to understand how button_name is passed into this function.
-        mqtt_client.send_message("Stop Pressing My Buttons! ", [button_name])
+        mqtt_client.send_message("stop_pressing_my_buttons", [button_name])
 
 
 def handle_shutdown(button_state, my_delegate):

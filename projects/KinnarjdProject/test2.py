@@ -25,6 +25,11 @@ class MyDelegateOnThePc(object):
         message_to_display = "{} was pressed.".format(button_name)
         self.display_label.configure(text=message_to_display)
 
+    def stop_pressing_my_buttons(self, button_name):
+        print("Yo we Got: " + button_name)
+        message_to_display = "{} Got Hit.".format(button_name)
+        self.display_label.configure(text=message_to_display)
+
 
 def main():
     root = tkinter.Tk()
