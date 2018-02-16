@@ -95,10 +95,11 @@ def send_choice(mqtt_client, answer, delegate, root, main_frame):
                  "Did you remember to use the bathroom before this heist?",
                  "The cops are on behind you, do you want to give up now??",
                  "Your tire just popped, do you stop at the mechanic right now?",
-                 "You forgot to have breakfast, should you stop at Wendy's on the way??"]
+                 "You forgot to have breakfast, should you stop at Wendy's on the way??",
+                 ".............Press Any Button To Continue............................."]
     questionanswers = ["Yes", "No", "Yes", "No", "Yes", "Yes", "No", "No", "No"]
     root.title("Crack the Code to Rob")
-    if delegate.index + 1 < len(questionanswers):
+    if delegate.index < len(questionanswers):
         button_label = ttk.Label(main_frame, text=questions[delegate.index])
         button_label.grid(row=1, column=1)
         delegate.tester(button_label)
