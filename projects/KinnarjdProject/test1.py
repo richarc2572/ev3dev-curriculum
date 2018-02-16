@@ -18,9 +18,11 @@ class MyDelegate(object):
 
     def drive_unless_line(self, num):
         self.drive_unless_line(num)
+        ev3.Sound.speak("it ran").wait()
 
     def driveback_unless_line(self, num):
         self.driveback_unless_line(num)
+        ev3.Sound.speak("it ran two").wait()
 
 
 def main():

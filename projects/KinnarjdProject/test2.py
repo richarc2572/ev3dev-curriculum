@@ -26,7 +26,7 @@ class MyDelegateOnThePc(object):
         self.display_label.configure(text=message_to_show)
 
     def cracked_the_code(self):
-        self.display_label.configure(text="answer the first question")
+        self.display_label.configure(text="Press either button to Begin")
 
     def tester(self, labelwithstring):
         # change the delegate's label to have the given text
@@ -48,7 +48,7 @@ def main():
     root.title("Crack the Code to Rob the Bank")
     main_frame = ttk.Frame(root, padding=20, relief='raised')
     main_frame.grid()
-    button_label = ttk.Label(main_frame, text="Get Ready to Answer Questions")
+    button_label = ttk.Label(main_frame, text="When the robot says so, press any button to begin")
     button_label.grid(row=1, column=1)
     pc_delegate = MyDelegateOnThePc(button_label)
     mqtt_client = com.MqttClient(pc_delegate)
