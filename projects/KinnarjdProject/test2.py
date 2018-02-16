@@ -36,7 +36,7 @@ class MyDelegateOnThePc(object):
         print("tester function called")
 
     def they_won(self):
-        self.display_label["text"] = "you won the game!"
+        self.display_label["text"] = "__________________you won the game!__________________"
         winner_sequence()
 
 

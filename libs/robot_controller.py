@@ -109,7 +109,7 @@ class Snatch3r(object):
         """This drives forward for two seconds unless it hits a black line"""
         ev3.Sound.speak("question {} correct".format(num)).wait()
         for k in range(50):
-            if ev3.ColorSensor != 1:
+            if self.color_sensor.color != 1:
                 self.forward(600, 600)
             else:
                 self.stop()
@@ -119,7 +119,7 @@ class Snatch3r(object):
                 ev3.Sound.speak("You won the game well done").wait()
                 break
             time.sleep(0.01)
-        self.stop()
+        self.stop_fast()
         ev3.Sound.beep().wait()
 
     def driveback_unless_line(self, num):
