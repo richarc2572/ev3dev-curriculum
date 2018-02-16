@@ -10,7 +10,6 @@ Author: David Fisher.
 
 import tkinter
 from tkinter import ttk
-import time
 import mqtt_remote_method_calls as com
 
 
