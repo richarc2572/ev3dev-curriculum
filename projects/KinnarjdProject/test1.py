@@ -44,17 +44,17 @@ def main():
         btn.process()
         if combo == 2 and btn.check_buttons(buttons=['up', 'right']):
             ev3.Sound.speak("You cracked the code, now answer the questions on the computer").wait()
-            # robot.arm_up()
+            robot.arm_up()
             mqtt_client.send_message("cracked_the_code")
-            # robot.arm_down()
+            robot.arm_down()
             combo = combo + 1
         elif combo == 0 and btn.check_buttons(buttons=['up', 'left']):
             ev3.Sound.speak("Correct Combo for the first part").wait()
-            # robot.arm_up()
+            robot.arm_up()
             combo = combo + 1
         elif combo == 1 and btn.check_buttons(buttons=['down', 'right']):
             ev3.Sound.speak("Correct Combo for the second part, one left").wait()
-            # robot.arm_down()
+            robot.arm_down()
             combo = combo + 1
         time.sleep(0.01)
     ev3.Sound.speak("Goodbye").wait()
