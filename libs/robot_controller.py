@@ -108,7 +108,7 @@ class Snatch3r(object):
         """Created by Jonathan Kinnard"""
         """This drives forward for two seconds unless it hits a black line"""
         ev3.Sound.speak("question {} correct".format(num)).wait()
-        for k in range(100):
+        for k in range(50):
             if ev3.ColorSensor != 1:
                 self.forward(600, 600)
             else:
@@ -126,7 +126,7 @@ class Snatch3r(object):
         """Created by Jonathan Kinnard"""
         """This drives forward for two seconds unless it hits a black line"""
         ev3.Sound.speak("question {} incorrect".format(num)).wait()
-        for k in range(100):
+        for k in range(50):
             self.backward(600, 600)
             time.sleep(0.01)
         self.stop()
