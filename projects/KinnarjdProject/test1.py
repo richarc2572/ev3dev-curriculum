@@ -17,14 +17,10 @@ class MyDelegate(object):
         """Have the cops theme song play"""
 
     def drive_unless_line(self, num):
-        ev3.Sound.speak("it ran one").wait()
         robot.drive_unless_line(num)
-        ev3.Sound.speak("it ran two").wait()
 
     def driveback_unless_line(self, num):
-        ev3.Sound.speak("it ran three").wait()
         robot.driveback_unless_line(num)
-        ev3.Sound.speak("it ran four").wait()
 
 
 def main():

@@ -18,7 +18,7 @@ class MyDelegateOnThePc(object):
 
     def __init__(self, label_to_display_messages_in):
         self.display_label = label_to_display_messages_in
-        self.index = 0
+        self.index = -1
 
     def incorrect_button_pressed(self, button_name):
         print("Incorrect Button: " + button_name)
@@ -48,7 +48,7 @@ def main():
     root.title("Crack the Code to Rob the Bank")
     main_frame = ttk.Frame(root, padding=20, relief='raised')
     main_frame.grid()
-    button_label = ttk.Label(main_frame, text="When the robot says so, press any button to begin")
+    button_label = ttk.Label(main_frame, text="You must first complete crack the code with the buttons on the robot")
     button_label.grid(row=1, column=1)
     pc_delegate = MyDelegateOnThePc(button_label)
     mqtt_client = com.MqttClient(pc_delegate)
@@ -99,19 +99,21 @@ def send_choice(mqtt_client, answer, delegate, root, main_frame):
     questionanswers = ["Yes", "No", "Yes", "No", "Yes", "Yes", "No", "No", "No"]
     root.title("Crack the Code to Rob")
     if delegate.index < len(questionanswers):
-        button_label = ttk.Label(main_frame, text=questions[delegate.index])
-        button_label.grid(row=1, column=1)
-        delegate.tester(button_label)
-        if answer == questionanswers[delegate.index]:
-            mqtt_client.send_message("drive_unless_line", [delegate.index])
-            print("talks to robot1")
-            delegate.index = delegate.index + 1
-        elif answer != questionanswers[delegate.index]:
-            mqtt_client.send_message("driveback_unless_line", [delegate.index])
-            print("talks to robot 2")
+        if delegate.index == -1:
+            print("ready to begin answering")
             delegate.index = delegate.index + 1
         else:
-            print("Something went wrong")
+            button_label = ttk.Label(main_frame, text=questions[delegate.index])
+            button_label.grid(row=1, column=1)
+            delegate.tester(button_label)
+            if answer == questionanswers[delegate.index]:
+                mqtt_client.send_message("drive_unless_line", [delegate.index])
+                delegate.index = delegate.index + 1
+            elif answer != questionanswers[delegate.index]:
+                mqtt_client.send_message("driveback_unless_line", [delegate.index])
+                delegate.index = delegate.index + 1
+            else:
+                print("Something went wrong with the buttons")
     else:
         button_label = ttk.Label(main_frame,
                                  text="I am sorry, but you are out of questions, "
