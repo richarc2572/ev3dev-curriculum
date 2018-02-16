@@ -88,21 +88,21 @@ def main():
 
 def send_choice(mqtt_client, answer, delegate, root, main_frame):
     print("Sending either move up or move back depending on the answer: ".format(answer))
-    questions = ["Did you choose Dr. Mutchler as your getaway driver?",
-                 "Did you copy the awesome heist from the Ocean's 11",
-                 "They do have a chopper in the sky, do you keep goin",
-                 "Does your mom know you're right now robbin a bank?",
-                 "Do you wear an awesome real black leather coat too?",
-                 "You remember to use the bathroom before this heist?",
-                 "The cops are on your tail, do you wanna give up now",
-                 "Your tire just popped, do you go to the mechanic???",
-                 "You forgot to have breakfast, you stop at Wendy's??"]
+    questions = ["Choose Dr. Mutchler as your getaway driver?",
+                 "Did you copy the heist from the Ocean's 11??",
+                 "Police chopper in the sky, do you keep going?",
+                 "Does your mom know you are robbing a bank today?",
+                 "Also did you wear an awesome real black leather coat?",
+                 "Did you remember to use the bathroom before this heist?",
+                 "The cops are on behind you, do you want to give up now??",
+                 "Your tire just popped, do you stop at the mechanic right now?",
+                 "You forgot to have breakfast, should you stop at Wendy's on the way??"]
     questionanswers = ["Yes", "No", "Yes", "No", "Yes", "Yes", "No", "No", "No"]
     root.title("Crack the Code to Rob")
-    button_label = ttk.Label(main_frame, text=questions[delegate.index])
-    button_label.grid(row=1, column=1)
-    delegate.tester(button_label)
     if delegate.index < len(questionanswers):
+        button_label = ttk.Label(main_frame, text=questions[delegate.index])
+        button_label.grid(row=1, column=1)
+        delegate.tester(button_label)
         if answer == questionanswers[delegate.index]:
             mqtt_client.send_message("drive_unless_line", [delegate.index])
             delegate.index = delegate.index + 1
@@ -112,6 +112,11 @@ def send_choice(mqtt_client, answer, delegate, root, main_frame):
         else:
             print("Something went wrong")
     else:
+        button_label = ttk.Label(main_frame,
+                                 text="I am sorry, but you are out of questions, "
+                                      "this means you did not make it home in time!")
+        button_label.grid(row=1, column=1)
+        delegate.tester(button_label)
         print("Out of Questions, You loose if you have not gotten to the line by now")
         mqtt_client.send_message("indexout")
 
@@ -132,3 +137,4 @@ def winner_sequence():
 
 
 main()
+
