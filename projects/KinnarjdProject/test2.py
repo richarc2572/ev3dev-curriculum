@@ -96,7 +96,7 @@ def send_choice(mqtt_client, answer, delegate, root, main_frame):
                  "The cops are on behind you, do you want to give up now??",
                  "Your tire just popped, do you stop at the mechanic right now?",
                  "You forgot to have breakfast, should you stop at Wendy's on the way??",
-                 ".............Press Any Button To Continue............................."]
+                 "________________________Press Any Button To Continue_________________________"]
     questionanswers = ["Yes", "No", "Yes", "No", "Yes", "Yes", "No", "No", "No"]
     root.title("Crack the Code to Rob")
     if delegate.index < len(questionanswers):
