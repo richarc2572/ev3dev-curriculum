@@ -1,4 +1,4 @@
-#PC
+# PC
 """
 There are no TODOs in this module.  You will simply run this code on your PC to communicate with the EV3.  Feel free
 to look at the code to see if you understand what is going on, but no changes are needed to this file.
@@ -18,7 +18,7 @@ class MyDelegateOnThePc(object):
 
     def __init__(self, label_to_display_messages_in):
         self.display_label = label_to_display_messages_in
-        self.index = -1
+        self.index = 0
 
     def incorrect_button_pressed(self, button_name):
         print("Incorrect Button: " + button_name)
@@ -26,7 +26,7 @@ class MyDelegateOnThePc(object):
         self.display_label.configure(text=message_to_show)
 
     def cracked_the_code(self):
-        self.display_label.configure(text="Press either button to Begin")
+        self.display_label.configure(text="Choose Dr. Mutchler as your getaway driver?")
 
     def tester(self, labelwithstring):
         # change the delegate's label to have the given text
@@ -80,6 +80,7 @@ def main():
 
     root.mainloop()
 
+
 # ----------------------------------------------------------------------
 # Tkinter callbacks
 # ----------------------------------------------------------------------
@@ -87,8 +88,7 @@ def main():
 
 def send_choice(mqtt_client, answer, delegate, root, main_frame):
     print("Sending either move up or move back depending on the answer: ".format(answer))
-    questions = ["Choose Dr. Mutchler as your getaway driver?",
-                 "Did you copy the heist from the Ocean's 11??",
+    questions = ["Did you copy the heist from the Ocean's 11??",
                  "Police chopper in the sky, do you keep going?",
                  "Does your mom know you are robbing a bank today?",
                  "Also did you wear an awesome real black leather coat?",
@@ -99,22 +99,17 @@ def send_choice(mqtt_client, answer, delegate, root, main_frame):
     questionanswers = ["Yes", "No", "Yes", "No", "Yes", "Yes", "No", "No", "No"]
     root.title("Crack the Code to Rob")
     if delegate.index < len(questionanswers):
-        if delegate.index == -1:
-            print("ready to begin answering")
+        button_label = ttk.Label(main_frame, text=questions[delegate.index])
+        button_label.grid(row=1, column=1)
+        delegate.tester(button_label)
+        if answer == questionanswers[delegate.index]:
+            mqtt_client.send_message("drive_unless_line", [delegate.index])
             delegate.index = delegate.index + 1
-            send_choice(mqtt_client, answer, delegate, root, main_frame)
+        elif answer != questionanswers[delegate.index]:
+            mqtt_client.send_message("driveback_unless_line", [delegate.index])
+            delegate.index = delegate.index + 1
         else:
-            button_label = ttk.Label(main_frame, text=questions[delegate.index])
-            button_label.grid(row=1, column=1)
-            delegate.tester(button_label)
-            if answer == questionanswers[delegate.index]:
-                mqtt_client.send_message("drive_unless_line", [delegate.index])
-                delegate.index = delegate.index + 1
-            elif answer != questionanswers[delegate.index]:
-                mqtt_client.send_message("driveback_unless_line", [delegate.index])
-                delegate.index = delegate.index + 1
-            else:
-                print("Something went wrong with the buttons")
+            print("Something went wrong with the buttons")
     else:
         button_label = ttk.Label(main_frame,
                                  text="I am sorry, but you are out of questions, "
@@ -135,4 +130,3 @@ def winner_sequence():
 
 
 main()
-
