@@ -11,7 +11,7 @@ class MyDelegate(object):
 
 def main():
     my_delegate = MyDelegate()
-    mqtt_client = com.MqttClient(my_delegate)
+    mqtt_client = com.MqttClient()
     mqtt_client.connect_to_ev3()
 
     left_speed = 200
@@ -92,12 +92,13 @@ def send_back(mqtt_client, left_speed_entry, right_speed_entry):
 
 def send_attack(mqtt_client):
     print('attack')
+    mqtt_client.send_message("attack", [])
 
 
 def quit_program(mqtt_client, shutdown_ev3):
-    print('exit')
     if shutdown_ev3:
-        mqtt_client.send_message("exit")
+        print("shutdown")
+        mqtt_client.send_message("shutdown")
     mqtt_client.close()
     exit()
 

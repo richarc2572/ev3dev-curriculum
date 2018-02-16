@@ -5,7 +5,7 @@ from PIL import Image
 import mqtt_remote_method_calls as com
 import robot_controller as robo
 
-
+'''
 class GameMaster(object):
     """ Delegate that listens for responses from EV3. """
 
@@ -30,7 +30,7 @@ class GameMaster(object):
 
     def exit(self):
         self.running = False
-
+        
     def forwar(self, left_speed, right_speed):
         self.robot.forward(self, left_speed, right_speed)
 
@@ -47,7 +47,7 @@ class GameMaster(object):
         self.right_motor.run_forever(speed_sp=-right_speed_entry)
 
 
-''' 
+
     def randomly_display_new_dice(self):
         self.dice_values = [0, 0, 0, 0, 0]
         for i in range(self.num_active_dice):
@@ -137,7 +137,7 @@ class GameMaster(object):
             print(too_high_or_too_low)
         self.randomly_display_new_dice()'''
 
-
+'''
 def main():
     print('ready')
     my_delegate = GameMaster()
@@ -150,6 +150,18 @@ def main():
 
 
 direction_dict = ['forward', 'backward', 'left', 'right']
+
+'''
+
+
+def main():
+    ev3.Sound.speak("Hello").wait()
+    robot = robo.Snatch3r()
+    mqtt_client = com.MqttClient(robot)
+    mqtt_client.connect_to_pc()
+    # mqtt_client.connect_to_pc("35.194.247.175")  # Off campus IP address of a GCP broker
+    robot.loop_forever()
+
 
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
