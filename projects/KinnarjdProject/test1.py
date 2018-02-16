@@ -4,7 +4,7 @@ import mqtt_remote_method_calls as com
 import ev3dev.ev3 as ev3
 import time
 import robot_controller as robo
-
+robot = robo.Snatch3r()
 
 class MyDelegate(object):
 
@@ -17,12 +17,14 @@ class MyDelegate(object):
         """Have the cops theme song play"""
 
     def drive_unless_line(self, num):
-        self.drive_unless_line(num)
-        ev3.Sound.speak("it ran").wait()
+        ev3.Sound.speak("it ran one").wait()
+        robot.drive_unless_line(num)
+        ev3.Sound.speak("it ran two").wait()
 
     def driveback_unless_line(self, num):
-        self.driveback_unless_line(num)
-        ev3.Sound.speak("it ran two").wait()
+        ev3.Sound.speak("it ran three").wait()
+        robot.driveback_unless_line(num)
+        ev3.Sound.speak("it ran four").wait()
 
 
 def main():
@@ -31,7 +33,6 @@ def main():
     print(" Press Back to exit when done.")
     print("--------------------------------------------")
     ev3.Sound.speak("Bank Robber").wait()
-    robot = robo.Snatch3r()
     my_delegate = MyDelegate()
     mqtt_client = com.MqttClient(my_delegate)
     mqtt_client.connect_to_pc()
@@ -47,17 +48,17 @@ def main():
         btn.process()
         if combo == 2 and btn.check_buttons(buttons=['up', 'right']):
             ev3.Sound.speak("You cracked the code, now answer the questions on the computer").wait()
-            robot.arm_up()
+            # robot.arm_up()
             mqtt_client.send_message("cracked_the_code")
-            robot.arm_down()
+            # robot.arm_down()
             combo = combo + 1
         elif combo == 0 and btn.check_buttons(buttons=['up', 'left']):
             ev3.Sound.speak("Correct Combo for the first part").wait()
-            robot.arm_up()
+            # robot.arm_up()
             combo = combo + 1
         elif combo == 1 and btn.check_buttons(buttons=['down', 'right']):
             ev3.Sound.speak("Correct Combo for the second part, one left").wait()
-            robot.arm_down()
+            # robot.arm_down()
             combo = combo + 1
         time.sleep(0.01)
     ev3.Sound.speak("Goodbye").wait()
