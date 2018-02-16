@@ -102,6 +102,7 @@ def send_choice(mqtt_client, answer, delegate, root, main_frame):
         if delegate.index == -1:
             print("ready to begin answering")
             delegate.index = delegate.index + 1
+            send_choice(mqtt_client, answer, delegate, root, main_frame)
         else:
             button_label = ttk.Label(main_frame, text=questions[delegate.index])
             button_label.grid(row=1, column=1)
