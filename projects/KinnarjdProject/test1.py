@@ -16,6 +16,12 @@ class MyDelegate(object):
         time.sleep(0.5)
         """Have the cops theme song play"""
 
+    def drive_unless_line(self, num):
+        self.drive_unless_line(num)
+
+    def driveback_unless_line(self, num):
+        self.driveback_unless_line(num)
+
 
 def main():
     print("--------------------------------------------")

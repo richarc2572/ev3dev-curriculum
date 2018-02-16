@@ -33,7 +33,7 @@ class MyDelegateOnThePc(object):
         self.display_label = labelwithstring
         # self.display_label.configure(text=string)
         # self.display_label["text"] = string
-        print("try it out")
+        print("tester function called")
 
     def they_won(self):
         self.display_label["text"] = "you won the game!"
@@ -104,9 +104,11 @@ def send_choice(mqtt_client, answer, delegate, root, main_frame):
         delegate.tester(button_label)
         if answer == questionanswers[delegate.index]:
             mqtt_client.send_message("drive_unless_line", [delegate.index])
+            print("talks to robot1")
             delegate.index = delegate.index + 1
         elif answer != questionanswers[delegate.index]:
             mqtt_client.send_message("driveback_unless_line", [delegate.index])
+            print("talks to robot 2")
             delegate.index = delegate.index + 1
         else:
             print("Something went wrong")
@@ -123,12 +125,6 @@ def send_choice(mqtt_client, answer, delegate, root, main_frame):
 def quit_program(mqtt_client):
     mqtt_client.close()
     exit()
-
-
-def labeler(delegate, frame):
-    questions = ["Did you choose Dr. Mutchler as your getaway driver?", "Did you copy the heist from Ocean's 11?",
-                 "Does your mom know you are robbing a bank?", "Are you wearing a black leather jacket?"]
-    return ttk.Label(frame, text=questions[delegate.index])
 
 
 def winner_sequence():
