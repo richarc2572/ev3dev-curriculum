@@ -49,15 +49,16 @@ class MyDelegate(object):
         self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
         self.left_speed = 200
         self.right_speed = 200
-        self.color = None
+        self.color = 0
         self.turn = 2
-        self.available_colors = (ev3.ColorSensor.COLOR_RED, ev3.ColorSensor.COLOR_BLUE, ev3.ColorSensor.COLOR_GREEN,
-                                 ev3.ColorSensor.COLOR_YELLOW)
-        self.spoken_colors = ("Red", "Blue", "Green", "Yellow")
+        self.available_colors = [0, 1, 2, 3, 4, 5, 6]
+        self.spoken_colors = ["None", "Black", "Blue", "Green", "Yellow", "Red", "White", "Brown"]
         self.color_list = []
         self.active_list = False
         self.guess_list = []
         self.color_number = 0
+        self.sensor = ev3.ColorSensor()
+        assert self.sensor
 
     def move_direction(self, direction_string):
         print("Receiving: {}".format(direction_string))
@@ -91,18 +92,34 @@ class MyDelegate(object):
         if self.active_list is False:
             self.color_list = []
             for k in range(self.turn):
-                self.color_number = random.randint(0, 3)
+                self.color_number = random.randint(2, 5)
                 self.color_list.append(self.available_colors[self.color_number])
-                ev3.Sound.speak(self.spoken_colors[self.color_number])
-            print(self.color_list)
+                ev3.Sound.speak(self.spoken_colors[self.color_number]).wait()
+            print('Color List', self.color_list)
+            print('Blue', ev3.ColorSensor.COLOR_BLUE)
         self.active_list = True
 
     def guess(self):
         count = 0
-        self.guess_list.append(ev3.ColorSensor.color)
+        if self.sensor.color == ev3.ColorSensor.COLOR_RED:
+            print('red')
+            self.color = ev3.ColorSensor.COLOR_RED
+        elif self.sensor.color == ev3.ColorSensor.COLOR_BLUE:
+            print('blue')
+            self.color = ev3.ColorSensor.COLOR_BLUE
+        elif self.sensor.color == ev3.ColorSensor.COLOR_GREEN:
+            print('green')
+            self.color = ev3.ColorSensor.COLOR_GREEN
+        elif self.sensor.color == ev3.ColorSensor.COLOR_YELLOW:
+            print('yellow')
+            self.color = ev3.ColorSensor.COLOR_YELLOW
+
+        self.guess_list.append(self.available_colors[self.color])
+        print('guess list', self.guess_list)
         for k in range(len(self.guess_list)):
             if self.guess_list[k] == self.color_list[k]:
                 count += 1
+        print('count:', count)
         if count != len(self.guess_list):
             self.running = False
         if self.guess_list == self.color_list:

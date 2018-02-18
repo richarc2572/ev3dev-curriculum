@@ -81,60 +81,6 @@ def main():
     # mqtt_client.connect_to_ev3("35.194.247.175")  # Off campus IP address of a GCP broker
 
 
-'''
-    left_side_label = ttk.Label(main_frame, text="Left LED")
-    left_side_label.grid(row=0, column=0)
-
-    left_green_button = ttk.Button(main_frame, text="Green")
-    left_green_button.grid(row=1, column=0)
-    left_green_button['command'] = lambda: send_led_command(mqtt_client, "left", "green")
-
-    left_red_button = ttk.Button(main_frame, text="Red")
-    left_red_button.grid(row=2, column=0)
-    left_red_button['command'] = lambda: send_led_command(mqtt_client, "left", "red")
-
-    left_black_button = ttk.Button(main_frame, text="Black")
-    left_black_button.grid(row=3, column=0)
-    left_black_button['command'] = lambda: send_led_command(mqtt_client, "left", "black")
-
-    button_label = ttk.Label(main_frame, text="  Buttom messages from EV3  ")
-    button_label.grid(row=1, column=1)
-
-    button_message = ttk.Label(main_frame, text="--")
-    button_message.grid(row=2, column=1)
-
-    right_side_label = ttk.Label(main_frame, text="Right LED")
-    right_side_label.grid(row=0, column=2)
-
-    right_green_button = ttk.Button(main_frame, text="Green")
-    right_green_button.grid(row=1, column=2)
-    right_green_button['command'] = lambda: send_led_command(mqtt_client, "right", "green")
-
-    right_red_button = ttk.Button(main_frame, text="Red")
-    right_red_button.grid(row=2, column=2)
-    right_red_button['command'] = lambda: send_led_command(mqtt_client, "right", "red")
-
-    right_black_button = ttk.Button(main_frame, text="Black")
-    right_black_button.grid(row=3, column=2)
-    right_black_button['command'] = lambda: send_led_command(mqtt_client, "right", "black")
-
-    spacer = ttk.Label(main_frame, text="")
-    spacer.grid(row=4, column=2)
-
-    # Buttons for quit and exit
-    q_button = ttk.Button(main_frame, text="Quit")
-    q_button.grid(row=5, column=2)
-    q_button['command'] = (lambda: quit_program(mqtt_client))
-
-    pc_delegate = MyDelegateOnThePc(button_message)
-    mqtt_client = com.MqttClient(pc_delegate)
-    mqtt_client.connect_to_ev3()
-    # mqtt_client.connect_to_ev3("35.194.247.175")  # Off campus IP address of a GCP broker
-
-    root.mainloop()
-'''
-
-
 # ----------------------------------------------------------------------
 # Tkinter callbacks
 # ----------------------------------------------------------------------
