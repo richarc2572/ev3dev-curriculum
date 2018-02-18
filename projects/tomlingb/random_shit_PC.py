@@ -1,12 +1,4 @@
 #!/usr/bin/env python3
-"""
-There are no TODOs in this module.  You will simply run this code on your PC to communicate with the EV3.  Feel free
-to look at the code to see if you understand what is going on, but no changes are needed to this file.
-
-See the m3_ev3_led_button_communication.py file for all the details.
-
-Author: David Fisher.
-"""
 
 import tkinter
 from tkinter import ttk
@@ -39,7 +31,7 @@ def main():
     root.bind('w', lambda event: send_direction(mqtt_client, "forward"))
 
     backward_button = ttk.Button(main_frame, text='Backward')
-    backward_button.grid(row=3, column=1)
+    backward_button.grid(row=4, column=1)
     backward_button['command'] = lambda: send_direction(mqtt_client, "backward")
     root.bind('s', lambda event: send_direction(mqtt_client, "backward"))
 
@@ -53,16 +45,25 @@ def main():
     right_button['command'] = lambda: send_direction(mqtt_client, "turn_right")
     root.bind('d', lambda event: send_direction(mqtt_client, "turn_right"))
 
+    stop_button = ttk.Button(main_frame, text='Stop')
+    stop_button.grid(row=3, column=1)
+    stop_button['command'] = lambda: send_direction(mqtt_client, "stop")
+    root.bind('<space>', lambda event: send_direction(mqtt_client, "stop"))
+
+    color_button = ttk.Button(main_frame, text='Check Color')
+    color_button.grid(row=2, column=4)
+    color_button['command'] = lambda: send_check_color(mqtt_client)
+
     q_button = ttk.Button(main_frame, text="Quit")
-    q_button.grid(row=5, column=0)
+    q_button.grid(row=6, column=0)
     q_button['command'] = lambda: quit_program(mqtt_client, False)
 
     e_button = ttk.Button(main_frame, text="Exit on EV3 too")
-    e_button.grid(row=5, column=2)
+    e_button.grid(row=6, column=2)
     e_button['command'] = lambda: quit_program(mqtt_client, True)
 
     button_message = ttk.Label(main_frame, text="--")
-    button_message.grid(row=4, column=1)
+    button_message.grid(row=5, column=1)
 
     pc_delegate = MyDelegateOnThePc(button_message)
     mqtt_client = com.MqttClient(pc_delegate)
@@ -132,6 +133,11 @@ def main():
 def send_direction(mqtt_client, direction):
     print("Sending direction: {}".format(direction))
     mqtt_client.send_message("move_direction", [direction])
+
+
+def send_check_color(mqtt_client):
+    print("Checking color underneath")
+    mqtt_client.send_message("check_color")
 
 
 def quit_program(mqtt_client, shutdown_ev3):
