@@ -34,6 +34,10 @@ def main():
     clean_button.grid(row=1, column=1)
     clean_button['command'] = lambda: send_clean_room(mqtt_client)
 
+    calibrate_arm_button = ttk.Button(main_frame, text="Calibrate Arm")
+    calibrate_arm_button.grid(row=1, column=2)
+    calibrate_arm_button['command'] = lambda: send_calibrate_arm(mqtt_client)
+
     pc_delegate = MyDelegateOnThePc(message_label)
     mqtt_client = com.MqttClient(pc_delegate)
     mqtt_client.connect_to_ev3()
@@ -49,6 +53,11 @@ def send_is_room_clean(mqtt_client):
 def send_clean_room(mqtt_client):
     print("Telling ev3 to clean room")
     mqtt_client.send_message("clean_room")
+
+
+def send_calibrate_arm(mqtt_client):
+    print("Calibrating Arm")
+    mqtt_client.send_message("calibrate_arm")
 
 
 main()
