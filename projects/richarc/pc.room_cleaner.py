@@ -4,6 +4,15 @@ from tkinter import ttk
 import mqtt_remote_method_calls as com
 
 
+class MyDelegateOnThePc(object):
+
+    def __init__(self, room_status_label):
+        self.room_status = room_status_label
+
+    def is_room_clean(self):
+
+
+
 def main():
     mqtt_client = com.MqttClient()
     mqtt_client.connect_to_ev3()
@@ -17,8 +26,10 @@ def main():
     message_label = ttk.Label(main_frame, text="--")
     message_label.grid(row=0, column=0)
 
+    
+
     clean_button = ttk.Button(main_frame, text="Clean Room")
-    clean_button.grid(row=1, column=0)
+    clean_button.grid(row=1, column=1)
     clean_button['command'] = lambda: send_clean_room(mqtt_client)
 
     root.mainloop()
