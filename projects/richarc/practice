@@ -11,8 +11,6 @@ def main():
     robot.arm_position(12)
 
     while not robot.touch_sensor.is_pressed:
-        print("(X, Y)=({}, {}) Width={} Height={}".format(robot.pixy.value(1), robot.pixy.value(2), robot.pixy.value(
-            3), robot.pixy.value(4)))
         x = robot.pixy.value(1)
         width = robot.pixy.value(3)
         dx = 125 - x
