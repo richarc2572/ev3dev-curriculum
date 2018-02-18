@@ -39,6 +39,7 @@ import mqtt_remote_method_calls as com
 
 import ev3dev.ev3 as ev3
 import time
+import random
 
 
 class MyDelegate(object):
@@ -48,9 +49,16 @@ class MyDelegate(object):
         self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
         self.left_speed = 200
         self.right_speed = 200
+        self.color = None
+        self.turn = 2
+        self.available_colors = (ev3.ColorSensor.COLOR_RED, ev3.ColorSensor.COLOR_BLUE, ev3.ColorSensor.COLOR_GREEN,
+                                 ev3.ColorSensor.COLOR_YELLOW)
+        self.color_list = []
+        self.active_list = False
+        self.guess_list = []
 
     def move_direction(self, direction_string):
-        print("Received: {}".format(direction_string))
+        print("Receiving: {}".format(direction_string))
 
         if direction_string == "forward":
             self.left_motor.run_forever(speed_sp=self.left_speed)
@@ -69,7 +77,32 @@ class MyDelegate(object):
             self.right_motor.stop()
 
     def check_color(self):
-        print('not setup yet')
+        self.color = ev3.ColorSensor.color
+        print(ev3.ColorSensor.color)
+
+    def next_turn(self):
+        self.turn += 1
+        self.active_list = False
+        self.guess_list = []
+
+    def create_color_list(self):
+        if self.active_list is False:
+            self.color_list = []
+            for k in range(self.turn):
+                self.color_list.append(self.available_colors[random.randint(3)])
+            print(self.color_list)
+        self.active_list = True
+
+    def guess(self):
+        count = 0
+        self.guess_list.append(ev3.ColorSensor.color)
+        for k in range(len(self.guess_list)):
+            if self.guess_list[k] == self.color_list[k]:
+                count += 1
+        if count != len(self.guess_list):
+            self.running = False
+        if self.guess_list == self.color_list:
+            print('You Win!!')
 
     def shutdown(self):
         self.left_motor.stop()
@@ -83,13 +116,14 @@ def main():
     print(" LED Button communication")
     print(" Press Back to exit when done.")
     print("--------------------------------------------")
-    ev3.Sound.speak("LED Button communication").wait()
+    ev3.Sound.speak("Starting").wait()
 
     my_delegate = MyDelegate()
     mqtt_client = com.MqttClient(my_delegate)
     mqtt_client.connect_to_pc()
 
     while my_delegate.running:
+        my_delegate.create_color_list()
         time.sleep(0.01)
 
     ev3.Sound.speak("Goodbye").wait()

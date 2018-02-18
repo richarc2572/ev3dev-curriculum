@@ -54,6 +54,14 @@ def main():
     color_button.grid(row=2, column=4)
     color_button['command'] = lambda: send_check_color(mqtt_client)
 
+    guess_button = ttk.Button(main_frame, text='Submit Color')
+    guess_button.grid(row=2, column=5)
+    guess_button['command'] = lambda: send_guess(mqtt_client)
+
+    next_turn_button = ttk.Button(main_frame, text='Next')
+    next_turn_button.grid(row=4, column=4)
+    next_turn_button['command'] = lambda: send_next_turn(mqtt_client)
+
     q_button = ttk.Button(main_frame, text="Quit")
     q_button.grid(row=6, column=0)
     q_button['command'] = lambda: quit_program(mqtt_client, False)
@@ -138,6 +146,16 @@ def send_direction(mqtt_client, direction):
 def send_check_color(mqtt_client):
     print("Checking color underneath")
     mqtt_client.send_message("check_color")
+
+
+def send_guess(mqtt_client):
+    print('Submitting')
+    mqtt_client.send_message("guess")
+
+
+def send_next_turn(mqtt_client):
+    print('Next_turn')
+    mqtt_client.send_message("next_turn")
 
 
 def quit_program(mqtt_client, shutdown_ev3):
