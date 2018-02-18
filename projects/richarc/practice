@@ -26,18 +26,18 @@ def main():
                 robot.arm_position(12)
                 break
             else:
-                robot.forward(-5 * dx, 5 * dx)
+                robot.move(-5 * dx, 5 * dx)
         elif dwidth > 5 and x != 0:
             if dx > 10:
-                robot.forward(5 * dwidth, 10 * dwidth)
+                robot.move(5 * dwidth, 10 * dwidth)
             elif dx < -10:
-                robot.forward(10 * dwidth, 5 * dwidth)
+                robot.move(10 * dwidth, 5 * dwidth)
             else:
-                robot.forward(10 * dwidth, 10 * dwidth)
+                robot.move(10 * dwidth, 10 * dwidth)
         elif dwidth < -5 and x != 0:
-            robot.forward(-200, -200)
+            robot.move(-200, -200)
         else:
-            robot.forward(200, -200)
+            robot.move(200, -200)
         time.sleep(0.1)
 
     robot.stop()
