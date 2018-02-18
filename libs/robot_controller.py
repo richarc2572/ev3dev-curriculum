@@ -80,7 +80,7 @@ class Snatch3r(object):
         ev3.Sound.beep().wait()
         self.arm_motor.position = 0
 
-    def arm_up_amount(self, revolutions):
+    def arm_position(self, revolutions):
         if revolutions < 14.2:
             self.arm_motor.run_to_abs_pos(position_sp=360 * revolutions, speed_sp=self.MAX_SPEED)
             self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)

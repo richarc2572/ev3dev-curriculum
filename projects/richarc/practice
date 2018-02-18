@@ -1,6 +1,5 @@
 import ev3dev.ev3 as ev3
 import time
-
 import robot_controller as robo
 
 
@@ -9,27 +8,38 @@ def main():
 
     robot = robo.Snatch3r()
     robot.pixy.mode = "SIG1"
+    robot.arm_position(12)
 
     while not robot.touch_sensor.is_pressed:
         print("(X, Y)=({}, {}) Width={} Height={}".format(robot.pixy.value(1), robot.pixy.value(2), robot.pixy.value(
             3), robot.pixy.value(4)))
         x = robot.pixy.value(1)
         width = robot.pixy.value(3)
-        dx = 90 - x
-        if 85 <= x <= 95 and 55 <= width <= 65:
-            robot.stop_fast()
-            ev3.Sound.beep().wait()
-            robot.turn_degrees(25, 200)
-            robot.drive_inches(2.5, 200)
-            robot.arm_up_amount(5)
-            robot.arm_down()
-        if dx > 5 and x != 0:
-            robot.forward(-5 * dx, 5 * dx)
-        if dx < 5 and x != 0:
-            robot.forward(-5 * dx, 5 * dx)
-        if x == 0:
-            robot.stop()
-
+        dx = 125 - x
+        dwidth = 55 - width
+        if abs(dwidth) < 5:
+            if abs(dx) < 5:
+                robot.stop_fast()
+                ev3.Sound.beep().wait()
+                robot.turn_degrees(-5, 200)
+                robot.arm_down()
+                robot.turn_degrees(23, 200)
+                robot.drive_inches(2.75, 200)
+                robot.arm_position(12)
+                break
+            else:
+                robot.forward(-5 * dx, 5 * dx)
+        elif dwidth > 5 and x != 0:
+            if dx > 10:
+                robot.forward(5 * dwidth, 10 * dwidth)
+            elif dx < -10:
+                robot.forward(10 * dwidth, 5 * dwidth)
+            else:
+                robot.forward(10 * dwidth, 10 * dwidth)
+        elif dwidth < -5 and x != 0:
+            robot.forward(-200, -200)
+        else:
+            robot.forward(200, -200)
         time.sleep(0.1)
 
     robot.stop()
