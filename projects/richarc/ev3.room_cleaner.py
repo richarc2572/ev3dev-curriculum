@@ -34,7 +34,6 @@ class MyDelegate(object):
                     width = self.robot.pixy.value(3)
                 dx = 125 - x
                 dwidth = 60 - width
-                print(x, width, dx, dwidth)
                 if abs(dwidth) < 5:
                     if abs(dx) < 5:
                         self.robot.stop_fast()
@@ -42,12 +41,12 @@ class MyDelegate(object):
                         self.robot.arm_down()
                         self.robot.turn_degrees(25, 100)
                         self.robot.drive_inches(3, 100)
-                        self.robot.arm_position(5)
-                        self.robot.turn_degrees(90, 100)
+                        self.return_home()
+                        self.robot.turn_degrees(90, 200)
+                        self.robot.drive_inches(5, 200)
                         self.robot.arm_down()
-                        self.robot.drive_inches(-3, 100)
-                        self.robot.turn_degrees(-90, 100)
-                        self.robot.drive_inches(-6, 200)
+                        self.robot.drive_inches(-5, 200)
+                        self.robot.turn_degrees(-90, 200)
                         break
                     else:
                         self.robot.move(-2 * dx, 2 * dx)
@@ -75,6 +74,37 @@ class MyDelegate(object):
             self.mqtt_client.send_message("is_room_clean", [True])
         else:
             self.mqtt_client.send_message("is_room_clean", [False])
+
+    def return_home(self):
+        self.robot.arm_up()
+        btn = ev3.Button()
+        self.robot.pixy.mode = "SIG3"
+        while not btn.backspace:
+            x = self.robot.pixy.value(1)
+            width = self.robot.pixy.value(3)
+            dx = 125 - x
+            dwidth = 50 - width
+            if width > 5:
+                if abs(dwidth) < 5:
+                    if abs(dx) < 5:
+                        ev3.Sound.beep().wait()
+                        self.robot.turn_degrees(190, 200)
+                        break
+                    else:
+                        self.robot.move(-2 * dx, 2 * dx)
+                elif dwidth > 5:
+                    if dx > 5:
+                        self.robot.move(5 * dwidth, 10 * dwidth)
+                    elif dx < -5:
+                        self.robot.move(10 * dwidth, 5 * dwidth)
+                    else:
+                        self.robot.move(10 * dwidth, 10 * dwidth)
+                elif dwidth < -5:
+                    self.robot.move(-200, -200)
+            else:
+                self.robot.move(200, -200)
+            time.sleep(0.1)
+        self.robot.stop()
 
     def calibrate_arm(self):
         self.robot.arm_calibration()
