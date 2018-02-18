@@ -86,18 +86,15 @@ class Snatch3r(object):
             self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
 
     def arm_up(self):
-        ev3.Sound.speak("Arm Up").wait()
         self.arm_motor.run_forever(speed_sp=self.MAX_SPEED)
         while not self.touch_sensor.is_pressed:
             time.sleep(0.01)
         self.arm_motor.stop_action = ev3.Motor.STOP_ACTION_BRAKE
         self.arm_motor.stop()
-        ev3.Sound.beep().wait()
 
     def arm_down(self):
         self.arm_motor.run_to_abs_pos(position_sp=0, speed_sp=self.MAX_SPEED)
         self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
-        ev3.Sound.beep().wait()
 
     def shutdown(self):
         self.arm_motor.stop()
@@ -115,7 +112,7 @@ class Snatch3r(object):
         ev3.Sound.speak("question {} correct".format(num)).wait()
         for k in range(50):
             if self.color_sensor.color != 1:
-                self.forward(600, 600)
+                self.move(600, 600)
             else:
                 self.stop()
                 mqtt_client = com.MqttClient()
@@ -172,7 +169,7 @@ class Snatch3r(object):
             current_distance = self.beacon_seeker.distance
             if current_distance == -128:
                 print("IR Remote not found. Distance is -128")
-                self.forward(-100, 100)
+                self.move(-100, 100)
                 time.sleep(1)
             else:
                 if math.fabs(current_heading) < 1.5:
@@ -182,15 +179,15 @@ class Snatch3r(object):
                         self.stop()
                         return True
                     else:
-                        self.forward(300, 300)
+                        self.move(300, 300)
                 elif math.fabs(current_heading) < 10:
                     if current_heading < 0:
-                        self.forward(-100, 100)
+                        self.move(-100, 100)
                     else:
-                        self.forward(100, -100)
+                        self.move(100, -100)
                 else:
                     print("Heading to far off")
-                    self.forward(-100, 100)
+                    self.move(-100, 100)
                     time.sleep(1)
             time.sleep(0.2)
         print("Abandon ship!")
