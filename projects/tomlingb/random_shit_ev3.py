@@ -53,9 +53,11 @@ class MyDelegate(object):
         self.turn = 2
         self.available_colors = (ev3.ColorSensor.COLOR_RED, ev3.ColorSensor.COLOR_BLUE, ev3.ColorSensor.COLOR_GREEN,
                                  ev3.ColorSensor.COLOR_YELLOW)
+        self.spoken_colors = ("Red", "Blue", "Green", "Yellow")
         self.color_list = []
         self.active_list = False
         self.guess_list = []
+        self.color_number = 0
 
     def move_direction(self, direction_string):
         print("Receiving: {}".format(direction_string))
@@ -89,7 +91,9 @@ class MyDelegate(object):
         if self.active_list is False:
             self.color_list = []
             for k in range(self.turn):
-                self.color_list.append(self.available_colors[random.randint(3)])
+                self.color_number = random.randint(0, 3)
+                self.color_list.append(self.available_colors[self.color_number])
+                ev3.Sound.speak(self.spoken_colors[self.color_number])
             print(self.color_list)
         self.active_list = True
 
@@ -113,8 +117,7 @@ class MyDelegate(object):
 
 def main():
     print("--------------------------------------------")
-    print(" LED Button communication")
-    print(" Press Back to exit when done.")
+    print(" Memory Game")
     print("--------------------------------------------")
     ev3.Sound.speak("Starting").wait()
 
