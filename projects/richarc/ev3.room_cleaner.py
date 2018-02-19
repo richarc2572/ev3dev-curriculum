@@ -10,6 +10,8 @@ class MyDelegate(object):
         self.running = False
         self.robot = robo.Snatch3r()
         self.mqtt_client = None
+        self.blue_position = 'Missing'
+        self.orange_position = 'Missing'
 
     def clean_room(self):
         self.robot.arm_up()
@@ -65,15 +67,25 @@ class MyDelegate(object):
         self.robot.stop()
         self.robot.arm_down()
 
-    def is_room_clean(self):
+    def check_area(self):
+        if not self.robot.touch_sensor.is_pressed:
+            self.robot.arm_up()
+
         self.robot.pixy.mode = "SIG1"
-        width1 = self.robot.pixy.value(3)
-        self.robot.pixy.mode = "SIG2"
-        width2 = self.robot.pixy.value(3)
-        if width1 and width2 < 1:
-            self.mqtt_client.send_message("is_room_clean", [True])
+        width = self.robot.pixy.value(3)
+        if width > 10:
+            self.blue_position = 'Found'
         else:
-            self.mqtt_client.send_message("is_room_clean", [False])
+            self.blue_position = 'Missing'
+
+        self.robot.pixy.mode = "SIG2"
+        width = self.robot.pixy.value(3)
+        if width > 10:
+            self.orange_position = 'Found'
+        else:
+            self.orange_position = 'Missing'
+
+        self.mqtt_client.send_message("message_from_ev3", [self.blue_position, self.orange_position])
 
     def return_home(self):
         self.robot.arm_up()
