@@ -15,7 +15,6 @@ Authors: David Fisher and PUT_YOUR_NAME_HERE.
 import tkinter
 from tkinter import ttk
 
-
 import mqtt_remote_method_calls as com
 
 
@@ -44,7 +43,6 @@ def main():
 
     rect_tag1 = canvas.create_rectangle(150, 90, 170, 110, fill="green")
     rect_tag2 = canvas.create_rectangle(150, 90, 170, 110, fill="pink")
-
 
     # Buttons for quit and exit
     quit_button = ttk.Button(main_frame, text="Quit")
