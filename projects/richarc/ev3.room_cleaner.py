@@ -14,59 +14,19 @@ class MyDelegate(object):
         self.orange_position = 'Missing'
 
     def clean_room(self, blue_option, orange_option):
-
         if blue_option == 1 and orange_option == 0:
-            self.robot.pixy.mode = "SIG1"
-
-        self.robot.pixy.mode = "SIG1"
-        width1 = self.robot.pixy.value(3)
-        self.robot.pixy.mode = "SIG2"
-        width2 = self.robot.pixy.value(3)
-        if width1 and width2 < 1:
-            print("Room is already clean")
-        #             ev3.Sound.speak("Room is already clean").wait()
+            self.robot.pick_up("SIG1")
+        elif blue_option == 0 and orange_option == 1:
+            self.robot.pick_up("SIG2")
         else:
-            btn = ev3.Button()
-            print("Cleaning room")
-            #             ev3.Sound.speak("Cleaning room").wait()
-            while not btn.backspace:
-                if width2 > width1:
-                    x = self.robot.pixy.value(1)
-                    width = self.robot.pixy.value(3)
-                else:
-                    self.robot.pixy.mode = "SIG1"
-                    x = self.robot.pixy.value(1)
-                    width = self.robot.pixy.value(3)
-                dx = 125 - x
-                dwidth = 60 - width
-                if abs(dwidth) < 5:
-                    if abs(dx) < 6:
-                        self.robot.stop_fast()
-                        self.robot.turn_degrees(-5, 200)
-                        self.robot.arm_down()
-                        self.robot.turn_degrees(24, 200)
-                        self.robot.drive_inches(3, 200)
-                        # self.return_home()
-                        # self.robot.turn_degrees(90, 200)
-                        # self.robot.drive_inches(5, 200)
-                        # self.robot.arm_down()
-                        # self.robot.drive_inches(-5, 200)
-                        # self.robot.turn_degrees(-90, 200)
-                        break
-                    else:
-                        self.robot.move(-2 * dx, 2 * dx)
-                elif dwidth > 5 and x != 0:
-                    if dx > 5:
-                        self.robot.move(5 * dwidth, 10 * dwidth)
-                    elif dx < -5:
-                        self.robot.move(10 * dwidth, 5 * dwidth)
-                    else:
-                        self.robot.move(10 * dwidth, 10 * dwidth)
-                elif dwidth < -5 and x != 0:
-                    self.robot.move(-200, -200)
-                else:
-                    self.robot.move(200, -200)
-                time.sleep(0.1)
+            self.robot.pixy.mode = "SIG1"
+            width1 = self.robot.pixy.value(3)
+            self.robot.pixy.mode = "SIG2"
+            width2 = self.robot.pixy.value(3)
+            if width1 > width2:
+                self.robot.pick_up("SIG1")
+            else:
+                self.robot.pick_up("SIG2")
         self.robot.stop()
         self.robot.arm_down()
 
@@ -90,25 +50,8 @@ class MyDelegate(object):
 
         self.mqtt_client.send_message("message_from_ev3", [self.blue_position, self.orange_position])
 
-    def return_home(self):
-        self.robot.arm_up()
-        self.robot.pixy.mode = "SIG2"
-        while self.robot.color_sensor.color != 5:
-            x = self.robot.pixy.value(1)
-            dx = 150 - x
-            if x == 0:
-                self.robot.move(-200, 200)
-            elif dx > 5:
-                self.robot.move(5 * dx, 10 * dx)
-            elif dx < -5:
-                self.robot.move(-10 * dx, -5 * dx)
-            else:
-                self.robot.move(400, 400)
-            time.sleep(0.1)
-        self.robot.stop()
-        self.robot.arm_down()
-        self.robot.drive_inches(-5, 200)
-        self.robot.turn_degrees(180, 200)
+    def take_home(self, color):
+        self.robot.take_home(color)
 
     def calibrate_arm(self):
         self.robot.arm_calibration()

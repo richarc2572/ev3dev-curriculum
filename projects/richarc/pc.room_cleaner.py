@@ -103,7 +103,11 @@ def send_check_area(mqtt_client):
 
 def send_pick_up(mqtt_client, blue_option, orange_option):
     print("Telling ev3 to clean room")
-    mqtt_client.send_message("clean_room", [blue_option, orange_option])
+    if blue_option == 1:
+        mqtt_client.send_message("take_home", ["SIG1"])
+    else:
+        mqtt_client.send_message("take_home", ["SIG2"])
+
 
 
 def send_calibrate_arm(mqtt_client):
