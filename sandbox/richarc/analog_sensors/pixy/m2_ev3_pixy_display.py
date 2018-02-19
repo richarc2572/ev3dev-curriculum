@@ -27,20 +27,30 @@ def main():
     mqtt_client.connect_to_pc()
 
     robot = robo.Snatch3r()
-    robot.pixy.mode = "SIG2"
 
-    while not robot.touch_sensor.is_pressed:
+    btn = ev3.Button()
+
+    while not btn.backspace:
         # DONE: 3. Read the Pixy values for x, y, width, and height
         # Print the values (much like the print_pixy_readings example)
-        x = robot.pixy.value(1)
-        y = robot.pixy.value(2)
-        width = robot.pixy.value(3)
-        height = robot.pixy.value(4)
-        print("(X, Y)=({}, {}) Width={} Height={}".format(x, y, width, height))
+        robot.pixy.mode = "SIG3"
+        x1 = robot.pixy.value(1)
+        y1 = robot.pixy.value(2)
+        width1 = robot.pixy.value(3)
+        height1 = robot.pixy.value(4)
+
+        robot.pixy.mode = "SIG4"
+        x2 = robot.pixy.value(1)
+        y2 = robot.pixy.value(2)
+        width2 = robot.pixy.value(3)
+        height2 = robot.pixy.value(4)
+
+        print("(X, Y)=({}, {}) Width={} Height={}".format(x1, y1, width1, height1), end="")
+        print("(X, Y)=({}, {}) Width={} Height={}".format(x2, y2, width2, height2))
 
         # DONE: 4. Send the Pixy values to the PC by calling the on_rectangle_update method
         # If you open m2_pc_pixy_display you can see the parameters for that method [x, y, width, height]
-        mqtt_client.send_message("on_rectangle_update", [x, y, width, height])
+        mqtt_client.send_message("on_rectangle_update", [x1, y1, width1, height1, x2, y2, width2, height2])
         time.sleep(0.25)
 
     print("Goodbye!")

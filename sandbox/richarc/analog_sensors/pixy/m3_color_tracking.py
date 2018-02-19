@@ -24,24 +24,23 @@ def main():
     # This code assumes you have setup the pixy object on the Snatch3r class.
     # Add the pixy property to that class if you have not done so already.
     robot = robo.Snatch3r()
-    robot.pixy.mode = "SIG7"
+    robot.pixy.mode = "SIG3"
     turn_speed = 100
 
     while not robot.touch_sensor.is_pressed:
-
         # Done: 2. Read the Pixy values for x and y
         x = robot.pixy.value(1)
         y = robot.pixy.value(2)
         print("(X, Y)=({}, {})".format(x, y))
 
         # Done: 3. Use the x value to turn the robot
-        if x < 150:
-            robot.forward(-100, 100)
-        elif x > 170:
-            robot.forward(100, -100)
-        else:
-            robot.stop()
-        time.sleep(0.25)
+        #        if x < 150:
+        #            robot.forward(-100, 100)
+        #        elif x > 170:
+        #            robot.forward(100, -100)
+        #        else:
+        #            robot.stop()
+        time.sleep(0.1)
 
     print("Goodbye!")
     robot.stop()

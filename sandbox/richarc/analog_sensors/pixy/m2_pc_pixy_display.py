@@ -21,12 +21,14 @@ import mqtt_remote_method_calls as com
 
 class MyDelegate(object):
 
-    def __init__(self, canvas, rectangle_tag):
+    def __init__(self, canvas, rectangle_tag1, rectangle_tag2):
         self.canvas = canvas
-        self.rectangle_tag = rectangle_tag
+        self.rectangle_tag1 = rectangle_tag1
+        self.rectangle_tag2 = rectangle_tag2
 
-    def on_rectangle_update(self, x, y, width, height):
-        self.canvas.coords(self.rectangle_tag, [x, y, x + width, y + height])
+    def on_rectangle_update(self, x1, y1, width1, height1, x2, y2, width2, height2):
+        self.canvas.coords(self.rectangle_tag1, [x1, y1, x1 + width1, y1 + height1])
+        self.canvas.coords(self.rectangle_tag2, [x2, y2, x2 + width2, y2 + height2])
 
 
 def main():
@@ -40,7 +42,9 @@ def main():
     canvas = tkinter.Canvas(main_frame, background="lightgray", width=320, height=200)
     canvas.grid(columnspan=2)
 
-    rect_tag = canvas.create_rectangle(150, 90, 170, 110, fill="blue")
+    rect_tag1 = canvas.create_rectangle(150, 90, 170, 110, fill="green")
+    rect_tag2 = canvas.create_rectangle(150, 90, 170, 110, fill="pink")
+
 
     # Buttons for quit and exit
     quit_button = ttk.Button(main_frame, text="Quit")
@@ -48,7 +52,7 @@ def main():
     quit_button["command"] = lambda: quit_program(mqtt_client)
 
     # Create an MQTT connection
-    my_delegate = MyDelegate(canvas, rect_tag)
+    my_delegate = MyDelegate(canvas, rect_tag1, rect_tag2)
     mqtt_client = com.MqttClient(my_delegate)
     mqtt_client.connect_to_ev3()
     # mqtt_client.connect_to_ev3("35.194.247.175")  # Off campus IP address of a GCP broker
