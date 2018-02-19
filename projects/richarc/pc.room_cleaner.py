@@ -3,35 +3,49 @@ from tkinter import ttk
 from tkinter import *
 
 import mqtt_remote_method_calls as com
-import time
 
 
 class MyDelegateOnThePc(object):
 
-    def __init__(self, room_status_label):
+    def __init__(self, room_status_label, blue_checkbox, orange_checkbox):
         self.room_status_label = room_status_label
+        self.blue_checkbox = blue_checkbox
+        self.orange_checkbox = orange_checkbox
 
     def message_from_ev3(self, blue_position, orange_position):
         if blue_position == 'Found':
+            self.blue_checkbox.configure(state=NORMAL)
             if orange_position == 'Found':
-                self.room_status_label.configure(text="Blue and Orange needs to be organized.")
+                self.orange_checkbox.configure(state=NORMAL)
+                self.room_status_label.configure(text="Blue and Orange need to be organized.")
             if orange_position == 'Home':
+                self.orange_checkbox.configure(state=DISABLED)
                 self.room_status_label.configure(text="Blue needs to be organized, Orange is organized.")
             if orange_position == 'Missing':
+                self.orange_checkbox.configure(state=DISABLED)
                 self.room_status_label.configure(text="Blue needs to be organized, Orange is missing.")
         elif blue_position == 'Home':
+            self.blue_checkbox.deselect()
+            self.blue_checkbox.configure(state=DISABLED)
             if orange_position == 'Found':
+                self.orange_checkbox.configure(state=NORMAL)
                 self.room_status_label.configure(text="Blue is organized, Orange needs to be organized.")
             if orange_position == 'Home':
+                self.orange_checkbox.configure(state=DISABLED)
                 self.room_status_label.configure(text="Blue and Orange are organized.")
             if orange_position == 'Missing':
+                self.orange_checkbox.configure(state=DISABLED)
                 self.room_status_label.configure(text="Blue is organized, Orange is missing.")
         else:
+            self.blue_checkbox.configure(state=DISABLED)
             if orange_position == 'Found':
+                self.orange_checkbox.configure(state=NORMAL)
                 self.room_status_label.configure(text="Blue is missing, Orange needs to be organized.")
             if orange_position == 'Home':
+                self.orange_checkbox.configure(state=DISABLED)
                 self.room_status_label.configure(text="Blue is missing, Orange is organized.")
             if orange_position == 'Missing':
+                self.orange_checkbox.configure(state=DISABLED)
                 self.room_status_label.configure(text="Blue and Orange are missing.")
 
 
@@ -71,11 +85,11 @@ def main():
     organize_button.grid(row=3, column=0)
     organize_button['command'] = lambda: send_pick_up(mqtt_client, blue_checkbox_var.get(), orange_checkbox_var.get())
 
-    #     calibrate_arm_button = ttk.Button(main_frame, text="Calibrate Arm")
-    #     calibrate_arm_button.grid(row=1, column=2)
-    #     calibrate_arm_button['command'] = lambda: send_calibrate_arm(mqtt_client)
+    calibrate_arm_button = ttk.Button(main_frame, text="Calibrate Arm")
+    calibrate_arm_button.grid(row=4, column=0)
+    calibrate_arm_button['command'] = lambda: send_calibrate_arm(mqtt_client)
 
-    pc_delegate = MyDelegateOnThePc(message_label)
+    pc_delegate = MyDelegateOnThePc(message_label, blue_checkbox, orange_checkbox)
     mqtt_client = com.MqttClient(pc_delegate)
     mqtt_client.connect_to_ev3()
 
@@ -87,9 +101,9 @@ def send_check_area(mqtt_client):
     mqtt_client.send_message("check_area")
 
 
-def send_pick_up(mqtt_client, blue, orange):
+def send_pick_up(mqtt_client, blue_option, orange_option):
     print("Telling ev3 to clean room")
-    mqtt_client.send_message("clean_room", [blue, orange])
+    mqtt_client.send_message("clean_room", [blue_option, orange_option])
 
 
 def send_calibrate_arm(mqtt_client):

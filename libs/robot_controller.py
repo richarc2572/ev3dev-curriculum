@@ -193,3 +193,38 @@ class Snatch3r(object):
         print("Abandon ship!")
         self.stop()
         return False
+
+    def organize(self, mode):
+        if not self.touch_sensor.is_pressed:
+            self.arm_up()
+
+        btn = ev3.Button()
+        self.pixy.mode = mode
+        while not btn.backspace:
+            x = self.pixy.value(1)
+            width = self.pixy.value(3)
+            dx = 125 - x
+            dwidth = 60 - width
+            if abs(dwidth) < 5:
+                if abs(dx) < 7:
+                    self.stop_fast()
+                    self.turn_degrees(-5, 200)
+                    self.arm_down()
+                    self.turn_degrees(24, 200)
+                    self.drive_inches(3, 200)
+                    self.arm_up()
+                    break
+                else:
+                    self.move(-2 * dx, 2 * dx)
+            elif dwidth > 5 and x != 0:
+                if dx > 5:
+                    self.move(5 * dwidth, 10 * dwidth)
+                elif dx < -5:
+                    self.move(10 * dwidth, 5 * dwidth)
+                else:
+                    self.move(10 * dwidth, 10 * dwidth)
+            elif dwidth < -5 and x != 0:
+                self.move(-200, -200)
+            else:
+                self.move(200, -200)
+            time.sleep(0.1)

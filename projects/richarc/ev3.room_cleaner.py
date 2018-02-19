@@ -13,8 +13,11 @@ class MyDelegate(object):
         self.blue_position = 'Missing'
         self.orange_position = 'Missing'
 
-    def clean_room(self):
-        self.robot.arm_up()
+    def clean_room(self, blue_option, orange_option):
+
+        if blue_option == 1 and orange_option == 0:
+            self.robot.pixy.mode = "SIG1"
+
         self.robot.pixy.mode = "SIG1"
         width1 = self.robot.pixy.value(3)
         self.robot.pixy.mode = "SIG2"
