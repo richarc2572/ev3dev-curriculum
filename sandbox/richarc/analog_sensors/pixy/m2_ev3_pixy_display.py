@@ -33,7 +33,7 @@ def main():
     while not btn.backspace:
         # DONE: 3. Read the Pixy values for x, y, width, and height
         # Print the values (much like the print_pixy_readings example)
-        robot.pixy.mode = "SIG3"
+        robot.pixy.mode = "SIG2"
         x1 = robot.pixy.value(1)
         y1 = robot.pixy.value(2)
         width1 = robot.pixy.value(3)

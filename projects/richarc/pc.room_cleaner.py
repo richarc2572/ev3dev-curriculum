@@ -1,5 +1,6 @@
 import tkinter
 from tkinter import ttk
+from tkinter import *
 
 import mqtt_remote_method_calls as com
 
@@ -18,29 +19,33 @@ class MyDelegateOnThePc(object):
 
 def main():
     root = tkinter.Tk()
-    root.title("Room Cleaner")
+    root.title("Organizer")
 
     main_frame = ttk.Frame(root, padding=20, relief='raised')
     main_frame.grid()
 
+    blue_checkbox_var = IntVar()
+    blue_checkbox = ttk.Checkbutton(main_frame, text="Blue", variable=blue_checkbox_var)
+    blue_checkbox.grid(row=0, column=1)
+
+    orange_checkbox_var = IntVar()
+    orange_checkbox = ttk.Checkbutton(main_frame, text="Orange", variable=orange_checkbox_var)
+    orange_checkbox.grid(row=0, column=2)
+
     message_label = ttk.Label(main_frame, text="--")
-    message_label.grid(row=0, column=0)
+    message_label.grid(row=1, column=1)
 
     check_room_button = ttk.Button(main_frame, text="Check Room")
     check_room_button.grid(row=1, column=0)
     check_room_button['command'] = lambda: send_is_room_clean(mqtt_client)
 
     clean_button = ttk.Button(main_frame, text="Clean Room")
-    clean_button.grid(row=1, column=1)
-    clean_button['command'] = lambda: send_clean_room(mqtt_client)
+    clean_button.grid(row=0, column=0)
+    clean_button['command'] = lambda: send_pick_up(mqtt_client, blue_checkbox_var.get(), orange_checkbox_var.get())
 
-    return_home_button = ttk.Button(main_frame, text="Go Home")
-    return_home_button.grid(row=1, column=3)
-    return_home_button['command'] = lambda: send_return_home(mqtt_client)
-
-    calibrate_arm_button = ttk.Button(main_frame, text="Calibrate Arm")
-    calibrate_arm_button.grid(row=1, column=2)
-    calibrate_arm_button['command'] = lambda: send_calibrate_arm(mqtt_client)
+    #     calibrate_arm_button = ttk.Button(main_frame, text="Calibrate Arm")
+    #     calibrate_arm_button.grid(row=1, column=2)
+    #     calibrate_arm_button['command'] = lambda: send_calibrate_arm(mqtt_client)
 
     pc_delegate = MyDelegateOnThePc(message_label)
     mqtt_client = com.MqttClient(pc_delegate)
@@ -54,14 +59,9 @@ def send_is_room_clean(mqtt_client):
     mqtt_client.send_message("is_room_clean")
 
 
-def send_clean_room(mqtt_client):
+def send_pick_up(mqtt_client, blue, orange):
     print("Telling ev3 to clean room")
-    mqtt_client.send_message("clean_room")
-
-
-def send_return_home(mqtt_client):
-    print("Going Home")
-    mqtt_client.send_message("return_home")
+    mqtt_client.send_message("clean_room", [blue, orange])
 
 
 def send_calibrate_arm(mqtt_client):
