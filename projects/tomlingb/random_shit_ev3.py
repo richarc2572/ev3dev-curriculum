@@ -45,6 +45,7 @@ import random
 class MyDelegate(object):
     def __init__(self):
         self.running = True
+        self.lost = False
         self.left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
         self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
         self.left_speed = 200
@@ -57,6 +58,7 @@ class MyDelegate(object):
         self.active_list = False
         self.guess_list = []
         self.color_number = 0
+        self.send_count = 0
         self.sensor = ev3.ColorSensor()
         assert self.sensor
 
@@ -80,8 +82,18 @@ class MyDelegate(object):
             self.right_motor.stop()
 
     def check_color(self):
-        self.color = ev3.ColorSensor.color
-        print(ev3.ColorSensor.color)
+        if self.sensor.color == ev3.ColorSensor.COLOR_RED:
+            print('red')
+            self.color = ev3.ColorSensor.COLOR_RED
+        elif self.sensor.color == ev3.ColorSensor.COLOR_BLUE:
+            print('blue')
+            self.color = ev3.ColorSensor.COLOR_BLUE
+        elif self.sensor.color == ev3.ColorSensor.COLOR_GREEN:
+            print('green')
+            self.color = ev3.ColorSensor.COLOR_GREEN
+        elif self.sensor.color == ev3.ColorSensor.COLOR_YELLOW:
+            print('yellow')
+            self.color = ev3.ColorSensor.COLOR_YELLOW
 
     def next_turn(self):
         self.turn += 1
@@ -94,6 +106,7 @@ class MyDelegate(object):
             for k in range(self.turn):
                 self.color_number = random.randint(2, 5)
                 self.color_list.append(self.available_colors[self.color_number])
+                time.sleep(0.5)
                 ev3.Sound.speak(self.spoken_colors[self.color_number]).wait()
             print('Color List', self.color_list)
             print('Blue', ev3.ColorSensor.COLOR_BLUE)
@@ -101,6 +114,8 @@ class MyDelegate(object):
 
     def guess(self):
         count = 0
+        ev3.Sound.beep().wait()
+        self.send_count = 0
         if self.sensor.color == ev3.ColorSensor.COLOR_RED:
             print('red')
             self.color = ev3.ColorSensor.COLOR_RED
@@ -121,15 +136,19 @@ class MyDelegate(object):
                 count += 1
         print('count:', count)
         if count != len(self.guess_list):
-            self.running = False
+            self.lost = True
         if self.guess_list == self.color_list:
             print('You Win!!')
+            ev3.Sound.speak('Correct!').wait()
 
     def shutdown(self):
         self.left_motor.stop()
         self.right_motor.stop()
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
         self.running = False
         print('Goodbye!')
+        ev3.Sound.speak("Goodbye").wait()
 
 
 def main():
@@ -142,13 +161,21 @@ def main():
     mqtt_client = com.MqttClient(my_delegate)
     mqtt_client.connect_to_pc()
 
-    while my_delegate.running:
+    while my_delegate.running and my_delegate.lost is False:
         my_delegate.create_color_list()
+        if my_delegate.color != 0:
+            send_color(mqtt_client, my_delegate.color)
+            my_delegate.send_count += 1
         time.sleep(0.01)
 
-    ev3.Sound.speak("Goodbye").wait()
-    ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
-    ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+    if my_delegate.lost is True:
+        ev3.Sound.speak("You Lost").wait()
+
+    my_delegate.shutdown()
+
+
+def send_color(mqtt_client, color):
+    mqtt_client.send_message("color_submitted", [color])
 
 
 # ----------------------------------------------------------------------

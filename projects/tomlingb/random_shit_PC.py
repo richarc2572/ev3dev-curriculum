@@ -11,10 +11,11 @@ class MyDelegateOnThePc(object):
 
     def __init__(self, label_to_display_messages_in):
         self.display_label = label_to_display_messages_in
+        self.color_list = ["None", "Black", "Blue", "Green", "Yellow", "Red", "White", "Brown"]
 
-    def button_pressed(self, button_name):
-        print("Received: " + button_name)
-        message_to_display = "{} was pressed.".format(button_name)
+    def color_submitted(self, color_number):
+        color_name = self.color_list[color_number]
+        message_to_display = "{} was selected.".format(color_name)
         self.display_label.configure(text=message_to_display)
 
 
@@ -48,7 +49,7 @@ def main():
     stop_button = ttk.Button(main_frame, text='Stop')
     stop_button.grid(row=3, column=1)
     stop_button['command'] = lambda: send_direction(mqtt_client, "stop")
-    root.bind('<space>', lambda event: send_direction(mqtt_client, "stop"))
+    root.bind('e', lambda event: send_direction(mqtt_client, "stop"))
 
     color_button = ttk.Button(main_frame, text='Check Color')
     color_button.grid(row=2, column=4)
@@ -70,10 +71,10 @@ def main():
     e_button.grid(row=6, column=2)
     e_button['command'] = lambda: quit_program(mqtt_client, True)
 
-    button_message = ttk.Label(main_frame, text="--")
-    button_message.grid(row=5, column=1)
+    color_message = ttk.Label(main_frame, text="--")
+    color_message.grid(row=3, column=4)
 
-    pc_delegate = MyDelegateOnThePc(button_message)
+    pc_delegate = MyDelegateOnThePc(color_message)
     mqtt_client = com.MqttClient(pc_delegate)
     mqtt_client.connect_to_ev3()
 
