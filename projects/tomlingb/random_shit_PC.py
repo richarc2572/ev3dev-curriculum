@@ -2,6 +2,9 @@
 
 import tkinter
 from tkinter import ttk
+import PIL
+from PIL import Image, ImageTk
+import random
 
 import mqtt_remote_method_calls as com
 
@@ -12,11 +15,15 @@ class MyDelegateOnThePc(object):
     def __init__(self, label_to_display_messages_in):
         self.display_label = label_to_display_messages_in
         self.color_list = ["None", "Black", "Blue", "Green", "Yellow", "Red", "White", "Brown"]
+        self.color_files = ["blue.png", "green.jpg", "yellow.jpg", "red.jpg"]
 
     def color_submitted(self, color_number):
-        color_name = self.color_list[color_number]
-        message_to_display = "{} was selected.".format(color_name)
-        self.display_label.configure(text=message_to_display)
+        file_name = self.color_files[color_number - 2]
+        picture_to_display = "{}".format(file_name)
+        image = Image.open(picture_to_display)
+        image = image.resize((70, 20), Image.ANTIALIAS)
+        photo = ImageTk.PhotoImage(image)
+        self.display_label.configure(image=photo)
 
 
 def main():
@@ -71,10 +78,14 @@ def main():
     e_button.grid(row=6, column=2)
     e_button['command'] = lambda: quit_program(mqtt_client, True)
 
-    color_message = ttk.Label(main_frame, text="--")
-    color_message.grid(row=3, column=4)
+    image = Image.open('blue.png')
+    image = image.resize((70, 20), Image.ANTIALIAS)
+    photo = ImageTk.PhotoImage(image)
 
-    pc_delegate = MyDelegateOnThePc(color_message)
+    color_label = ttk.Label(main_frame, image=photo)
+    color_label.grid(row=3, column=4)
+
+    pc_delegate = MyDelegateOnThePc(color_label)
     mqtt_client = com.MqttClient(pc_delegate)
     mqtt_client.connect_to_ev3()
 
