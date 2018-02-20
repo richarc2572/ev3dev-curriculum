@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+"""This is the portion of my code that will run the Tkinter window and send instructions to the robot
+
+to see a description of the game go to the ev3 file"""
+
 import tkinter
 from tkinter import ttk
 import PIL
@@ -24,6 +28,7 @@ class MyDelegateOnThePc(object):
         image = image.resize((70, 20), Image.ANTIALIAS)
         photo = ImageTk.PhotoImage(image)
         self.display_label.configure(image=photo)
+        # this method puts the picture corresponding to the color detected by the sensor on the tkinter
 
 
 def main():
@@ -79,7 +84,7 @@ def main():
     e_button['command'] = lambda: quit_program(mqtt_client, True)
 
     image = Image.open('blue.png')
-    image = image.resize((70, 20), Image.ANTIALIAS)
+    image = image.resize((70, 20), Image.ANTIALIAS)  # this line changes the size of the image to better fit the window
     photo = ImageTk.PhotoImage(image)
 
     color_label = ttk.Label(main_frame, image=photo)
@@ -90,7 +95,6 @@ def main():
     mqtt_client.connect_to_ev3()
 
     root.mainloop()
-    # mqtt_client.connect_to_ev3("35.194.247.175")  # Off campus IP address of a GCP broker
 
 
 # ----------------------------------------------------------------------
