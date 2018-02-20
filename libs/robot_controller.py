@@ -232,6 +232,7 @@ class Snatch3r(object):
     def take_home(self, color):
         if not self.touch_sensor.is_pressed:
             self.arm_up()
+        self.turn_degrees(180, 200)
         btn = ev3.Button()
         self.pixy.mode = color
         while not btn.backspace:
@@ -242,7 +243,7 @@ class Snatch3r(object):
             if abs(dx) < 10:
                 if abs(dwidth) < 5:
                     self.turn_degrees(25, 200)
-                    self.drive_inches(3, 200)
+                    self.drive_inches(1, 200)
                     self.arm_down()
                     self.drive_inches(-3, 200)
                     break
@@ -261,11 +262,12 @@ class Snatch3r(object):
             time.sleep(0.1)
         self.stop()
         if color == "SIG1":
-            self.turn_degrees(90, 200)
-            self.drive_inches(25, 200)
-            self.turn_degrees(90, 200)
+            self.turn_degrees(-90, 200)
+            self.drive_inches(10, 200)
+            self.turn_degrees(-90, 200)
+            self.drive_inches(-5, 200)
         else:
-            self.turn_degrees(-90, 200)
-            self.drive_inches(25, 200)
-            self.turn_degrees(-90, 200)
+            self.turn_degrees(100, 200)
+            self.drive_inches(10, 200)
+            self.turn_degrees(100, 200)
         ev3.Sound.beep()

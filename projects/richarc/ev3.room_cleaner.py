@@ -16,11 +16,11 @@ class MyDelegate(object):
     def organize(self, blue_option, orange_option):
         if blue_option == 1 and orange_option == 0:
             self.robot.pick_up("SIG1")
-            self.robot.take_home("SIG1")
+            self.robot.take_home("SIG2")
             self.blue_position = 'Home'
         elif blue_option == 0 and orange_option == 1:
             self.robot.pick_up("SIG2")
-            self.robot.take_home("SIG2")
+            self.robot.take_home("SIG1")
             self.orange_position = 'Home'
         else:
             self.robot.pixy.mode = "SIG1"
@@ -29,17 +29,17 @@ class MyDelegate(object):
             width2 = self.robot.pixy.value(3)
             if width1 > width2:
                 self.robot.pick_up("SIG1")
-                self.robot.take_home("SIG1")
+                self.robot.take_home("SIG2")
                 self.blue_position = 'Home'
                 self.robot.pick_up("SIG2")
-                self.robot.take_home("SIG2")
+                self.robot.take_home("SIG1")
                 self.orange_position = 'Home'
             else:
                 self.robot.pick_up("SIG2")
-                self.robot.take_home("SIG2")
+                self.robot.take_home("SIG1")
                 self.orange_position = 'Home'
                 self.robot.pick_up("SIG1")
-                self.robot.take_home("SIG1")
+                self.robot.take_home("SIG2")
                 self.blue_position = 'Home'
         self.robot.stop()
         self.robot.arm_down()
@@ -78,9 +78,11 @@ class MyDelegate(object):
             time.sleep(0.01)
         self.robot.shutdown()
 
+    def shutdown(self):
+        self.robot.shutdown()
+
 
 def main():
-    #     ev3.Sound.speak("Room Cleaner").wait()
     print("Ready")
     my_delegate = MyDelegate()
     mqtt_client = com.MqttClient(my_delegate)

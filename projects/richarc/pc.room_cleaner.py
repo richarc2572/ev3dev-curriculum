@@ -89,6 +89,10 @@ def main():
     calibrate_arm_button.grid(row=4, column=0)
     calibrate_arm_button['command'] = lambda: send_calibrate_arm(mqtt_client)
 
+    exit_button = ttk.Button(main_frame, text="Exit")
+    exit_button.grid(row=4, column=1)
+    exit_button['command'] = lambda: exit_program(mqtt_client)
+
     pc_delegate = MyDelegateOnThePc(message_label, blue_checkbox, orange_checkbox)
     mqtt_client = com.MqttClient(pc_delegate)
     mqtt_client.connect_to_ev3()
@@ -116,6 +120,12 @@ def checkbox_event(organize_button, blue_checkbox_state, orange_checkbox_state):
         organize_button.configure(state=NORMAL)
     else:
         organize_button.configure(state=DISABLED)
+
+
+def exit_program(mqtt_client):
+    mqtt_client.send_message("shutdown")
+    mqtt_client.close()
+    exit()
 
 
 main()
