@@ -212,36 +212,6 @@ class Snatch3r(object):
                     self.turn_degrees(30, 200)
                     self.drive_inches(2.5, 200)
                     self.arm_up()
-
-                    break
-                else:
-                    self.move(-2 * dx, 2 * dx)
-            elif dwidth > 5 and x != 0:
-                if dx > 5:
-                    self.move(5 * dwidth, 10 * dwidth)
-                elif dx < -5:
-                    self.move(10 * dwidth, 5 * dwidth)
-                else:
-                    self.move(10 * dwidth, 10 * dwidth)
-            elif dwidth < -5 and x != 0:
-                self.move(-200, -200)
-            else:
-                self.move(200, -200)
-            time.sleep(0.1)
-
-    def take_home(self, color):
-        if not self.touch_sensor.is_pressed:
-            self.arm_up()
-        btn = ev3.Button()
-        self.pixy.mode = color
-        while not btn.backspace:
-            x = self.pixy.value(1)
-            width = self.pixy.value(3)
-            dx = 125 - x
-            dwidth = 62 - width
-            if abs(dwidth) < 5:
-                if abs(dx) < 10:
-                    ev3.Sound.beep().wait()
                     break
                 else:
                     self.move(-2 * dx, 2 * dx)
@@ -258,3 +228,44 @@ class Snatch3r(object):
                 self.move(200, -200)
             time.sleep(0.1)
         self.stop()
+
+    def take_home(self, color):
+        if not self.touch_sensor.is_pressed:
+            self.arm_up()
+        btn = ev3.Button()
+        self.pixy.mode = color
+        while not btn.backspace:
+            x = self.pixy.value(1)
+            width = self.pixy.value(3)
+            dx = 125 - x
+            dwidth = 130 - width
+            if abs(dx) < 10:
+                if abs(dwidth) < 5:
+                    self.turn_degrees(25, 200)
+                    self.drive_inches(3, 200)
+                    self.arm_down()
+                    self.drive_inches(-3, 200)
+                    break
+                elif dwidth < -5:
+                    self.move(-200, -200)
+                elif dx > 5:
+                    self.move(300 + 2 * dx, 300 + 5 * dx)
+                elif dx < -5:
+                    self.move(300 - 5 * dx, 300 - 2 * dx)
+                else:
+                    self.move(200 + 2 * dwidth, 200 + 2 * dwidth)
+            elif abs(dx) >= 10:
+                self.move(-3 * dx, 3 * dx)
+            else:
+                self.move(-200, 200)
+            time.sleep(0.1)
+        self.stop()
+        if color == "SIG1":
+            self.turn_degrees(90, 200)
+            self.drive_inches(25, 200)
+            self.turn_degrees(90, 200)
+        else:
+            self.turn_degrees(-90, 200)
+            self.drive_inches(25, 200)
+            self.turn_degrees(-90, 200)
+        ev3.Sound.beep()

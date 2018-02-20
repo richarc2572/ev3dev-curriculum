@@ -13,11 +13,15 @@ class MyDelegate(object):
         self.blue_position = 'Missing'
         self.orange_position = 'Missing'
 
-    def clean_room(self, blue_option, orange_option):
+    def organize(self, blue_option, orange_option):
         if blue_option == 1 and orange_option == 0:
             self.robot.pick_up("SIG1")
+            self.robot.take_home("SIG1")
+            self.blue_position = 'Home'
         elif blue_option == 0 and orange_option == 1:
             self.robot.pick_up("SIG2")
+            self.robot.take_home("SIG2")
+            self.orange_position = 'Home'
         else:
             self.robot.pixy.mode = "SIG1"
             width1 = self.robot.pixy.value(3)
@@ -25,8 +29,18 @@ class MyDelegate(object):
             width2 = self.robot.pixy.value(3)
             if width1 > width2:
                 self.robot.pick_up("SIG1")
+                self.robot.take_home("SIG1")
+                self.blue_position = 'Home'
+                self.robot.pick_up("SIG2")
+                self.robot.take_home("SIG2")
+                self.orange_position = 'Home'
             else:
                 self.robot.pick_up("SIG2")
+                self.robot.take_home("SIG2")
+                self.orange_position = 'Home'
+                self.robot.pick_up("SIG1")
+                self.robot.take_home("SIG1")
+                self.blue_position = 'Home'
         self.robot.stop()
         self.robot.arm_down()
 
